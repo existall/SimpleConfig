@@ -11,10 +11,11 @@ namespace ExistAll.Settings
 		public void Add(IAssemblyHolder assemblyHolder)
 		{
 			if (assemblyHolder == null) throw new ArgumentNullException(nameof(assemblyHolder));
+			if (assemblyHolder.Assembly == null) throw new ArgumentNullException(nameof(assemblyHolder.Assembly));
 			_assemblyHolders.Add(assemblyHolder);
 		}
 
-		public IEnumerable<Type> GeTypes()
+		public IEnumerable<Type> GetTypes()
 		{
 			return _assemblyHolders.SelectMany(x => x.Types)
 				.ToArray();
