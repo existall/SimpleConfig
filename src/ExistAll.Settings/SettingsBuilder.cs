@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using ExistAll.Settings.Core;
+using ExistAll.Settings.Core.Reflection;
 
 namespace ExistAll.Settings
 {
@@ -11,17 +10,22 @@ namespace ExistAll.Settings
 	{
 		private readonly ISettingTypesExtractor _settingTypesExtractor;
 		private readonly ISettingOptionsValidator _settingOptionsValidator;
+		private readonly ISettingsClassGenerator _settingsClassGenerator;
 		private int _counter = 0;
 		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
 
-		public SettingsBuilder() : this(new SettingTypesExtractor(), new SettingOptionsValidator())
+		public SettingsBuilder() : this(new SettingTypesExtractor(),
+			new SettingOptionsValidator(),
+			new SettingsClassGenerator())
 		{ }
 
 		internal SettingsBuilder(ISettingTypesExtractor settingTypesExtractor,
-			ISettingOptionsValidator settingOptionsValidator)
+			ISettingOptionsValidator settingOptionsValidator,
+			ISettingsClassGenerator settingsClassGenerator)
 		{
 			_settingTypesExtractor = settingTypesExtractor;
 			_settingOptionsValidator = settingOptionsValidator;
+			_settingsClassGenerator = settingsClassGenerator;
 		}
 
 		public ISettingsCollection Build(AssemblyCollection assemblies, SettingsOptions options)
@@ -35,7 +39,7 @@ namespace ExistAll.Settings
 			foreach (var setting in settingInterfaces)
 			{
 				// create class here
-
+				var generateType = _settingsClassGenerator.GenerateType(setting);
 
 				foreach (var property in setting.GetTypeInfo().DeclaredProperties)
 				{
