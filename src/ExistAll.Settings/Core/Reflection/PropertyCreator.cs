@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 namespace ExistAll.Settings.Core.Reflection
 {
-    internal class PropertyCreator : IPropertyCreator
+	internal class PropertyCreator : IPropertyCreator
 	{
 		public void CreateAnonymousProperties(TypeBuilder typeBuilder, PropertyInfo[] properties, out List<FieldInfo> fields)
 		{
@@ -19,8 +19,12 @@ namespace ExistAll.Settings.Core.Reflection
 			{
 				var field = typeBuilder.DefineField($"_{propertyInfo.Name}", propertyInfo.PropertyType, FieldAttributes.Private);
 				var property = typeBuilder.DefineProperty(propertyInfo.Name, PropertyAttributes.HasDefault, propertyInfo.PropertyType, null);
-				var getter = typeBuilder.DefineMethod($"get_{property.Name}", MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Virtual,  null, new[] { property.PropertyType });
-				var setter = typeBuilder.DefineMethod($"set_{property.Name}", MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Virtual, null, new[] { property.PropertyType });
+
+				var methodAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig |
+									   MethodAttributes.Virtual | MethodAttributes.Final;
+
+				var getter = typeBuilder.DefineMethod($"get_{property.Name}", methodAttributes, property.PropertyType, Type.EmptyTypes);
+				var setter = typeBuilder.DefineMethod($"set_{property.Name}", methodAttributes, null, new[] { property.PropertyType });
 
 				var getterGenerator = getter.GetILGenerator();
 				getterGenerator.Emit(OpCodes.Ldarg_0);
@@ -37,8 +41,6 @@ namespace ExistAll.Settings.Core.Reflection
 				property.SetSetMethod(setter);
 
 				fields.Add(field);
-
-				//typeBuilder.DefineMethodOverride();
 			}
 		}
 	}
