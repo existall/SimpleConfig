@@ -10,9 +10,11 @@ namespace ExistAll.Settings.UnitTests
         public void Test1()
         {
 			SettingsClassGenerator generator = new SettingsClassGenerator();
-	        //var generateType = generator.GenerateType(typeof(X1));
+	        var generateType = generator.GenerateType(typeof(X1));
 			var generateType1 = generator.GenerateType(typeof(X2));
-		}
+
+	        var instance = (X1)Activator.CreateInstance(generateType);
+        }
     }
 
 	public interface X1
