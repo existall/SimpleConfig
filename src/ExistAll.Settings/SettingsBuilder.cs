@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using ExistAll.Settings.Core;
@@ -34,6 +35,7 @@ namespace ExistAll.Settings
 			foreach (var setting in settingInterfaces)
 			{
 				// create class here
+
 
 				foreach (var property in setting.GetTypeInfo().DeclaredProperties)
 				{
