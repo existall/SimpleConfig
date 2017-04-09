@@ -25,7 +25,7 @@ namespace ExistAll.Settings.Core
 			if (info.GetCustomAttribute(options.AttributeType, true) != null)
 				return true;
 
-			if (info.IsAssignableFrom(options.InterfaceBase))
+			if (options.InterfaceBase.GetTypeInfo().IsAssignableFrom(info))
 				return true;
 
 			if (info.Name.ToLower().EndsWith(options.SettingSufix.Trim().ToLower()))

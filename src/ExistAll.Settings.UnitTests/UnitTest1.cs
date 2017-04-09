@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using ExistAll.Settings.Core.Reflection;
 using Xunit;
 
@@ -10,20 +11,34 @@ namespace ExistAll.Settings.UnitTests
         public void Test1()
         {
 			SettingsClassGenerator generator = new SettingsClassGenerator();
-	        var generateType = generator.GenerateType(typeof(X1));
-			var generateType1 = generator.GenerateType(typeof(X2));
+	        var generateType = generator.GenerateType(typeof(IX1));
+			var generateType1 = generator.GenerateType(typeof(IX2));
 
-	        var instance = (X1)Activator.CreateInstance(generateType);
+	        var instance = (IX1)Activator.CreateInstance(generateType);
         }
-    }
 
-	public interface X1
+		[Fact]
+		public void Test2()
+		{
+			var collection = new AssemblyCollection()
+				.AddFullAssemblyHolder(this.GetType().GetTypeInfo().Assembly);
+
+			var t = new SettingsBuilder().Build(collection, new SettingsOptions());
+
+			var settings = t.GetSettings<IX2>();
+		}
+	}
+
+	
+	public interface IX1 : ISettingSection
 	{
+		[DefaultValue("guy")]
 		string Name { get; set; }
 	}
 
-	public interface X2
+	public interface IX2 : ISettingSection
 	{
+		[DefaultValue(4)]
 		int Number { get; set; }
 	}
 }

@@ -34,7 +34,7 @@ namespace ExistAll.Settings.Core.Reflection
 			return Convert.ChangeType(value, strippedType);
 		}
 
-		private static object ConvertToArray(object value, Type strippedType)
+		private object ConvertToArray(object value, Type strippedType)
 		{
 			var values = value.GetType().IsArray ? (object[])value : new[] { value };
 
@@ -64,10 +64,7 @@ namespace ExistAll.Settings.Core.Reflection
 
 		private static object ConvertEnumType(Type propertyType, object value)
 		{
-			if (value.GetType() == propertyType)
-				return value;
-
-			return Enum.Parse(propertyType, (string)value);
+			return value.GetType()== propertyType ? value : Enum.Parse(propertyType, (string)value);
 		}
 	}
 }

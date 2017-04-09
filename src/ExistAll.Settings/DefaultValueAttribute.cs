@@ -2,9 +2,14 @@ using System;
 
 namespace ExistAll.Settings
 {
-	public class DefaultValueAttribute : Attribute, IDefaultValueAttribute
+	public abstract class DefaultValueBaseAttribute : Attribute
 	{
-		public object DefaultValue { get; set; }
+		public abstract object DefaultValue { get; set; }
+	}
+
+	public class DefaultValueAttribute : DefaultValueBaseAttribute
+	{
+		public override object DefaultValue { get; set; }
 
 		public DefaultValueAttribute(object defaultValue, params object[] defaultValues)
 		{

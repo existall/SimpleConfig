@@ -6,9 +6,9 @@ namespace ExistAll.Settings.Core.Reflection
 	{
 		public static object GetDefaultValue(this PropertyInfo property)
 		{
-			var defaultAttribute = property.GetCustomAttribute(typeof(IDefaultValueAttribute));
+			var defaultAttribute = property.GetCustomAttribute(typeof(DefaultValueBaseAttribute));
 
-			return ((IDefaultValueAttribute) defaultAttribute)?.DefaultValue;
+			return ((DefaultValueBaseAttribute) defaultAttribute)?.DefaultValue;
 		}
 	}
 }

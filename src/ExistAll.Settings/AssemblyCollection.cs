@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ExistAll.Settings
 {
-	public class AssemblyCollection
+	public class AssemblyCollection : IAssemblyCollection
 	{
 		private readonly HashSet<IAssemblyHolder> _assemblyHolders = new HashSet<IAssemblyHolder>();
 
@@ -15,7 +15,7 @@ namespace ExistAll.Settings
 			_assemblyHolders.Add(assemblyHolder);
 		}
 
-		public IEnumerable<Type> GetTypes()
+		internal IEnumerable<Type> GetTypes()
 		{
 			return _assemblyHolders.SelectMany(x => x.Types)
 				.ToArray();
