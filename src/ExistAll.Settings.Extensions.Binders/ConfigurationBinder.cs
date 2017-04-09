@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace ExistAll.Settings.Extensions.Binders
+namespace ExistAll.Settings.Binders
 {
 	public class ConfigurationBinder : ISectionBinder
 	{
@@ -14,18 +14,9 @@ namespace ExistAll.Settings.Extensions.Binders
 
 		public string GetValue(SettingsBindingContext bindingContext)
 		{
-			try
-			{
-				var configurationSection = _configuration.GetSection(bindingContext.Section);
+			var configurationSection = _configuration.GetSection(bindingContext.Section);
 
-				return configurationSection?[bindingContext.Key];
-			}
-			catch (Exception e)
-			{
-				
-			}
-
-			return null;
+			return configurationSection?[bindingContext.Key];
 		}
 	}
 }

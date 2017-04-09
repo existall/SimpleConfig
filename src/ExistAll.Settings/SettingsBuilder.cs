@@ -51,7 +51,7 @@ namespace ExistAll.Settings
 
 				foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(setting))
 				{
-					var context = new SettingsBindingContext(setting.Name, property.Name, null);
+					var context = new SettingsBindingContext(options.SectionNameFormater(setting.Name), property.Name, null);
 
 					string value = null;
 

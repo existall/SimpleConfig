@@ -9,5 +9,6 @@ namespace ExistAll.Settings
 		public string SettingSufix { get; set; } = "Settings";
 		public string ArraySplitDelimiter { get; set; } = ",";
 		public string DateTimeFormat { get; set; } = "yyyy-MM-dd";
+		public Func<string, string> SectionNameFormater => (interfaceName) => interfaceName.Trim('I');
 	}
 }
