@@ -53,14 +53,16 @@ namespace ExistAll.Settings
 				{
 					var context = new SettingsBindingContext(setting.Name, property.Name, null);
 
-					string value = null; 
+					string value = null;
 
 					foreach (var binder in _binders)
 					{
 						value = binder.Value.GetValue(context);
 					}
 
-					var propertyValue = _typeConverter.ConvertValue(value ?? property.GetDefaultValue(), property.PropertyType);
+					var propertyValue = value != null
+						?  _typeConverter.ConvertValue(value, property.PropertyType, options) :
+						property.GetDefaultValue();
 
 					property.SetValue(instance, propertyValue);
 				}

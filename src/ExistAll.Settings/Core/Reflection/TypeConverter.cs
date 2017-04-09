@@ -7,12 +7,12 @@ namespace ExistAll.Settings.Core.Reflection
 {
 	internal interface ITypeConverter
 	{
-		object ConvertValue(object value, Type propertyType);
+		object ConvertValue(string value, Type propertyType, SettingsOptions options);
 	}
 
 	internal class TypeConverter : ITypeConverter
 	{
-		public object ConvertValue(object value, Type propertyType)
+		public object ConvertValue(string value, Type propertyType, SettingsOptions options)
 		{
 			if (value == null)
 				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
@@ -20,25 +20,25 @@ namespace ExistAll.Settings.Core.Reflection
 			var strippedType = StripNullable(propertyType);
 
 			if (strippedType == typeof(Uri))
-				return new Uri((string)value);
+				return new Uri(value);
 
 			if (strippedType == typeof(DateTime))
-				return ConvertFromDateTime(value);
+				return ConvertFromDateTime(value, options);
 
 			if (strippedType.GetTypeInfo().IsEnum)
 				return ConvertEnumType(strippedType, value);
 
 			if (strippedType.IsArray)
-				return ConvertToArray(value, strippedType);
+				return ConvertToArray(value, strippedType, options);
 
 			return Convert.ChangeType(value, strippedType);
 		}
 
-		private object ConvertToArray(object value, Type strippedType)
+		private object ConvertToArray(string value, Type strippedType, SettingsOptions options)
 		{
-			var values = value.GetType().IsArray ? (object[])value : new[] { value };
+			var strings = value.Split(new[] { options.ArraySplitDelimiter }, StringSplitOptions.RemoveEmptyEntries).ToArray();
 
-			var objects = values.Select(x => ConvertValue(x, strippedType.GetElementType())).ToArray();
+			var objects = strings.Select(x => ConvertValue(x, strippedType.GetElementType(), options)).ToArray();
 
 			var instance = Array.CreateInstance(strippedType.GetElementType(), objects.Length);
 
@@ -57,14 +57,14 @@ namespace ExistAll.Settings.Core.Reflection
 				type;
 		}
 
-		private static DateTime ConvertFromDateTime(object value)
+		private static DateTime ConvertFromDateTime(string value, SettingsOptions options)
 		{
-			return DateTime.ParseExact((string)value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+			return DateTime.ParseExact(value, options.DateTimeFormat, CultureInfo.InvariantCulture);
 		}
 
 		private static object ConvertEnumType(Type propertyType, object value)
 		{
-			return value.GetType()== propertyType ? value : Enum.Parse(propertyType, (string)value);
+			return value.GetType() == propertyType ? value : Enum.Parse(propertyType, (string)value);
 		}
 	}
 }
