@@ -30,9 +30,4 @@ namespace ExistAll.Settings
 			DefaultValue = newArray;
 		}
 	}
-
-	public interface IDefaultValueAttribute
-	{
-		object DefaultValue { get; }
-	}
 }

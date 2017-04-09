@@ -57,7 +57,14 @@ namespace ExistAll.Settings
 
 					foreach (var binder in _binders)
 					{
-						value = binder.Value.GetValue(context);
+						try
+						{
+							value = binder.Value.GetValue(context);
+						}
+						catch (Exception e)
+						{
+							throw new SettingsBindingException(binder.Value, context, e);
+						}
 					}
 
 					var propertyValue = value != null

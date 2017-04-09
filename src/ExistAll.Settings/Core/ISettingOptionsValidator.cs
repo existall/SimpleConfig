@@ -15,6 +15,12 @@
 			{
 				throw new SettingsOptionsArgumentNullException();
 			}
+
+			if(string.IsNullOrWhiteSpace(settingsOptions.ArraySplitDelimiter))
+				throw new SettingsOptionsArgumentMissingException(nameof(settingsOptions.ArraySplitDelimiter));
+
+			if(string.IsNullOrWhiteSpace(settingsOptions.DateTimeFormat))
+				throw new SettingsOptionsArgumentMissingException(nameof(settingsOptions.DateTimeFormat));
 		}
 	}
 }

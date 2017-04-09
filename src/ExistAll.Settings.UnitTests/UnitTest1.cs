@@ -5,17 +5,17 @@ using Xunit;
 
 namespace ExistAll.Settings.UnitTests
 {
-    public class UnitTest1
-    {
-        [Fact]
-        public void Test1()
-        {
+	public class UnitTest1
+	{
+		[Fact]
+		public void Test1()
+		{
 			SettingsClassGenerator generator = new SettingsClassGenerator();
-	        var generateType = generator.GenerateType(typeof(IX1));
+			var generateType = generator.GenerateType(typeof(IX1));
 			var generateType1 = generator.GenerateType(typeof(IX2));
 
-	        var instance = (IX1)Activator.CreateInstance(generateType);
-        }
+			var instance = (IX1)Activator.CreateInstance(generateType);
+		}
 
 		[Fact]
 		public void Test2()
@@ -29,10 +29,10 @@ namespace ExistAll.Settings.UnitTests
 		}
 	}
 
-	
+
 	public interface IX1 : ISettingSection
 	{
-	
+
 		string Name { get; set; }
 	}
 
