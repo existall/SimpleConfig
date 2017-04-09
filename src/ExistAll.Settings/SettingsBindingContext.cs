@@ -6,7 +6,7 @@ namespace ExistAll.Settings
 	{
 		public string Section { get; }
 		public string Key { get; }
-		public string CurrentValue { get; }
+		public string CurrentValue { get; internal set; }
 
 		public SettingsBindingContext(string section, string key, string value)
 		{
