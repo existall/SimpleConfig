@@ -1,15 +1,15 @@
-﻿1. Diagnostics 
+﻿1. Diagnostics
 	1.1 Error Counts
 	1.2 Time monitoring
 	1.3 add diagnostics error logger to conext.
 
 2. Exceptions
-	2.
+	2. add exception details on each part of builder that could fail
 
 3. Use Roslyn if faster (dependent on [1]).
 
 4. override services with options to enable extending the frameworks.
 
-5. use IEnumberable rather then Arrays ? 
+5. use IEnumberable rather then Arrays ?
 
 6. for better performance use parallel.
