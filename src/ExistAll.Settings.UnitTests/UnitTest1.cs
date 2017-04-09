@@ -25,18 +25,19 @@ namespace ExistAll.Settings.UnitTests
 
 			var t = new SettingsBuilder().Build(collection, new SettingsOptions());
 
-			var settings = t.GetSettings<IX2>();
+			var settings = t.GetSettings<IX1>();
 		}
 	}
 
 	
 	public interface IX1 : ISettingSection
 	{
-		[DefaultValue("guy")]
+	
 		string Name { get; set; }
 	}
 
-	public interface IX2 : ISettingSection
+	[SettingsSectionAttribue]
+	public interface IX2
 	{
 		[DefaultValue(4)]
 		int Number { get; set; }

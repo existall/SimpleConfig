@@ -52,12 +52,15 @@ namespace ExistAll.Settings
 				foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(setting))
 				{
 					var context = new SettingsBindingContext(setting.Name, property.Name, null);
+
+					string value = null; 
+
 					foreach (var binder in _binders)
 					{
-						binder.Value.Bind(context);
+						value = binder.Value.GetValue(context);
 					}
 
-					var propertyValue = _typeConverter.ConvertValue(context.Value ?? property.GetDefaultValue(), property.PropertyType);
+					var propertyValue = _typeConverter.ConvertValue(value ?? property.GetDefaultValue(), property.PropertyType);
 
 					property.SetValue(instance, propertyValue);
 				}
