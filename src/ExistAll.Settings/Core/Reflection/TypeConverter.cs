@@ -1,54 +1,18 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace ExistAll.Settings
+namespace ExistAll.Settings.Core.Reflection
 {
-	public interface ISettingsImplementor
+	internal interface ITypeConverter
 	{
-		void SetValues(IDictionary<string, object> values = null);
+		object ConvertValue(object value, Type propertyType);
 	}
 
-	public abstract class SettingsImplementor<T> : ISettingsImplementor
+	internal class TypeConverter : ITypeConverter
 	{
-		public void SetValues(IDictionary<string, object> values = null)
-		{
-			//foreach (var property in SettingsImplementorGenerator.GetInterfaceProperties(typeof(T)))
-				//SetValue(property, values ?? new Dictionary<string, object>());
-		}
-
-		private void SetValue(PropertyInfo property, IDictionary<string, object> values)
-		{
-			object value = null;
-			try
-			{
-				var loaded =
-					values.TryGetValue(typeof(T).Name.Substring(1) + "." + property.Name, out value) ||
-					values.TryGetValue(property.DeclaringType.Name.Substring(1) + "." + property.Name, out value);
-
-				if (!loaded)
-				{
-					var defaultAttribute = property.GetCustomAttribute<DefaultValueAttribute>();
-					if (defaultAttribute != null)
-						value = defaultAttribute.DefaultValue;
-				}
-
-				else if (property.PropertyType.IsArray)
-				{
-					value = ((string)value).Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-				}
-
-				GetType().GetTypeInfo().GetMethod("set_" + property.Name).Invoke(this, new[] { ConvertValue(value, property.PropertyType) });
-			}
-			catch (Exception ex)
-			{
-				throw new Exception(string.Format("{0}.{1} of type {2} with value {3}", property.DeclaringType.FullName, property.Name, property.PropertyType, value), ex);
-			}
-		}
-
-		private static object ConvertValue(object value, Type propertyType)
+		public object ConvertValue(object value, Type propertyType)
 		{
 			if (value == null)
 				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;

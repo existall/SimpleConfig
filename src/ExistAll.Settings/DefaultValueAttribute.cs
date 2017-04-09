@@ -2,11 +2,11 @@ using System;
 
 namespace ExistAll.Settings
 {
-	public class DefaultAttribute : Attribute
+	public class DefaultValueAttribute : Attribute, IDefaultValueAttribute
 	{
 		public object DefaultValue { get; set; }
 
-		public DefaultAttribute(object defaultValue, params object[] defaultValues)
+		public DefaultValueAttribute(object defaultValue, params object[] defaultValues)
 		{
 			if (defaultValues == null || defaultValues.Length == 0)
 			{
@@ -24,5 +24,10 @@ namespace ExistAll.Settings
 
 			DefaultValue = newArray;
 		}
+	}
+
+	public interface IDefaultValueAttribute
+	{
+		object DefaultValue { get; }
 	}
 }

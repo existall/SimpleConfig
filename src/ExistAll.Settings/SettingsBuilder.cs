@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using ExistAll.Settings.Core;
 using ExistAll.Settings.Core.Reflection;
 
@@ -11,21 +10,29 @@ namespace ExistAll.Settings
 		private readonly ISettingTypesExtractor _settingTypesExtractor;
 		private readonly ISettingOptionsValidator _settingOptionsValidator;
 		private readonly ISettingsClassGenerator _settingsClassGenerator;
-		private int _counter = 0;
+		private readonly ITypePropertiesExtractor _typePropertiesExtractor;
+		private readonly ITypeConverter _typeConverter;
+		private int _counter;
 		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
 
 		public SettingsBuilder() : this(new SettingTypesExtractor(),
 			new SettingOptionsValidator(),
-			new SettingsClassGenerator())
+			new SettingsClassGenerator(),
+			new TypePropertiesExtractor(),
+			new TypeConverter())
 		{ }
 
 		internal SettingsBuilder(ISettingTypesExtractor settingTypesExtractor,
 			ISettingOptionsValidator settingOptionsValidator,
-			ISettingsClassGenerator settingsClassGenerator)
+			ISettingsClassGenerator settingsClassGenerator,
+			ITypePropertiesExtractor typePropertiesExtractor,
+			ITypeConverter typeConverter)
 		{
 			_settingTypesExtractor = settingTypesExtractor;
 			_settingOptionsValidator = settingOptionsValidator;
 			_settingsClassGenerator = settingsClassGenerator;
+			_typePropertiesExtractor = typePropertiesExtractor;
+			_typeConverter = typeConverter;
 		}
 
 		public ISettingsCollection Build(AssemblyCollection assemblies, SettingsOptions options)
@@ -34,29 +41,29 @@ namespace ExistAll.Settings
 			_settingOptionsValidator.ValidateOptions(options);
 			var settingInterfaces = _settingTypesExtractor.ExtractSettingTypes(assemblies, options);
 
-			SettingsCollection collection = new SettingsCollection();
+			var collection = new SettingsCollection();
 
 			foreach (var setting in settingInterfaces)
 			{
-				// create class here
 				var generateType = _settingsClassGenerator.GenerateType(setting);
 
-				foreach (var property in setting.GetTypeInfo().DeclaredProperties)
+				var instance = Activator.CreateInstance(generateType);
+
+				foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(setting))
 				{
-					// use defaults here first
-
-					var context = new SettingsBindingContext(setting.Name, property.Name, null);  // pass the default
-
+					var context = new SettingsBindingContext(setting.Name, property.Name, null);
 					foreach (var binder in _binders)
 					{
 						binder.Value.Bind(context);
 					}
+
+					var propertyValue = _typeConverter.ConvertValue(context.Value ?? property.GetDefaultValue(), property.PropertyType);
+
+					property.SetValue(instance, propertyValue);
 				}
 
-				// set property here.
-				collection.Add(setting,null);
+				collection.Add(setting, instance);
 			}
-
 
 			return collection;
 		}

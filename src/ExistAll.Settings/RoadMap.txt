@@ -1,0 +1,10 @@
+﻿1. Diagnostics 
+	1.1 Error Counts
+	1.2 Time monitoring
+
+2. Exceptions
+	2.
+
+3. Use Roslyn if faster (dependent on [1]).
+
+4. override services with options.
