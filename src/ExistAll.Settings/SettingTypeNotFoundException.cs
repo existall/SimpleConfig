@@ -5,7 +5,7 @@ namespace ExistAll.Settings
 	public class SettingTypeNotFoundException : Exception
 	{
 		public SettingTypeNotFoundException(Type settingsType) 
-			:base(Resources.GetSettingsNotFoundMesageFormatMessage(settingsType))
+			:base(Resources.GetSettingsNotFoundMessageFormatMessage(settingsType))
 		{
 		}
 	}

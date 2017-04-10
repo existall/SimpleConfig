@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ExistAll.Settings.Core;
 using ExistAll.Settings.Core.Reflection;
 
@@ -49,30 +50,7 @@ namespace ExistAll.Settings
 
 				var instance = Activator.CreateInstance(generateType);
 
-				foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(setting))
-				{
-					var context = new SettingsBindingContext(options.SectionNameFormater(setting.Name), property.Name, null);
-
-					string value = null;
-
-					foreach (var binder in _binders)
-					{
-						try
-						{
-							value = binder.Value.GetValue(context);
-						}
-						catch (Exception e)
-						{
-							throw new SettingsBindingException(binder.Value, context, e);
-						}
-					}
-
-					var propertyValue = value != null
-						?  _typeConverter.ConvertValue(value, property.PropertyType, options) :
-						property.GetDefaultValue();
-
-					property.SetValue(instance, propertyValue);
-				}
+				PopulateInstanceWithValues(instance, setting, options);
 
 				collection.Add(setting, instance);
 			}
@@ -84,6 +62,48 @@ namespace ExistAll.Settings
 		{
 			if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
 			_binders.Add(_counter++, sectionBinder);
+		}
+
+		private void ConvertAndSetPropertyValue(string value, PropertyInfo property, object instance, SettingsOptions options)
+		{
+			try
+			{
+				var propertyValue = value != null
+					? _typeConverter.ConvertValue(value, property.PropertyType, options) :
+					property.GetDefaultValue();
+
+				property.SetValue(instance, propertyValue);
+			}
+			catch (Exception e)
+			{
+				throw new SettingsPropertyValueException(value, property, e);
+			}
+		}
+
+		private void PopulateInstanceWithValues(object instance, Type setting, SettingsOptions options)
+		{
+			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(setting))
+			{
+				var context = new SettingsBindingContext(options.SectionNameFormater(setting.Name), property.Name, null);
+
+				string value = null;
+
+				foreach (var binder in _binders)
+				{
+					try
+					{
+						value = binder.Value.GetValue(context);
+						context.CurrentValue = value;
+					}
+					catch (Exception e)
+					{
+						throw new SettingsBindingException(binder.Value, context, e);
+					}
+				}
+
+				ConvertAndSetPropertyValue(value, property, instance, options);
+
+			}
 		}
 	}
 }

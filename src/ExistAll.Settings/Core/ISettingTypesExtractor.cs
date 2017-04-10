@@ -13,6 +13,9 @@ namespace ExistAll.Settings.Core
 	{
 		public Type[] ExtractSettingTypes(AssemblyCollection assemblies, SettingsOptions options)
 		{
+			if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
+			if (options == null) throw new ArgumentNullException(nameof(options));
+
 			return assemblies.GetTypes()
 				.Where(x => x.GetTypeInfo().IsInterface && IsFromOptions(x, options))
 				.ToArray();
@@ -20,18 +23,26 @@ namespace ExistAll.Settings.Core
 
 		private static bool IsFromOptions(Type type, SettingsOptions options)
 		{
-			var info = type.GetTypeInfo();
+			try
+			{
+				var info = type.GetTypeInfo();
 
-			if (info.GetCustomAttribute(options.AttributeType, true) != null)
-				return true;
+				if (info.GetCustomAttribute(options.AttributeType, true) != null)
+					return true;
 
-			if (options.InterfaceBase.GetTypeInfo().IsAssignableFrom(info))
-				return true;
+				if (options.InterfaceBase.GetTypeInfo().IsAssignableFrom(info))
+					return true;
 
-			if (info.Name.ToLower().EndsWith(options.SettingSufix.Trim().ToLower()))
-				return true;
+				if (info.Name.ToLower().EndsWith(options.SettingSufix.Trim().ToLower()))
+					return true;
 
-			return false;
+				return false;
+			}
+			catch (Exception e)
+			{
+				throw new SettingsExtractionException(type,e);
+			}
+
 		}
 	}
 }

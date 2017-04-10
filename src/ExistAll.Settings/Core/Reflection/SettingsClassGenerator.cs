@@ -23,7 +23,9 @@ namespace ExistAll.Settings.Core.Reflection
 		}
 
 		public SettingsClassGenerator()
-			: this(new TypePropertiesExtractor(), new PropertyCreator(), new EqualityCompererCreator())
+			: this(new TypePropertiesExtractor(),
+				  new PropertyCreator(),
+				  new EqualityCompererCreator())
 		{
 			var assemblyName = new AssemblyName(Guid.NewGuid().ToString());
 #if NET451
@@ -50,23 +52,30 @@ namespace ExistAll.Settings.Core.Reflection
 
 		public Type GenerateType(Type interfaceType)
 		{
-			var name = interfaceType.FullName.TrimStart('I') + "Impl";
+			try
+			{
+				var name = interfaceType.Name.TrimStart('I') + "Impl";
 
-			var existingType = _moduleBuilder.Assembly.GetType(name.Replace("+", "\\+"));
-			if (existingType != null)
-				return existingType;
+				var existingType = _moduleBuilder.Assembly.GetType(name.Replace("+", "\\+"));
+				if (existingType != null)
+					return existingType;
 
 
-			var properties = _typePropertiesExtractor.ExtractTypeProperties(interfaceType);
+				var properties = _typePropertiesExtractor.ExtractTypeProperties(interfaceType);
 
-			var typeBuilder = _moduleBuilder.DefineType(name, TypeAttributes.Class | TypeAttributes.Public);
-			typeBuilder.AddInterfaceImplementation(interfaceType);
-			List<FieldInfo> fields;
-			_propertyCreator.CreateAnonymousProperties(typeBuilder, properties.ToArray(), out fields);
-			_equalityCompererCreator.CreateEqualsMethod(typeBuilder, fields);
-			_equalityCompererCreator.CreateGetHashCodeMethod(typeBuilder, fields);
-			var result = typeBuilder.CreateTypeInfo();
-			return result.AsType();
+				var typeBuilder = _moduleBuilder.DefineType(name, TypeAttributes.Class | TypeAttributes.Public);
+				typeBuilder.AddInterfaceImplementation(interfaceType);
+				List<FieldInfo> fields;
+				_propertyCreator.CreateAnonymousProperties(typeBuilder, properties.ToArray(), out fields);
+				_equalityCompererCreator.CreateEqualsMethod(typeBuilder, fields);
+				_equalityCompererCreator.CreateGetHashCodeMethod(typeBuilder, fields);
+				var result = typeBuilder.CreateTypeInfo();
+				return result.AsType();
+			}
+			catch (Exception e)
+			{
+				throw new TypeGenerationException(interfaceType,e);
+			}
 		}
 	}
 }
