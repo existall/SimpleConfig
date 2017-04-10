@@ -30,14 +30,14 @@ Task("Restore-NuGet-Packages")
     .Does(() =>
 {
     
-    DotNetCoreRestore("./ExistAll.AspNet.FeatureFolderBase");
+    DotNetCoreRestore("./Core/ExistAll.Settings");
 });
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-        DotNetCoreBuild("./ExistAll.AspNet.FeatureFolderBase", new DotNetCoreBuildSettings {
+        DotNetCoreBuild("./Core/ExistAll.Settings", new DotNetCoreBuildSettings {
             Configuration = "Release"
         });
     
@@ -47,7 +47,7 @@ Task("Create-NuGet-Packages")
     .IsDependentOn("Build")
     .Does(() =>
     {
-        DotNetCorePack("./ExistAll.AspNet.FeatureFolderBase", new DotNetCorePackSettings 
+        DotNetCorePack("./Core/ExistAll.Settings", new DotNetCorePackSettings 
         {
             OutputDirectory = "./.artifacts",
             Verbose = false,
