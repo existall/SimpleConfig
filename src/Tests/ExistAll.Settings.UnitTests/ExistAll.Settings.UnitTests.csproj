@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExistAll.Settings.Extensions.Binders\ExistAll.Settings.Binders.csproj" />
-    <ProjectReference Include="..\ExistAll.Settings\ExistAll.Settings.csproj" />
+    <ProjectReference Include="..\..\Core\ExistAll.Settings.Extensions.Binders\ExistAll.Settings.Binders.csproj" />
+    <ProjectReference Include="..\..\Core\ExistAll.Settings\ExistAll.Settings.csproj" />
   </ItemGroup>
 
   <ItemGroup>
