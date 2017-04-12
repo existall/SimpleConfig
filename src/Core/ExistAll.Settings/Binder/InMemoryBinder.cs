@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace ExistAll.Settings.Binder
+﻿namespace ExistAll.Settings.Binder
 {
 	internal class InMemoryBinder : ISectionBinder
 	{
@@ -11,9 +9,9 @@ namespace ExistAll.Settings.Binder
 			_collection = collection;
 		}
 
-		public string GetValue(SettingsBindingContext bindingContext)
+		public bool TryGetValue(SettingsBindingContext bindingContext, out string value)
 		{
-			return _collection.GetValue(bindingContext.Section, bindingContext.Key);
+			return _collection.TryGetValue(bindingContext.Section, bindingContext.Key, out value);
 		}
 	}
 }

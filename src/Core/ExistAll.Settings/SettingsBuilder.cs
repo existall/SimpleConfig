@@ -92,17 +92,19 @@ namespace ExistAll.Settings
 				{
 					try
 					{
-						value = binder.Value.GetValue(context);
-						context.CurrentValue = value;
+						string tempValue = null;
+						if (binder.Value.TryGetValue(context, out tempValue))
+						{
+							value = tempValue;
+							context.CurrentValue = value;
+						}
 					}
 					catch (Exception e)
 					{
 						throw new SettingsBindingException(binder.Value, context, e);
 					}
 				}
-
 				ConvertAndSetPropertyValue(value, property, instance, options);
-
 			}
 		}
 	}

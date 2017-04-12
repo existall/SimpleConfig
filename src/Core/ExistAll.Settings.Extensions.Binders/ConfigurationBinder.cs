@@ -17,5 +17,17 @@ namespace ExistAll.Settings.Binders
 
 			return configurationSection?[bindingContext.Key];
 		}
+
+		public bool TryGetValue(SettingsBindingContext bindingContext, out string value)
+		{
+			value = null;
+			var configurationSection = _configuration.GetSection(bindingContext.Section);
+
+			if (configurationSection == null)
+				return false;
+
+			value = configurationSection[bindingContext.Key];
+			return value != null;
+		}
 	}
 }

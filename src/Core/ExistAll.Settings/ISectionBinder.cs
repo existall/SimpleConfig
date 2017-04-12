@@ -2,6 +2,6 @@ namespace ExistAll.Settings
 {
 	public interface ISectionBinder
 	{
-		string GetValue(SettingsBindingContext bindingContext);
+		bool TryGetValue(SettingsBindingContext bindingContext, out string value);
 	}
 }

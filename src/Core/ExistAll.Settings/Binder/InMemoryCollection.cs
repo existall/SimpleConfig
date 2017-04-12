@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ExistAll.Settings.Binder
 {
-	public class InMemoryCollection
+	public class InMemoryCollection : IInMemoryCollection
 	{
 		private readonly Dictionary<string, string> _inner = new Dictionary<string, string>();
 
@@ -15,11 +15,11 @@ namespace ExistAll.Settings.Binder
 			_inner.Add(CreateKey(section, key), value);
 		}
 
-		internal string GetValue(string section, string key)
+		internal bool TryGetValue(string section, string key, out string value)
 		{
-			string value = null;
-			_inner.TryGetValue(CreateKey(section, key),out value);
-			return value;
+			value = null;
+			var hasValue = _inner.TryGetValue(CreateKey(section, key), out value);
+			return hasValue;
 		}
 
 		private static string CreateKey(string section, string key)
