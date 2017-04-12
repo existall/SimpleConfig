@@ -9,7 +9,7 @@ var target = Argument("Target", "Default");
 // 1. If command line parameter parameter passed, use that.
 // 2. Otherwise if an Environment variable exists, use that.
 var configuration =
-    HasArgument("Configuration") ? Argument("Configuration") :
+    HasArgument("Configuration") ? Argument("Configuration", "Release") :
     EnvironmentVariable("Configuration") != null ? EnvironmentVariable("BuildNumber") : "Release";
 // The build number to use in the version number of the built NuGet packages.
 // There are multiple ways this value can be passed, this is a common pattern.
@@ -63,13 +63,18 @@ Task("Test")
         var projects = GetFiles("./Tests/**/*.csproj");
         foreach(var project in projects)
         {
+            var settings = new DotNetCoreTestSettings
+            {
+         Configuration = "Release"
+     };
+
             DotNetCoreTest(
-                project.GetDirectory().FullPath,
+                project.FullPath,
                 new DotNetCoreTestSettings()
                 {
-                    ArgumentCustomization = args => args
-                        .Append("-xml")
-                        .Append(artifactsDirectory.Path.CombineWithFilePath(project.GetFilenameWithoutExtension()).FullPath + ".xml"),
+                    ArgumentCustomization = (args) => args
+                         .Append("-l")
+                         .Append("\"trx;LogFileName=" + artifactsDirectory.Path.CombineWithFilePath(project.GetFilenameWithoutExtension()).FullPath + ".trx\""),
                     Configuration = configuration,
                     NoBuild = true
                 });
@@ -83,7 +88,7 @@ Task("Pack")
     .Does(() =>
     {
         var revision = buildNumber.ToString("D4");
-        foreach (var project in GetFiles("./Source/**/*.csproj"))
+        foreach (var project in GetFiles("./Core/**/*.csproj"))
         {
             DotNetCorePack(
                 project.GetDirectory().FullPath,
@@ -91,7 +96,7 @@ Task("Pack")
                 {
                     Configuration = configuration,
                     OutputDirectory = artifactsDirectory,
-                    VersionSuffix = revision
+                    //VersionSuffix = revision
                 });
         }
     });
