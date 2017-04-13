@@ -21,11 +21,17 @@ namespace ExistAll.SimpleConfig.UnitTests
 		public void Test2()
 		{
 			var collection = new AssemblyCollection()
-				.AddFullAssemblyHolder(this.GetType().GetTypeInfo().Assembly);
+				.AddFullTypesAssembly(this.GetType().GetTypeInfo().Assembly);
 
-			var t = new ConfigBuilder().Build(collection, new ConfigOptions());
+			var configCollection = new ConfigBuilder().Build(collection, new ConfigOptions());
 
-			var config = t.GetConfig<IX1>();
+			var config = configCollection.GetConfig<IX1>();
+
+			foreach (var configItem in configCollection)
+			{
+				Type interfaceType = configItem.Key;
+				object configImplemintation = configItem.Value;
+			}
 		}
 	}
 
@@ -40,5 +46,15 @@ namespace ExistAll.SimpleConfig.UnitTests
 	{
 		[DefaultValue(4)]
 		int Number { get; set; }
+	}
+
+	[ConfigSection]
+	public interface IEmailSenderConfig
+	{
+		[DefaultValue("SomeUrl")]
+		string EmailServiceUrl { get; set; }
+
+		[DefaultValue(3)]
+		int Retries { get; set; }
 	}
 }
