@@ -4,7 +4,9 @@ Getting Started
 SimpleConfig uses a `ConfigBuilder` in order to create a `ConfigCollection`. `ConfigCollection`holds a key value pair of `Type` and the generated implemintatin of the Config interface. Thus it can be easly registered to any IOC contianer of your liking.
 
 `IConfigBuilder.Build` is the entry point to get all config files, the `Build` method accept two SimpleConfig classes:
+
 [1. AssemblyCollection]()
+
 [2. ConfigOptions]()
 
 ````C#
