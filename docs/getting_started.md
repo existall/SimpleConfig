@@ -51,4 +51,4 @@ foreach (var configItem in configCollection)
 }
 ````
 
-SimpleConfig is highly extendable and we will explain on the next [page]()
+SimpleConfig is highly extendable and we will explain how to work with it on the next [page](https://github.com/existall/SimpleConfig/blob/master/docs/building_the_collection.md)
