@@ -5,11 +5,6 @@ using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
 {
-	internal interface ITypeConverter
-	{
-		object ConvertValue(string value, Type propertyType, ConfigOptions options);
-	}
-
 	internal class TypeConverter : ITypeConverter
 	{
 		public object ConvertValue(string value, Type propertyType, ConfigOptions options)

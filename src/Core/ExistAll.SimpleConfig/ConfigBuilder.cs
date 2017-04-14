@@ -93,6 +93,8 @@ namespace ExistAll.SimpleConfig
 					try
 					{
 						string tempValue = null;
+
+						x // only set deaflut if no true was here!!
 						if (binder.Value.TryGetValue(context, out tempValue))
 						{
 							value = tempValue;

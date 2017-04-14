@@ -2,11 +2,6 @@ using System;
 
 namespace ExistAll.SimpleConfig
 {
-	public abstract class DefaultValueBaseAttribute : Attribute
-	{
-		public abstract object DefaultValue { get; set; }
-	}
-
 	public class DefaultValueAttribute : DefaultValueBaseAttribute
 	{
 		public override object DefaultValue { get; set; }

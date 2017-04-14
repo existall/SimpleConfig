@@ -5,11 +5,6 @@ using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
 {
-	internal interface ITypePropertiesExtractor
-	{
-		IEnumerable<PropertyInfo> ExtractTypeProperties(Type type);
-	}
-
 	internal class TypePropertiesExtractor : ITypePropertiesExtractor
 	{
 		public IEnumerable<PropertyInfo> ExtractTypeProperties(Type type)
