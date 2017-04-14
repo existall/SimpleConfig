@@ -53,4 +53,4 @@ public interface ISomeInterfaceConfig
 
 ## SimpleConfig is built to make your application independent Frameworks so every indication of config interface can be changed using `ConfigOptions`
 
-In the next page we will explain about [DefaultValue Attribute]()
+In the next page we will explain about [DefaultValue Attribute](https://github.com/existall/SimpleConfig/blob/master/docs/Default%20Values.md)

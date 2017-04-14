@@ -30,7 +30,7 @@ The Key name the context provides is the property name as is, for example the in
 
 Since Order between the binders is important the context will provide the current value as `string` that the former binders has set already.
 
-In the next page we will learn how to [extend]() SimpleConfig and future features.
+In the next page we will learn how to [Extend](https://github.com/existall/SimpleConfig/blob/master/docs/Extend%20Simple%20Config.md) SimpleConfig and future features.
 
 
 

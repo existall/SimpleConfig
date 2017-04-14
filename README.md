@@ -2,11 +2,16 @@ ExistAll.SimpleConfig
 =====================
 
 ## Installation 
-``
+`Install-Package ExistAll.SimpleConfig`
 
 ## Table of Content
 1.Introduction  
-2.[Getting started]()
+2.[Getting started](https://github.com/existall/SimpleConfig/blob/master/docs/getting_started.md)  
+3.[Building the collection](https://github.com/existall/SimpleConfig/blob/master/docs/building_the_collection.md)  
+4.[Building Config Interfaces](https://github.com/existall/SimpleConfig/blob/master/docs/Build%20Config%20Interface.md)  
+5.[DefaultValue](https://github.com/existall/SimpleConfig/blob/master/docs/Default%20Values.md)  
+6.[Build Section Binders](https://github.com/existall/SimpleConfig/blob/master/docs/Build%20a%20SectionBinder.md)  
+7.[Extending SimpleConfig](https://github.com/existall/SimpleConfig/blob/master/docs/Extend%20Simple%20Config.md)
 
 Introduction - or why SimpleConfig was created
 ----------------------------------------------
