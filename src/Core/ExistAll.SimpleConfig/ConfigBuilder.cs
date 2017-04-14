@@ -64,11 +64,11 @@ namespace ExistAll.SimpleConfig
 			_binders.Add(_counter++, sectionBinder);
 		}
 
-		private void ConvertAndSetPropertyValue(string value, PropertyInfo property, object instance, ConfigOptions options)
+		private void ConvertAndSetPropertyValue(string value, PropertyInfo property, object instance, ConfigOptions options, bool hasBinderSetValue)
 		{
 			try
 			{
-				var propertyValue = value != null
+				var propertyValue = hasBinderSetValue
 					? _typeConverter.ConvertValue(value, property.PropertyType, options) :
 					property.GetDefaultValue();
 
@@ -87,16 +87,16 @@ namespace ExistAll.SimpleConfig
 				var context = new ConfigBindingContext(options.SectionNameFormater(config.Name), property.Name, null);
 
 				string value = null;
-
+				bool hasBinderSetValue = false;
 				foreach (var binder in _binders)
 				{
 					try
 					{
 						string tempValue = null;
 
-						x // only set deaflut if no true was here!!
 						if (binder.Value.TryGetValue(context, out tempValue))
 						{
+							hasBinderSetValue = true;
 							value = tempValue;
 							context.CurrentValue = value;
 						}
@@ -106,7 +106,7 @@ namespace ExistAll.SimpleConfig
 						throw new ConfigBindingException(binder.Value, context, e);
 					}
 				}
-				ConvertAndSetPropertyValue(value, property, instance, options);
+				ConvertAndSetPropertyValue(value, property, instance, options, hasBinderSetValue);
 			}
 		}
 	}
