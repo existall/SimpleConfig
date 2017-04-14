@@ -1,8 +1,12 @@
 ExistAll.SimpleConfig
 =====================
 
-[1. Introduction]()
-[2. Getting started]()
+## Installation 
+``
+
+## Table of Content
+1.Introduction  
+2.[Getting started]()
 
 Introduction - or why SimpleConfig was created
 ----------------------------------------------
