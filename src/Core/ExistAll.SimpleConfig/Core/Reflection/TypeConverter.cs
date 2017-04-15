@@ -12,16 +12,16 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			if (value == null)
 				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
 
-			var strippedType = StripNullable(propertyType);
+			var strippedType = StripIfNullable(propertyType);
 
-			if (strippedType == typeof(Uri))
-				return new Uri(value);
+			if (strippedType.GetTypeInfo().IsEnum)
+				return ConvertEnumType(strippedType, value);
 
 			if (strippedType == typeof(DateTime))
 				return ConvertFromDateTime(value, options);
 
-			if (strippedType.GetTypeInfo().IsEnum)
-				return ConvertEnumType(strippedType, value);
+			if (strippedType == typeof(Uri))
+				return new Uri(value);
 
 			if (strippedType.IsArray)
 				return ConvertToArray(value, strippedType, options);
@@ -45,7 +45,7 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			return instance;
 		}
 
-		private static Type StripNullable(Type type)
+		private static Type StripIfNullable(Type type)
 		{
 			return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) ?
 				type.GetTypeInfo().GetGenericArguments()[0] :
