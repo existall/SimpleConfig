@@ -84,7 +84,7 @@ namespace ExistAll.SimpleConfig
 		{
 			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
 			{
-				var context = new ConfigBindingContext(options.SectionNameFormater(config.Name), property.Name, null);
+				var context = new ConfigBindingContext(options.SectionNameFormater(config.Name), property.Name);
 
 				string value = null;
 				bool hasBinderSetValue = false;
