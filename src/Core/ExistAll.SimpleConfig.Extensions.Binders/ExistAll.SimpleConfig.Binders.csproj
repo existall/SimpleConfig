@@ -1,10 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard1.5</TargetFramework>
+		<ApplicationIcon />
+		<OutputTypeEx>library</OutputTypeEx>
+		<Version>0.8.0</Version>
+		<Authors>Guy Ludvig</Authors>
+		<Description>SimpleConfig allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
+This framework should be used instead of .Net Core IOptions&lt;T&gt;.
+		</Description>
+		<Company>ExistAll</Company>
+		<PackageLicenseUrl>https://github.com/existall/SimpleConfig/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/existall/SimpleConfig</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/existall/SimpleConfig</RepositoryUrl>
+		<RepositoryType>GIT</RepositoryType>
+		<PackageTags>Configuration, Ioc, DI</PackageTags>
+	</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="ExistAll.SimpleConfig" Version="0.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="1.1.1" />
