@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard1.5</TargetFramework>
 		<ApplicationIcon />
 		<OutputTypeEx>library</OutputTypeEx>
-		<Version>0.8.0</Version>
+		<Version>0.8.0-beta</Version>
 		<Authors>Guy Ludvig</Authors>
 		<Description>SimpleConfig allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
 This framework should be used instead of .Net Core IOptions&lt;T&gt;.
@@ -18,9 +18,12 @@ This framework should be used instead of .Net Core IOptions&lt;T&gt;.
 	</PropertyGroup>
 
 	<ItemGroup>
-    <PackageReference Include="ExistAll.SimpleConfig" Version="0.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="1.1.1" />
   </ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ExistAll.SimpleConfig\ExistAll.SimpleConfig.csproj" />
+	</ItemGroup>
 
 </Project>
