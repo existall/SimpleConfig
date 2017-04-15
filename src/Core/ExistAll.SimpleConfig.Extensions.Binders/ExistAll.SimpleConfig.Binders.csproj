@@ -5,12 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExistAll.SimpleConfig" Version="0.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ExistAll.SimpleConfig\ExistAll.SimpleConfig.csproj" />
   </ItemGroup>
 
 </Project>
