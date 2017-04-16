@@ -15,7 +15,7 @@ namespace ExistAll.SimpleConfig
 			_assemblyHolders.Add(assemblyHolder);
 		}
 
-		internal IEnumerable<Type> GetTypes()
+		public IEnumerable<Type> GetTypes()
 		{
 			return _assemblyHolders.SelectMany(x => x.Types)
 				.ToArray();

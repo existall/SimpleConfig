@@ -6,13 +6,13 @@ namespace ExistAll.SimpleConfig.Core
 {
 	internal class ConfigTypesExtractor : IConfigTypesExtractor
 	{
-		public Type[] ExtractConfigTypes(AssemblyCollection assemblies, ConfigOptions options)
+		public Type[] ExtractConfigTypes(IAssemblyCollection assemblies, ConfigOptions options)
 		{
 			if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
 			if (options == null) throw new ArgumentNullException(nameof(options));
 
 			return assemblies.GetTypes()
-				.Where(x => IntrospectionExtensions.GetTypeInfo(x).IsInterface && IsFromOptions(x, options))
+				.Where(x => x.GetTypeInfo().IsInterface && IsFromOptions(x, options))
 				.ToArray();
 		}
 
