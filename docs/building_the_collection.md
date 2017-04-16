@@ -4,6 +4,8 @@ To build the `ConfigCollection` you must provide assemblies to which SimpleConfi
 Thus SimpleConfig provides an AssemblyCollection for you to set all assemblies you want it to scan.
 We know that many applications uses different architectures so `AssemblyCollection` has one method
 
+
+## !!This feature will be removed in the next version, and will support only public interfaces!!
 `public void Add(IAssemblyHolder assemblyHolder)`
 
 `SimpleConfig` don't expect you to implement the `IAssemblyHolder` interface, it provide two extension methods.
