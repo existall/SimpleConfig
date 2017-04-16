@@ -11,11 +11,14 @@ namespace ExistAll.SimpleConfig.Core
 				throw new ConfigOptionsArgumentNullException();
 			}
 
-			if(string.IsNullOrWhiteSpace(configOptions.ArraySplitDelimiter))
+			if (string.IsNullOrWhiteSpace(configOptions.ArraySplitDelimiter))
 				throw new ConfigOptionsArgumentMissingException(nameof(configOptions.ArraySplitDelimiter));
 
-			if(string.IsNullOrWhiteSpace(configOptions.DateTimeFormat))
+			if (string.IsNullOrWhiteSpace(configOptions.DateTimeFormat))
 				throw new ConfigOptionsArgumentMissingException(nameof(configOptions.DateTimeFormat));
+
+			if (configOptions.SectionNameFormater == null)
+				throw new ConfigOptionsArgumentMissingException("SectionNameFormater");
 		}
 	}
 }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 {
-	public partial class ConfigTypesExtractorTests
+	public class ConfigTypesExtractorTests
 	{
 		[Fact]
 		public void ExtractConfigTypes_WhenTypeHasNoIndications_ShouldNotExtractType()

@@ -9,6 +9,6 @@ namespace ExistAll.SimpleConfig
 		public string ConfigSuffix { get; set; } = "Config";
 		public string ArraySplitDelimiter { get; set; } = ",";
 		public string DateTimeFormat { get; set; } = "yyyy-MM-dd";
-		public Func<string, string> SectionNameFormater => (interfaceName) => interfaceName.Trim('I');
+		public Func<string, string> SectionNameFormater { get; set; } = (interfaceName) => interfaceName.Trim('I');
 	}
 }
