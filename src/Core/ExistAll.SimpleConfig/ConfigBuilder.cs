@@ -38,13 +38,32 @@ namespace ExistAll.SimpleConfig
 
 		public IConfigCollection Build(IEnumerable<Assembly> assemblies, ConfigOptions options)
 		{
+			if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
 			if (options == null) throw new ArgumentNullException(nameof(options));
-			_configOptionsValidator.ValidateOptions(options);
 			var configInterfaces = _configTypesExtractor.ExtractConfigTypes(assemblies, options);
+			return InnerBuild(configInterfaces, options);
+		}
+
+		public IConfigCollection Build(IEnumerable<Type> interfaces, ConfigOptions options)
+		{
+			if (interfaces == null) throw new ArgumentNullException(nameof(interfaces));
+			if (options == null) throw new ArgumentNullException(nameof(options));
+			return InnerBuild(interfaces, options);
+		}
+
+		public void Add(ISectionBinder sectionBinder)
+		{
+			if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
+			_binders.Add(_counter++, sectionBinder);
+		}
+
+		private IConfigCollection InnerBuild(IEnumerable<Type> interfaces, ConfigOptions options)
+		{
+			_configOptionsValidator.ValidateOptions(options);
 
 			var collection = new ConfigCollection();
 
-			foreach (var configInterface in configInterfaces)
+			foreach (var configInterface in interfaces)
 			{
 				var generateType = _configClassGenerator.GenerateType(configInterface);
 
@@ -56,17 +75,6 @@ namespace ExistAll.SimpleConfig
 			}
 
 			return collection;
-		}
-
-		public IConfigCollection Build(IEnumerable<Type> interfaces, ConfigOptions options)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Add(ISectionBinder sectionBinder)
-		{
-			if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
-			_binders.Add(_counter++, sectionBinder);
 		}
 
 		private void ConvertAndSetPropertyValue(string value, PropertyInfo property, object instance, ConfigOptions options, bool hasBinderSetValue)
