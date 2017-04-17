@@ -5,7 +5,7 @@ branches:
   only:
   - master
 #services: mssql2014
-image: Visual Studio 2017
+#image: Visual Studio 2017
 #install:
 #  - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v4.0.0/nuget.exe
 nuget:
@@ -13,7 +13,7 @@ nuget:
 build_script:
 - ps: cd src
 - ps: .\build.ps1
-test: on
+test: off
 #artifacts:
 #- path: src\AutoMapper\bin\release\*.nupkg
 #  name: NuGet
