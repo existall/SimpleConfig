@@ -11,6 +11,12 @@ namespace ExistAll.SimpleConfig.UnitTests
 	public class Class1
 	{
 		[Fact]
+		public void Test2()
+		{
+			Assert.True(false);
+		}
+
+		[Fact]
 		public void Test()
 		{
 			var configuration = new ConfigurationBuilder().AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
