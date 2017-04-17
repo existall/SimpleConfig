@@ -10,11 +10,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 {
 	public class Class1
 	{
-		[Fact]
-		public void Test2()
-		{
-			Assert.True(false);
-		}
+		
 
 		[Fact]
 		public void Test()

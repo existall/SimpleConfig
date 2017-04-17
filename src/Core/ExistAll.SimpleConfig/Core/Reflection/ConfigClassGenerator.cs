@@ -40,7 +40,7 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 #endif
 			try
 			{
-				_moduleBuilder = assemblyBuilder.DefineDynamicModule("SeetingsModule");
+				_moduleBuilder = assemblyBuilder.DefineDynamicModule("ConfingModule");
 			}
 			finally
 			{
