@@ -36,7 +36,7 @@ namespace ExistAll.SimpleConfig
 			_typeConverter = typeConverter;
 		}
 
-		public IConfigCollection Build(AssemblyCollection assemblies, ConfigOptions options)
+		public IConfigCollection Build(IEnumerable<Assembly> assemblies, ConfigOptions options)
 		{
 			if (options == null) throw new ArgumentNullException(nameof(options));
 			_configOptionsValidator.ValidateOptions(options);
@@ -56,6 +56,11 @@ namespace ExistAll.SimpleConfig
 			}
 
 			return collection;
+		}
+
+		public IConfigCollection Build(IEnumerable<Type> interfaces, ConfigOptions options)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Add(ISectionBinder sectionBinder)

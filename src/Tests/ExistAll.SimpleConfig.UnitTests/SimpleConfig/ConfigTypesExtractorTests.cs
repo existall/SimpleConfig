@@ -1,5 +1,7 @@
-﻿using ExistAll.SimpleConfig.Core;
-using NSubstitute;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using ExistAll.SimpleConfig.Core;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
@@ -11,11 +13,10 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] {typeof(INonIndicationInterface)});
+			var assemblyCollection = MockAssemblies(typeof(INonIndicationInterface));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions());
-		
+
 			Assert.DoesNotContain(typeof(INonIndicationInterface), results);
 		}
 
@@ -24,8 +25,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] { typeof(IAttributeIndicationInterface) });
+			var assemblyCollection = MockAssemblies(typeof(IAttributeIndicationInterface));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions());
 
@@ -37,8 +37,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] { typeof(IIndicationInterface) });
+			var assemblyCollection = MockAssemblies(typeof(IIndicationInterface));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions());
 
@@ -50,32 +49,36 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] { typeof(IIndicationInterfaceConfig) });
+			var assemblyCollection = MockAssemblies(typeof(IIndicationInterfaceConfig));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions());
 
 			Assert.Contains(typeof(IIndicationInterfaceConfig), results);
 		}
+
+		private IEnumerable<Assembly> MockAssemblies(Type returnType)
+		{
+			return new[] {returnType.GetTypeInfo().Assembly};
+		}
 	}
 
-	internal interface INonIndicationInterface
+	public interface INonIndicationInterface
 	{
-		
+
 	}
 
 	[ConfigSection]
-	internal interface IAttributeIndicationInterface
+	public interface IAttributeIndicationInterface
 	{
 
 	}
 
-	internal interface IIndicationInterface : IConfigSection
+	public interface IIndicationInterface : IConfigSection
 	{
 
 	}
 
-	internal interface IIndicationInterfaceConfig
+	public interface IIndicationInterfaceConfig
 	{
 
 	}

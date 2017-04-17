@@ -20,10 +20,8 @@ namespace ExistAll.SimpleConfig.UnitTests
 		[Fact]
 		public void Test2()
 		{
-			var collection = new AssemblyCollection()
-				.AddFullTypesAssembly(this.GetType().GetTypeInfo().Assembly);
 
-			var configCollection = new ConfigBuilder().Build(collection, new ConfigOptions());
+			var configCollection = new ConfigBuilder().Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 
 			var config = configCollection.GetConfig<IX1>();
 

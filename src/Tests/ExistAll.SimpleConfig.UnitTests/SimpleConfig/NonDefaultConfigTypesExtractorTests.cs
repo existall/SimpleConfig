@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using ExistAll.SimpleConfig.Core;
-using NSubstitute;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
@@ -8,12 +9,11 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
     public class NonDefaultConfigTypesExtractorTests
 	{
 		[Fact]
-		public void ExtractConfigTypes_WhenTypeHasNonDefaultAttribueIndidation_ShouldExtractType()
+		public void ExtractConfigTypes_WhenTypeHasNonDefaultAttributeIndication_ShouldExtractType()
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] { typeof(INonDefaultAttributeInterface) });
+			var assemblyCollection = MockAssemblies(typeof(INonDefaultAttributeInterface));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions()
 			{
@@ -28,8 +28,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] { typeof(INonDefaultInterfaceInterface) });
+			var assemblyCollection = MockAssemblies(typeof(INonDefaultInterfaceInterface));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions()
 			{
@@ -44,8 +43,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = new ConfigTypesExtractor();
 
-			var assemblyCollection = Substitute.For<IAssemblyCollection>();
-			assemblyCollection.GetTypes().Returns(new[] { typeof(INonDefaultSuffixIndicationInterfaceSomeSuffix) });
+			var assemblyCollection = MockAssemblies(typeof(INonDefaultSuffixIndicationInterfaceSomeSuffix));
 
 			var results = sut.ExtractConfigTypes(assemblyCollection, new ConfigOptions()
 			{
@@ -55,28 +53,33 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 			Assert.Contains(typeof(INonDefaultSuffixIndicationInterfaceSomeSuffix), results);
 		}
 
-		internal interface INonDefaultSuffixIndicationInterfaceSomeSuffix
+		private IEnumerable<Assembly> MockAssemblies(Type returnType)
 		{
-			
+			return new Assembly[] {returnType.GetTypeInfo().Assembly};
 		}
 
-		internal interface INonDefaultInterfaceIndication
+		public interface INonDefaultSuffixIndicationInterfaceSomeSuffix
 		{
 
 		}
 
-		internal interface INonDefaultInterfaceInterface : INonDefaultInterfaceIndication
+		public interface INonDefaultInterfaceIndication
+		{
+
+		}
+
+		public interface INonDefaultInterfaceInterface : INonDefaultInterfaceIndication
 		{
 
 		}
 
 		[SomeOther]
-		internal interface INonDefaultAttributeInterface
+		public interface INonDefaultAttributeInterface
 		{
 
 		}
 
-		internal class SomeOtherAttribute : Attribute
+		public class SomeOtherAttribute : Attribute
 		{
 
 		}

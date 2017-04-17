@@ -15,14 +15,11 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = new ConfigurationBuilder().AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
 
-			var collection = new AssemblyCollection()
-				.AddFullTypesAssembly(this.GetType().GetTypeInfo().Assembly);
-
 			var t = new ConfigBuilder();
 			t.Add(new ConfigurationBinder(configuration));
 
 
-			var configCollection = t.Build(collection, new ConfigOptions());
+			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 			var config = configCollection.GetConfig<IX1>();
 
 		}
@@ -30,9 +27,6 @@ namespace ExistAll.SimpleConfig.UnitTests
 		[Fact]
 		public void Test1()
 		{
-			var collection = new AssemblyCollection()
-				.AddFullTypesAssembly(this.GetType().GetTypeInfo().Assembly);
-
 			var co = new InMemoryCollection();
 			co.Add("X1", "Name", "goni");
 
@@ -40,7 +34,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 			t.Add(new InMemoryBinder(co));
 
 
-			var configCollection = t.Build(collection, new ConfigOptions());
+			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly}, new ConfigOptions());
 			var config = configCollection.GetConfig<IX1>();
 			var config1 = configCollection.GetConfig<IX2>();
 

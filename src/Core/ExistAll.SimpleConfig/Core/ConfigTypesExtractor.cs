@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -6,12 +7,12 @@ namespace ExistAll.SimpleConfig.Core
 {
 	internal class ConfigTypesExtractor : IConfigTypesExtractor
 	{
-		public Type[] ExtractConfigTypes(IAssemblyCollection assemblies, ConfigOptions options)
+		public Type[] ExtractConfigTypes(IEnumerable<Assembly> assemblies, ConfigOptions options)
 		{
 			if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
 			if (options == null) throw new ArgumentNullException(nameof(options));
 
-			return assemblies.GetTypes()
+			return assemblies.SelectMany(x=>x.GetExportedTypes())
 				.Where(x => x.GetTypeInfo().IsInterface && IsFromOptions(x, options))
 				.ToArray();
 		}
@@ -37,7 +38,6 @@ namespace ExistAll.SimpleConfig.Core
 			{
 				throw new ConfigExtractionException(type,e);
 			}
-
 		}
 	}
 }
