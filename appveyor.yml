@@ -11,7 +11,7 @@ image: Visual Studio 2017
 nuget:
   disable_publish_on_pr: true
 build_script:
-- ps: cd \src
+- ps: cd src
 - ps: .\build.ps1
 test: on
 #artifacts:
