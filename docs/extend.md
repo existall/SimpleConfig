@@ -32,7 +32,7 @@ Same as `AttributeType` and `ConfigSectionAttribute` SimpleConfig searches for i
 
 ## Type Converter Options
 
-### ArraySplitDelimiter 
+### ArraySplitDelimiter
 SimpleConfig tries to convert the binders string value into the property type, when the type is an array SimpleConfig needs to know with what to split the values. As default SimpleConfig uses `','` but I love giving you the choice to decide for yourself.
 
 ### DateTimeFormat

@@ -4,7 +4,10 @@ ExistAll.SimpleConfig
 A config framework suitable for IOC.
 
 ## Installation
-`Install-Package ExistAll.SimpleConfig`
+
+```
+    $ Install-Package ExistAll.SimpleConfig
+```
 
 ## Usage
 
@@ -44,13 +47,13 @@ A config framework suitable for IOC.
 Configuration can be loaded from a DB, consul, JSON files, or whatever.
 
 ## Documentation
-- [Getting started](docs/getting_started.md)  
-- [Building the collection](docs/building_the_collection.md)  
-- [Building Config Interfaces](docs/Build%20Config%20Interface.md)  
-- [DefaultValue](docs/Default%20Values.md)  
-- [Build Section Binders](docs/Build%20a%20SectionBinder.md)  
-- [Extending SimpleConfig](docs/Extend%20Simple%20Config.md)
-- [Why not IOptions<>?](docs/IOptions.md)
+- [Getting started](docs/getting-started.md)  
+- [Building the collection](docs/build-a-collection.md)  
+- [Building Config Interfaces](docs/build-a-config-interface.md)  
+- [DefaultValue](docs/default-values.md)  
+- [Build Section Binders](docs/build-a-section-binder.md)  
+- [Extending SimpleConfig](docs/extend-simple-config.md)
+- [Why not IOptions<>?](docs/ioptions.md)
 
 ## Contribute
 
