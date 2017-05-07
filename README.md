@@ -44,11 +44,11 @@ A config framework suitable for IOC.
 Configuration can be loaded from a DB, consul, JSON files, or whatever.
 
 ## Documentation
-- [Getting started](https://github.com/existall/SimpleConfig/blob/master/docs/getting_started.md)  
-- [Building the collection](https://github.com/existall/SimpleConfig/blob/master/docs/building_the_collection.md)  
-- [Building Config Interfaces](https://github.com/existall/SimpleConfig/blob/master/docs/Build%20Config%20Interface.md)  
-- [DefaultValue](https://github.com/existall/SimpleConfig/blob/master/docs/Default%20Values.md)  
-- [Build Section Binders](https://github.com/existall/SimpleConfig/blob/master/docs/Build%20a%20SectionBinder.md)  
+- [Getting started](docs/getting_started.md)  
+- [Building the collection](docs/building_the_collection.md)  
+- [Building Config Interfaces](docs/Build%20Config%20Interface.md)  
+- [DefaultValue](docs/Default%20Values.md)  
+- [Build Section Binders](docs/Build%20a%20SectionBinder.md)  
 - [Extending SimpleConfig](docs/Extend%20Simple%20Config.md)
 - [Why not IOptions<>?](docs/IOptions.md)
 
