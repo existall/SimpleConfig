@@ -7,7 +7,7 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 {
 	internal class TypeConverter : ITypeConverter
 	{
-		public object ConvertValue(string value, Type propertyType, ConfigOptions options)
+		public object ConvertValue(object value, Type propertyType, ConfigOptions options)
 		{
 			if (value == null)
 				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
@@ -18,10 +18,10 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 				return ConvertEnumType(strippedType, value);
 
 			if (strippedType == typeof(DateTime))
-				return ConvertFromDateTime(value, options);
+				return ConvertFromDateTime((string)value, options);
 
 			if (strippedType == typeof(Uri))
-				return new Uri(value);
+				return new Uri((string)value);
 
 			if (strippedType.IsArray)
 				return ConvertToArray(value, strippedType, options);
@@ -29,11 +29,16 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			return Convert.ChangeType(value, strippedType);
 		}
 
-		private object ConvertToArray(string value, Type strippedType, ConfigOptions options)
+		private object ConvertToArray(object value, Type strippedType, ConfigOptions options)
 		{
-			var strings = value.Split(new[] { options.ArraySplitDelimiter }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+		    if (value is string stringArray)
+		    {
+		        value = stringArray.Split(new[] { options.ArraySplitDelimiter }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+            }
 
-			var objects = strings.Select(x => ConvertValue(x, strippedType.GetElementType(), options)).ToArray();
+		    var values = value.GetType().IsArray ? (object[])value : new[] { value };
+
+            var objects = values.Select(x => ConvertValue(x, strippedType.GetElementType(), options)).ToArray();
 
 			var instance = Array.CreateInstance(strippedType.GetElementType(), objects.Length);
 

@@ -4,6 +4,6 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 {
 	internal interface ITypeConverter
 	{
-		object ConvertValue(string value, Type propertyType, ConfigOptions options);
+		object ConvertValue(object value, Type propertyType, ConfigOptions options);
 	}
 }

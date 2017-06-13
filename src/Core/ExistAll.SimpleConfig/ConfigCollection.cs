@@ -34,7 +34,7 @@ namespace ExistAll.SimpleConfig
 
 		public IEnumerator<KeyValuePair<Type, object>> GetEnumerator()
 		{
-			var dictionary = Enumerable.ToDictionary<KeyValuePair<Type, IConfigHolder>, Type, object>(_configHolders, x => x.Key, y => (object) y.Value);
+			var dictionary = _configHolders.ToDictionary(x => x.Key, y => y.Value.ConfigImplementation);
 
 			return dictionary.GetEnumerator();
 		}
