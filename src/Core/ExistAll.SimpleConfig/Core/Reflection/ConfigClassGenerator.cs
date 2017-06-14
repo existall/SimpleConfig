@@ -10,26 +10,23 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 	{
 		private readonly ITypePropertiesExtractor _typePropertiesExtractor;
 		private readonly IPropertyCreator _propertyCreator;
-		private readonly IEqualityCompererCreator _equalityCompererCreator;
 		private readonly ModuleBuilder _moduleBuilder;
 
 		internal ConfigClassGenerator(ITypePropertiesExtractor typePropertiesExtractor,
-			IPropertyCreator propertyCreator,
-			IEqualityCompererCreator equalityCompererCreator)
+			IPropertyCreator propertyCreator)
 		{
 			_typePropertiesExtractor = typePropertiesExtractor;
 			_propertyCreator = propertyCreator;
-			_equalityCompererCreator = equalityCompererCreator;
 		}
 
 		public ConfigClassGenerator()
 			: this(new TypePropertiesExtractor(),
-				  new PropertyCreator(),
-				  new EqualityCompererCreator())
+				new PropertyCreator())
 		{
 			var assemblyName = new AssemblyName(Guid.NewGuid().ToString());
 #if NET451
-			var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
+			var assemblyBuilder =
+AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
 #else
 			var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
 #endif
@@ -67,14 +64,12 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 				typeBuilder.AddInterfaceImplementation(interfaceType);
 				List<FieldInfo> fields;
 				_propertyCreator.CreateAnonymousProperties(typeBuilder, properties.ToArray(), out fields);
-				_equalityCompererCreator.CreateEqualsMethod(typeBuilder, fields);
-				_equalityCompererCreator.CreateGetHashCodeMethod(typeBuilder, fields);
 				var result = typeBuilder.CreateTypeInfo();
 				return result.AsType();
 			}
 			catch (Exception e)
 			{
-				throw new TypeGenerationException(interfaceType,e);
+				throw new TypeGenerationException(interfaceType, e);
 			}
 		}
 	}

@@ -31,14 +31,14 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 
 		private object ConvertToArray(object value, Type strippedType, ConfigOptions options)
 		{
-		    if (value is string stringArray)
-		    {
-		        value = stringArray.Split(new[] { options.ArraySplitDelimiter }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-            }
+			if (value is string stringArray)
+			{
+				value = stringArray.Split(new[] { options.ArraySplitDelimiter }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+			}
 
-		    var values = value.GetType().IsArray ? (object[])value : new[] { value };
+			var values = value.GetType().IsArray ? (object[])value : new[] { value };
 
-            var objects = values.Select(x => ConvertValue(x, strippedType.GetElementType(), options)).ToArray();
+			var objects = values.Select(x => ConvertValue(x, strippedType.GetElementType(), options)).ToArray();
 
 			var instance = Array.CreateInstance(strippedType.GetElementType(), objects.Length);
 

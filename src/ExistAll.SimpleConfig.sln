@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{4F4FC7AA-2E93-4175-8D6E-D241BF6D7DA5}"
 EndProject
@@ -14,6 +14,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.Binders", "Core\ExistAll.SimpleConfig.Extensions.Binders\ExistAll.SimpleConfig.Binders.csproj", "{912362E1-5F70-444C-BC74-2986C3652935}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.UnitTests", "Tests\ExistAll.SimpleConfig.UnitTests\ExistAll.SimpleConfig.UnitTests.csproj", "{C2605E30-CB86-4E77-A469-2063A8C91D12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{35C73CB5-12BD-4224-9ED6-9CE1A5E30F4E}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

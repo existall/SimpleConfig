@@ -10,8 +10,6 @@ namespace ExistAll.SimpleConfig.UnitTests
 {
 	public class Class1
 	{
-		
-
 		[Fact]
 		public void Test()
 		{
@@ -23,8 +21,8 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 			var config = configCollection.GetConfig<IX1>();
-
-		}
+		    var configx = configCollection.GetConfig<IX2>();
+        }
 
 		[Fact]
 		public void Test1()
