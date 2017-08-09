@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
     <ApplicationIcon />
@@ -18,11 +16,9 @@ This framework should be used instead of .Net Core IOptions&lt;T&gt;.</Descripti
     <RepositoryUrl>https://github.com/existall/SimpleConfig</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
-
 </Project>
