@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections;
+using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
 {
@@ -9,6 +11,25 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			var defaultAttribute = property.GetCustomAttribute(typeof(DefaultValueBaseAttribute));
 
 			return ((DefaultValueBaseAttribute) defaultAttribute)?.DefaultValue;
+		}
+
+		public static bool TryGetEnvironmentVariableAttributeValue(this PropertyInfo property,
+			IDictionary variables,
+			ConfigOptions configOptions,
+			out object result)
+		{
+			result = null;
+
+			var attribute = property.GetCustomAttribute(typeof(EnvironmentVariableBaseAttribute));
+
+			var variable = ((EnvironmentVariableBaseAttribute)attribute)?.Variable;
+
+			if (variable == null)
+				return false;
+			
+			result =  (string) variables[variable];
+
+			return true;
 		}
 	}
 }

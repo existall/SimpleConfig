@@ -37,7 +37,6 @@ namespace ExistAll.SimpleConfig.UnitTests
 			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly}, new ConfigOptions());
 			var config = configCollection.GetConfig<IX1>();
 			var config1 = configCollection.GetConfig<IX2>();
-
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using ExistAll.SimpleConfig.Core.Reflection;
+using NSubstitute.Core;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests
@@ -60,5 +61,18 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 		[DefaultValue(3)]
 		int Retries { get; set; }
+	}
+
+	[ConfigSection]
+	public interface IWithEnvironmentVariable
+	{
+		[EnvironmentVariable("Path")]
+		string Path { get; set; } 
+	}
+
+	[ConfigSection]
+	public interface IWithoutEnvironmentVariable
+	{
+		string Path { get; set; }
 	}
 }

@@ -4,7 +4,7 @@ namespace ExistAll.SimpleConfig
 {
 	public class DefaultValueAttribute : DefaultValueBaseAttribute
 	{
-		public override object DefaultValue { get; set; }
+		public sealed override object DefaultValue { get; set; }
 
 		public DefaultValueAttribute(object defaultValue, params object[] defaultValues)
 		{
