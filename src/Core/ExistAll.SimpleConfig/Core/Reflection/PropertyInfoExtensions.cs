@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Linq;
 using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
@@ -8,9 +8,9 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 	{
 		public static object GetDefaultValue(this PropertyInfo property)
 		{
-			var defaultAttribute = property.GetCustomAttribute(typeof(DefaultValueBaseAttribute));
+			var attributes = property.GetCustomAttributes<ConditionalDefaultValueBaseAttribute>();
 
-			return ((DefaultValueBaseAttribute) defaultAttribute)?.DefaultValue;
+			return attributes.FirstOrDefault(x => x.ShouldUse)?.DefaultValue;
 		}
 
 		public static bool TryGetEnvironmentVariableAttributeValue(this PropertyInfo property,

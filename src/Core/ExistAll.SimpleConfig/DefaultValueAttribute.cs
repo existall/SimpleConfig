@@ -2,9 +2,11 @@ using System;
 
 namespace ExistAll.SimpleConfig
 {
-	public class DefaultValueAttribute : DefaultValueBaseAttribute
+	public class DefaultValueAttribute : ConditionalDefaultValueBaseAttribute
 	{
 		public sealed override object DefaultValue { get; set; }
+
+		public override bool ShouldUse => true;
 
 		public DefaultValueAttribute(object defaultValue, params object[] defaultValues)
 		{

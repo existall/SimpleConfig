@@ -6,7 +6,7 @@
     <TargetFramework>netstandard1.5</TargetFramework>
     <ApplicationIcon />
     <OutputTypeEx>library</OutputTypeEx>
-    <Version>1.5.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Guy Ludvig</Authors>
     <Description>SimpleConfig allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
 This framework should be used instead of .Net Core IOptions&lt;T&gt;.</Description>
