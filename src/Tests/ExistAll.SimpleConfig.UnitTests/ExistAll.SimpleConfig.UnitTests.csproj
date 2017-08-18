@@ -11,6 +11,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\ExistAll.SimpleConfig.Core.AspNet\ExistAll.SimpleConfig.Core.AspNet.csproj" />
     <ProjectReference Include="..\..\Core\ExistAll.SimpleConfig.Extensions.Binders\ExistAll.SimpleConfig.Binders.csproj" />
     <ProjectReference Include="..\..\Core\ExistAll.SimpleConfig\ExistAll.SimpleConfig.csproj" />
   </ItemGroup>
