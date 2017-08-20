@@ -1,4 +1,4 @@
-using System;
+using System.Net;
 using ExistAll.SimpleConfig.Core.AspNet;
 using Xunit;
 
@@ -6,24 +6,16 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 {
 	public class StagingEnvironmentValuesTests
 	{
-		private const string VariableName = "ASPNETCORE_ENVIRONMENT";
-
-		public void ResetEnvironmentVariable()
-		{
-			Environment.SetEnvironmentVariable(VariableName, null);
-		}
-
-
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsDev_ShouldReturnTrue()
 		{
-			Environment.SetEnvironmentVariable(VariableName, Environments.Staging);
+			AspNetTestHelper.SetEnvVariable(Environments.Staging);
 
 			var sut = new StagingDefaultValue("hello");
 
 			Assert.True(sut.ShouldUse);
 
-			ResetEnvironmentVariable();
+			AspNetTestHelper.ResetEnvVariable();
 		}
 
 		[Fact]
@@ -33,19 +25,19 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 
 			Assert.False(sut.ShouldUse);
 
-			ResetEnvironmentVariable();
+			AspNetTestHelper.ResetEnvVariable();
 		}
 
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsStaging_ShouldReturnFalse()
 		{
-			Environment.SetEnvironmentVariable(VariableName, Environments.Production);
+			AspNetTestHelper.SetEnvVariable(Environments.Production);
 
 			var sut = new StagingDefaultValue("hello");
 
 			Assert.False(sut.ShouldUse);
 
-			ResetEnvironmentVariable();
+			AspNetTestHelper.ResetEnvVariable();
 		}
 	}
 }

@@ -10,8 +10,8 @@ namespace ExistAll.SimpleConfig
 
 		public ConfigBindingContext(string section, string key)
 		{
-			if (section == null) throw new ArgumentNullException(nameof(section));
-			if (key == null) throw new ArgumentNullException(nameof(key));
+			if (string.Equals(section, null, StringComparison.Ordinal)) throw new ArgumentNullException(nameof(section));
+			if (string.Equals(key, null, StringComparison.Ordinal)) throw new ArgumentNullException(nameof(key));
 
 			Section = section;
 			Key = key;

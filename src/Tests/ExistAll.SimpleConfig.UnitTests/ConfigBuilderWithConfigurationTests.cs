@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests
 {
-	public class Class1
+	public class ConfigBuilderWithConfigurationTests
 	{
 		[Fact]
 		public void Test()

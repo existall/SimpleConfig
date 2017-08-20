@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using ExistAll.SimpleConfig.Core.Reflection;
-using NSubstitute.Core;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests
