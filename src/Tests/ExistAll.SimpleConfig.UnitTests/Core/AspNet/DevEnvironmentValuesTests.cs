@@ -41,7 +41,7 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 		{
 			Environment.SetEnvironmentVariable(VariableName, Environments.Staging);
 
-			var sut = new DevelopmentDefaultValue("hello");
+			var sut = new StagingDefaultValue("hello");
 
 			Assert.False(sut.ShouldUse);
 
