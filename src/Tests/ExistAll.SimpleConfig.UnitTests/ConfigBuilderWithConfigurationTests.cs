@@ -13,7 +13,8 @@ namespace ExistAll.SimpleConfig.UnitTests
 		[Fact]
 		public void Test()
 		{
-			var configuration = new ConfigurationBuilder().AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
 
 			var t = new ConfigBuilder();
 			t.Add(new ConfigurationBinder(configuration));

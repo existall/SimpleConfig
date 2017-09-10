@@ -12,7 +12,7 @@ namespace ExistAll.SimpleConfig.Core.AspNet
 			DefaultValue = defaultValue;
 		}
 
-		public sealed override object DefaultValue { get; set; }
+		public sealed override object DefaultValue { get; }
 
 		public override bool ShouldUse => _environment.ToLowerInvariant()
 			.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")

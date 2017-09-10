@@ -4,7 +4,7 @@ namespace ExistAll.SimpleConfig
 {
 	public class DefaultValueAttribute : ConditionalDefaultValueBaseAttribute
 	{
-		public sealed override object DefaultValue { get; set; }
+		public sealed override object DefaultValue { get; }
 
 		public override bool ShouldUse => true;
 

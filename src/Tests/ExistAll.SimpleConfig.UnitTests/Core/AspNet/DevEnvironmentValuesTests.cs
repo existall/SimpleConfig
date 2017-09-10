@@ -37,13 +37,13 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 		}
 
 		[Fact]
-		public void ShouldUse_WhenEnvironmentIsStaging_ShouldReturnFalse()
+		public void ShouldUse_WhenEnvironmentIsStaging_ShouldReturnTrue()
 		{
 			Environment.SetEnvironmentVariable(VariableName, Environments.Staging);
 
 			var sut = new StagingDefaultValue("hello");
 
-			Assert.False(sut.ShouldUse);
+			Assert.True(sut.ShouldUse);
 
 			ResetEnvironmentVariable();
 		}
