@@ -2,7 +2,7 @@
 
 namespace ExistAll.SimpleConfig.DotNet.Frameworks
 {
-    public class AppSettingsValue : ConditionalDefaultValueBaseAttribute
+    public class AppSettingsValue : ConditionalValueBaseAttribute
 	{
 		private readonly string _key;
 
@@ -11,7 +11,11 @@ namespace ExistAll.SimpleConfig.DotNet.Frameworks
 			_key = key;
 		}
 
-		public override object DefaultValue => ConfigurationManager.AppSettings[_key];
+		public override object DefaultValue
+		{
+			get => ConfigurationManager.AppSettings[_key];
+			protected set { }
+		}
 
 		public override bool ShouldUse => true;
 	}

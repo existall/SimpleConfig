@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -8,28 +9,42 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 	{
 		public static object GetDefaultValue(this PropertyInfo property)
 		{
-			var attributes = property.GetCustomAttributes<ConditionalDefaultValueBaseAttribute>();
+			var attributes = property.GetCustomAttributes<ConditionalValueBaseAttribute>().ToArray();
 
-			return attributes.FirstOrDefault(x => x.ShouldUse)?.DefaultValue;
+			var conditionalValueBaseAttributes = attributes.Where(x => x.GetType() != typeof(DefaultValueAttribute)).ToArray();
+
+			object value;
+
+			if (TryGetValueFromAttributes(conditionalValueBaseAttributes, out value))
+			{
+				return value;
+			}
+
+			var defaultValueAttribute = attributes.Where(x => x.GetType() == typeof(DefaultValueAttribute)).ToArray();
+
+			if (TryGetValueFromAttributes(defaultValueAttribute, out value))
+			{
+				return value;
+			}
+
+			return null;
 		}
 
-		public static bool TryGetEnvironmentVariableAttributeValue(this PropertyInfo property,
-			IDictionary variables,
-			ConfigOptions configOptions,
-			out object result)
+		private static bool TryGetValueFromAttributes(IEnumerable<ConditionalValueBaseAttribute> attributes, out object value)
 		{
-			result = null;
+			value = null;
 
-			var attribute = property.GetCustomAttribute(typeof(EnvironmentVariableBaseAttribute));
+			foreach (var attribute in attributes)
+			{
+				if (attribute.ShouldUse)
+				{
+					value = attribute.DefaultValue;
+					return true;
+				}
+					
+			}
 
-			var variable = ((EnvironmentVariableBaseAttribute)attribute)?.Variable;
-
-			if (variable == null)
-				return false;
-			
-			result =  (string) variables[variable];
-
-			return true;
+			return false;
 		}
 	}
 }
