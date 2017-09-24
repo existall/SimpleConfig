@@ -1,12 +1,22 @@
+﻿using System;
+
 namespace ExistAll.SimpleConfig
 {
-	public class EnvironmentVariableAttribute : EnvironmentVariableBaseAttribute
+	public class EnvironmentVariableAttribute : ConditionalValueBaseAttribute
 	{
-		public override string Variable { get; }
+		private readonly string _environmentVariable;
 
-		public EnvironmentVariableAttribute(string variable)
+		public EnvironmentVariableAttribute(string environmentVariable)
 		{
-			Variable = variable;
+			_environmentVariable = environmentVariable;
 		}
+
+		public override object DefaultValue
+		{
+			get { return Environment.GetEnvironmentVariable(_environmentVariable); }
+			protected set { }
+		}
+
+		public override bool ShouldUse => true;
 	}
 }

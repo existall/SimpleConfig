@@ -2,8 +2,8 @@
 {
 	public class ProductionDefaultValue : EnvironmentValueAttribute
 	{
-		public ProductionDefaultValue(object defaultValue) :
-			base(defaultValue, (string) Environments.Production)
+		public ProductionDefaultValue(object defaultValue, params object[] defaultValues) :
+			base(Environments.Production, defaultValue, defaultValues)
 		{
 		}
 	}

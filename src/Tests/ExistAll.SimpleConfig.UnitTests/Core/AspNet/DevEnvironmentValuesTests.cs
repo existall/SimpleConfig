@@ -29,11 +29,21 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsNotDev_ShouldReturnFalse()
 		{
+			var sut = new DevelopmentDefaultValue("hello");
+
+			Assert.False(sut.ShouldUse);
+
+			ResetEnvironmentVariable();
+		}
+
+		[Fact]
+		public void ShouldUse_WhenEnvironmentIsStaging_ShouldReturnTrue()
+		{
 			Environment.SetEnvironmentVariable(VariableName, Environments.Staging);
 
 			var sut = new DevelopmentDefaultValue("hello");
 
-			Assert.False(sut.ShouldUse);
+			Assert.True(sut.ShouldUse);
 
 			ResetEnvironmentVariable();
 		}

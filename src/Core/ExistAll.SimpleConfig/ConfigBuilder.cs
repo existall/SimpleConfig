@@ -13,7 +13,6 @@ namespace ExistAll.SimpleConfig
 		private readonly IConfigClassGenerator _configClassGenerator;
 		private readonly ITypePropertiesExtractor _typePropertiesExtractor;
 		private readonly ITypeConverter _typeConverter;
-		private readonly IEnvironmentVariablesProvider _environmentVariablesProvider;
 		private int _counter;
 		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
 
@@ -21,23 +20,20 @@ namespace ExistAll.SimpleConfig
 			new ConfigOptionsValidator(),
 			new ConfigClassGenerator(),
 			new TypePropertiesExtractor(),
-			new TypeConverter(),
-			new EnvironmentVariablesProvider())
+			new TypeConverter())
 		{ }
 
 		internal ConfigBuilder(IConfigTypesExtractor configTypesExtractor,
 			IConfigOptionsValidator configOptionsValidator,
 			IConfigClassGenerator configClassGenerator,
 			ITypePropertiesExtractor typePropertiesExtractor,
-			ITypeConverter typeConverter,
-			IEnvironmentVariablesProvider environmentVariablesProvider)
+			ITypeConverter typeConverter)
 		{
 			_configTypesExtractor = configTypesExtractor;
 			_configOptionsValidator = configOptionsValidator;
 			_configClassGenerator = configClassGenerator;
 			_typePropertiesExtractor = typePropertiesExtractor;
 			_typeConverter = typeConverter;
-			_environmentVariablesProvider = environmentVariablesProvider;
 		}
 
 		public IConfigCollection Build(IEnumerable<Assembly> assemblies, ConfigOptions options)
@@ -99,13 +95,7 @@ namespace ExistAll.SimpleConfig
 
 		private object GetValue(object value, PropertyInfo property, ConfigOptions options, bool hasBinderSetValue)
 		{
-			if (hasBinderSetValue)
-				return value;
-
-			return property.TryGetEnvironmentVariableAttributeValue(
-				_environmentVariablesProvider.GetEnvironmentVariables(),
-				options,
-				out value) ? value : property.GetDefaultValue();
+			return hasBinderSetValue ? value : property.GetDefaultValue();
 		}
 
 		private void PopulateInstanceWithValues(object instance, Type config, ConfigOptions options)

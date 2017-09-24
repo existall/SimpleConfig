@@ -2,17 +2,15 @@
 
 namespace ExistAll.SimpleConfig.Core.AspNet
 {
-	public class EnvironmentValueAttribute : ConditionalDefaultValueBaseAttribute
+	public class EnvironmentValueAttribute : DefaultValueBaseAttribute
 	{
 		private readonly string _environment;
 
-		public EnvironmentValueAttribute(object defaultValue, string environment)
+		public EnvironmentValueAttribute(string environment, object defaultValue, params object[] defaultValues)
+			: base(defaultValue, defaultValues)
 		{
 			_environment = environment;
-			DefaultValue = defaultValue;
 		}
-
-		public sealed override object DefaultValue { get; set; }
 
 		public override bool ShouldUse => _environment.ToLowerInvariant()
 			.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
