@@ -28,4 +28,7 @@ Since many developers use different `DateTime` formats, SimpleConfig allows you 
 pubic DateTime StartTime { get; set; }
 ````
 
+### More Attribute supported from version 2
+1. SimpleConfig now support 
+
 In the next page we will discuss how to create [SectionBinder]()
