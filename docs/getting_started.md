@@ -1,22 +1,17 @@
 Getting Started
 ===============
 
-SimpleConfig uses a `ConfigBuilder` in order to create a `ConfigCollection`. `ConfigCollection`holds a key value pair of `Type` and the generated implemintatin of the Config interface. Thus it can be easly registered to any IOC contianer of your liking.
+SimpleConfig uses a `ConfigBuilder` in order to create a `ConfigCollection`. `ConfigCollection`holds a key value pair of `Type` and the generated implementation of the Config interface. Thus it can be easily registered to any IOC container of your liking.
 
-`IConfigBuilder.Build` is the entry point to get all config files, the `Build` method accept two SimpleConfig classes:
-
-[1. AssemblyCollection]()
-
-[2. ConfigOptions]()
+`IConfigBuilder.Build` is the entry point to get all config files, the `Build` method accept a collection of Assemblies and ConfigOptions.
 
 ````C#
-var collection = new AssemblyCollection()
-				.AddFullAssemblyHolder(this.GetType().GetTypeInfo().Assembly);
+var assemblies = new[]{this.GetType().GetTypeInfo().Assembly};
 
-var configCollection = new ConfigBuilder().Build(collection, new ConfigOptions());
+var configCollection = new ConfigBuilder().Build(assemblies, new ConfigOptions());
 ````
 
-the result is a new class [ConfigCollection]() where you can  iterate all of the implemintations of you config interfaces.
+the result is a new class `ConfigCollection` where you can iterate all of the implemintations of your config interfaces.
 
 ## First Config Interface
 
