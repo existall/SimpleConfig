@@ -11,29 +11,26 @@ namespace ExistAll.SimpleConfig
 		private readonly IConfigTypesExtractor _configTypesExtractor;
 		private readonly IConfigOptionsValidator _configOptionsValidator;
 		private readonly IConfigClassGenerator _configClassGenerator;
-		private readonly ITypePropertiesExtractor _typePropertiesExtractor;
-		private readonly ITypeConverter _typeConverter;
+		private readonly IValuesPopulator _valuesPopulator;
 		private int _counter;
 		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
 
-		public ConfigBuilder() : this(new ConfigTypesExtractor(),
+		public ConfigBuilder() 
+			: this(new ConfigTypesExtractor(),
 			new ConfigOptionsValidator(),
 			new ConfigClassGenerator(),
-			new TypePropertiesExtractor(),
-			new TypeConverter())
+			 new ValuesPopulator())
 		{ }
 
 		internal ConfigBuilder(IConfigTypesExtractor configTypesExtractor,
 			IConfigOptionsValidator configOptionsValidator,
 			IConfigClassGenerator configClassGenerator,
-			ITypePropertiesExtractor typePropertiesExtractor,
-			ITypeConverter typeConverter)
+			IValuesPopulator valuesPopulator)
 		{
 			_configTypesExtractor = configTypesExtractor;
 			_configOptionsValidator = configOptionsValidator;
 			_configClassGenerator = configClassGenerator;
-			_typePropertiesExtractor = typePropertiesExtractor;
-			_typeConverter = typeConverter;
+			_valuesPopulator = valuesPopulator;
 		}
 
 		public IConfigCollection Build(IEnumerable<Assembly> assemblies, ConfigOptions options)
@@ -69,63 +66,12 @@ namespace ExistAll.SimpleConfig
 
 				var instance = Activator.CreateInstance(generateType);
 
-				PopulateInstanceWithValues(instance, configInterface, options);
+				_valuesPopulator.PopulateInstanceWithValues(instance, configInterface, options, _binders);
 
 				collection.Add(configInterface, instance);
 			}
 
 			return collection;
-		}
-
-		private void ConvertAndSetPropertyValue(object value, PropertyInfo property, object instance, ConfigOptions options, bool hasBinderSetValue)
-		{
-			try
-			{
-				value = GetValue(value, property, options, hasBinderSetValue);
-
-				var propertyValue = _typeConverter.ConvertValue(value, property.PropertyType, options);
-
-				property.SetValue(instance, propertyValue);
-			}
-			catch (Exception e)
-			{
-				throw new ConfigPropertyValueException(value, property, e);
-			}
-		}
-
-		private object GetValue(object value, PropertyInfo property, ConfigOptions options, bool hasBinderSetValue)
-		{
-			return hasBinderSetValue ? value : property.GetDefaultValue();
-		}
-
-		private void PopulateInstanceWithValues(object instance, Type config, ConfigOptions options)
-		{
-			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
-			{
-				var context = new ConfigBindingContext(options.SectionNameFormater(config.Name), property.Name);
-
-				string value = null;
-				bool hasBinderSetValue = false;
-				foreach (var binder in _binders)
-				{
-					try
-					{
-						string tempValue = null;
-
-						if (binder.Value.TryGetValue(context, out tempValue))
-						{
-							hasBinderSetValue = true;
-							value = tempValue;
-							context.CurrentValue = value;
-						}
-					}
-					catch (Exception e)
-					{
-						throw new ConfigBindingException(binder.Value, context, e);
-					}
-				}
-				ConvertAndSetPropertyValue(value, property, instance, options, hasBinderSetValue);
-			}
 		}
 	}
 }

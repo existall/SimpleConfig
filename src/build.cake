@@ -8,6 +8,7 @@ var target = Argument("Target", "Default");
 // Configuration - The build configuration (Debug/Release) to use.
 // 1. If command line parameter parameter passed, use that.
 // 2. Otherwise if an Environment variable exists, use that.
+
 var configuration =
     HasArgument("Configuration") ? Argument("Configuration", "Release") :
     EnvironmentVariable("Configuration") != null ? EnvironmentVariable("BuildNumber") : "Release";

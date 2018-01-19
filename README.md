@@ -1,4 +1,6 @@
-ExistAll.SimpleConfig
+<img src="https://raw.githubusercontent.com/existall/Shepherd/master/art/logo.png" alt="ExistsForAll">
+
+ExistsForAll.SimpleConfig
 =====================
 
 ## Installation 
