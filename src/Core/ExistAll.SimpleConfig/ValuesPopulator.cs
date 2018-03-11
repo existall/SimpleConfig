@@ -25,7 +25,7 @@ namespace ExistAll.SimpleConfig
 		{
 			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
 			{
-				var context = new ConfigBindingContext(options.SectionNameFormater(config.Name), property.Name);
+				var context = new ConfigBindingContext(GetSectionName(config, options), property.Name);
 
 				string value = null;
 				var hasBinderSetValue = false;
@@ -33,9 +33,7 @@ namespace ExistAll.SimpleConfig
 				{
 					try
 					{
-						string tempValue = null;
-
-						if (!binder.Value.TryGetValue(context, out tempValue))
+						if (!binder.Value.TryGetValue(context, out var tempValue))
 							continue;
 
 						hasBinderSetValue = true;
@@ -72,6 +70,15 @@ namespace ExistAll.SimpleConfig
 		private object GetValue(object value, PropertyInfo property, ConfigOptions options, bool hasBinderSetValue)
 		{
 			return hasBinderSetValue ? value : property.GetDefaultValue();
+		}
+
+		private string GetSectionName(Type configClass, ConfigOptions options)
+		{
+			var attribute = configClass.GetTypeInfo().GetCustomAttribute<ConfigSectionAttribute>();
+
+			return !string.IsNullOrWhiteSpace(attribute?.Name) 
+				? attribute.Name 
+				: options.SectionNameFormater(configClass.Name);
 		}
 	}
 }

@@ -10,6 +10,23 @@ namespace ExistAll.SimpleConfig.UnitTests
 {
 	public class ConfigBuilderWithConfigurationTests
 	{
+
+		[Fact]
+		public void Test3()
+		{
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
+
+			var t = new ConfigBuilder();
+			t.Add(new ConfigurationBinder(configuration));
+
+			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+
+			var config = configCollection.GetConfig<IX3>();
+
+			Assert.Equal(34, config.Age);
+		}
+
 		[Fact]
 		public void Test()
 		{
@@ -24,6 +41,21 @@ namespace ExistAll.SimpleConfig.UnitTests
 			var config = configCollection.GetConfig<IX1>();
 		    var configx = configCollection.GetConfig<IX2>();
         }
+
+		[Fact]
+		public void Test2()
+		{
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
+
+			var t = new ConfigBuilder();
+			t.Add(new ConfigurationBinder(configuration,"appSettings"));
+
+
+			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+			var config = configCollection.GetConfig<IX1>();
+			var configx = configCollection.GetConfig<IX2>();
+		}
 
 		[Fact]
 		public void Test1()
