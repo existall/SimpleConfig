@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using ExistAll.SimpleConfig.Core.Reflection;
 
 namespace ExistAll.SimpleConfig
@@ -21,11 +22,14 @@ namespace ExistAll.SimpleConfig
 			_typeConverter = typeConverter;
 		}
 
-		public void PopulateInstanceWithValues(object instance, Type config, ConfigOptions options, SortedList<int, ISectionBinder> binders)
+		public void PopulateInstanceWithValues(object instance, 
+			Type config,
+			ConfigOptions options,
+			SortedList<int, ISectionBinder> binders)
 		{
 			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
 			{
-				var context = new ConfigBindingContext(GetSectionName(config, options), property.Name);
+				var context = new ConfigBindingContext(GetSectionName(config, options), GetPropertyName(property));
 
 				string value = null;
 				var hasBinderSetValue = false;
@@ -74,11 +78,20 @@ namespace ExistAll.SimpleConfig
 
 		private string GetSectionName(Type configClass, ConfigOptions options)
 		{
-			var attribute = configClass.GetTypeInfo().GetCustomAttribute<ConfigSectionAttribute>();
+			var attribute = configClass.GetTypeInfo().GetCustomAttribute<ConfigSectionAttribute>(true);
 
 			return !string.IsNullOrWhiteSpace(attribute?.Name) 
 				? attribute.Name 
 				: options.SectionNameFormater(configClass.Name);
+		}
+
+		private string GetPropertyName(PropertyInfo propertyInfo)
+		{
+			var attribute = propertyInfo.GetCustomAttribute<ConfigPropertyAttribute>(true);
+			
+			return !string.IsNullOrWhiteSpace(attribute?.Name) 
+				? attribute.Name 
+				: propertyInfo.Name;
 		}
 	}
 }

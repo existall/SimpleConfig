@@ -33,7 +33,6 @@ namespace ExistAll.SimpleConfig.UnitTests
 		}
 	}
 
-
 	public interface IX1 : IConfigSection
 	{
 		string Name { get; set; }
@@ -42,6 +41,13 @@ namespace ExistAll.SimpleConfig.UnitTests
 	[ConfigSection(Name = "dude")]
 	public interface IX3
 	{
+		int Age { get; set; } 
+	}
+	
+	[ConfigSection(Name = "father")]
+	public interface IX4
+	{
+		[ConfigProperty(Name = "mother")]
 		int Age { get; set; } 
 	}
 
