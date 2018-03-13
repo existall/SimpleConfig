@@ -12,7 +12,10 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			try
 			{
 				var info = type.GetTypeInfo();
-				var properties = info.GetProperties().ToList();
+				
+				var properties = info.GetProperties(BindingFlags.Public | BindingFlags.CreateInstance)
+					.ToList();
+				
 				var inherited = info
 					.GetInterfaces()
 					.SelectMany(x => x.GetTypeInfo().GetProperties())
