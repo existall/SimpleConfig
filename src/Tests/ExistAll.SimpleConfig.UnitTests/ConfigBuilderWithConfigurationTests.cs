@@ -17,10 +17,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
 
 			var t = new ConfigBuilder();
-			t.Add(new ConfigurationBinder(configuration));
+			t.AddSectionBinder(new ConfigurationBinder(configuration));
 
 
-			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly });
 			var config = configCollection.GetConfig<IX1>();
 		    var configx = configCollection.GetConfig<IX2>();
         }
@@ -32,10 +32,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 			co.Add("X1", "Name", "goni");
 
 			var t = new ConfigBuilder();
-			t.Add(new InMemoryBinder(co));
+			t.AddSectionBinder(new InMemoryBinder(co));
 
 
-			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly}, new ConfigOptions());
+			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly});
 			var config = configCollection.GetConfig<IX1>();
 			var config1 = configCollection.GetConfig<IX2>();
 		}

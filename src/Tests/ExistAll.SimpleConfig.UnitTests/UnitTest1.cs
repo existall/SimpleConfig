@@ -21,7 +21,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 		public void Test2()
 		{
 
-			var configCollection = new ConfigBuilder().Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+			var configCollection = new ConfigBuilder().Build(new []{ GetType().GetTypeInfo().Assembly });
 
 			var config = configCollection.GetConfig<IX1>();
 
@@ -32,7 +32,6 @@ namespace ExistAll.SimpleConfig.UnitTests
 			}
 		}
 	}
-
 
 	public interface IX1 : IConfigSection
 	{
@@ -65,7 +64,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 	[ConfigSection]
 	public interface IWithEnvironmentVariable
 	{
-		[EnvironmentVariable("Path")]
+		[EnvironmentVariable("TestVar")]
 		string Path { get; set; } 
 	}
 

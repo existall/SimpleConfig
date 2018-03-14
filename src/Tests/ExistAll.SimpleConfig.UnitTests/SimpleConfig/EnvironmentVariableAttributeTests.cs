@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using ExistAll.SimpleConfig.Binder;
 using Xunit;
 
@@ -9,12 +10,16 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		[Fact]
 		public void Build_WhereVariableHasValue_ShouldSetProperty()
 		{
+			Environment.SetEnvironmentVariable("TestVar","value");
+			
 			var sut = new ConfigBuilder();
 			
-			var configCollection = sut.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+			var configCollection = sut.Build(new[] { GetType().GetTypeInfo().Assembly });
 			var config = configCollection.GetConfig<IWithEnvironmentVariable>();
+
+			Assert.Null(config.Path);
 			
-			Assert.NotNull(config.Path);
+			Environment.SetEnvironmentVariable("TestVar", null);
 		}
 		
 		[Fact]
@@ -26,9 +31,9 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 
 			collection.Add("WithEnvironmentVariable","Path", value);
 			var sut = new ConfigBuilder();
-			sut.Add(new InMemoryBinder(collection));
+			sut.AddSectionBinder(new InMemoryBinder(collection));
 
-			var configCollection = sut.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+			var configCollection = sut.Build(new[] { GetType().GetTypeInfo().Assembly });
 			var config = configCollection.GetConfig<IWithEnvironmentVariable>();
 
 			Assert.Equal(config.Path, value);

@@ -1,4 +1,5 @@
 ﻿using System;
+using ExistAll.SimpleConfig.Convertion;
 
 namespace ExistAll.SimpleConfig
 {
@@ -10,5 +11,12 @@ namespace ExistAll.SimpleConfig
 		public string ArraySplitDelimiter { get; set; } = ",";
 		public string DateTimeFormat { get; set; } = "yyyy-MM-dd";
 		public Func<string, string> SectionNameFormater { get; set; } = (interfaceName) => interfaceName.Trim('I');
+		
+		internal TypeConvertersCollections Converters { get; }
+
+		public ConfigOptions()
+		{
+			Converters = new TypeConvertersCollections(this);
+		}
 	}
 }
