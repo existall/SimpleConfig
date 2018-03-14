@@ -26,4 +26,6 @@
 		<ProjectReference Include="..\ExistAll.SimpleConfig\ExistAll.SimpleConfig.csproj" />
 	</ItemGroup>
 
+	<Import Project="../../version.props"/>
+	
 </Project>
