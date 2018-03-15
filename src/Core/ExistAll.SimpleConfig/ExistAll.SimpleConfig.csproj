@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputType>Library</OutputType>
-	</PropertyGroup>
-	<PropertyGroup>
-		<TargetFramework>netstandard1.5</TargetFramework>
-		<ApplicationIcon />
-		<OutputTypeEx>library</OutputTypeEx>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
-		<PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
-		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-	</ItemGroup>
-	<Import Project="../../version.props"></Import>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <ApplicationIcon />
+    <OutputTypeEx>library</OutputTypeEx>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+  <Import Project="../../version.props">
+  </Import>
 </Project>

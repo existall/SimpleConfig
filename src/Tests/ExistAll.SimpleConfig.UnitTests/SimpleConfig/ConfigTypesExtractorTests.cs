@@ -61,25 +61,4 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 			return new[] {returnType.GetTypeInfo().Assembly};
 		}
 	}
-
-	public interface INonIndicationInterface
-	{
-
-	}
-
-	[ConfigSection]
-	public interface IAttributeIndicationInterface
-	{
-
-	}
-
-	public interface IIndicationInterface : IConfigSection
-	{
-
-	}
-
-	public interface IIndicationInterfaceConfig
-	{
-
-	}
 }

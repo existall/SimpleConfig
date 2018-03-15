@@ -10,6 +10,39 @@ namespace ExistAll.SimpleConfig.UnitTests
 {
 	public class ConfigBuilderWithConfigurationTests
 	{
+
+		[Fact]
+		public void Test3()
+		{
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
+
+			var t = new ConfigBuilder();
+			t.Add(new ConfigurationBinder(configuration));
+
+			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+
+			var config = configCollection.GetConfig<IInterfaceThree>();
+
+			Assert.Equal(34, config.Age);
+		}
+		
+		[Fact]
+		public void Test4()
+		{
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
+
+			var t = new ConfigBuilder();
+			t.Add(new ConfigurationBinder(configuration));
+
+			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+
+			var config = configCollection.GetConfig<IInterfaceFour>();
+
+			Assert.Equal(55, config.Age);
+		}
+		
 		[Fact]
 		public void Test()
 		{
@@ -21,9 +54,24 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 
 			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
-			var config = configCollection.GetConfig<IX1>();
-		    var configx = configCollection.GetConfig<IX2>();
+			var config = configCollection.GetConfig<IInterfaceOne>();
+		    var configx = configCollection.GetConfig<IInterfaceTwo>();
         }
+
+		[Fact]
+		public void Test2()
+		{
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "../../../appSettings.json")).Build();
+
+			var t = new ConfigBuilder();
+			t.Add(new ConfigurationBinder(configuration,"appSettings"));
+
+
+			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
+			var config = configCollection.GetConfig<IInterfaceOne>();
+			var configx = configCollection.GetConfig<IInterfaceTwo>();
+		}
 
 		[Fact]
 		public void Test1()
@@ -36,8 +84,8 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 
 			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly}, new ConfigOptions());
-			var config = configCollection.GetConfig<IX1>();
-			var config1 = configCollection.GetConfig<IX2>();
+			var config = configCollection.GetConfig<IInterfaceOne>();
+			var config1 = configCollection.GetConfig<IInterfaceTwo>();
 		}
 	}
 }
