@@ -13,7 +13,7 @@ namespace ExistAll.SimpleConfig.Tests.Frameworks
 			var configCollection = sut.Build(new[] { GetType().GetTypeInfo().Assembly });
 			var config = configCollection.GetConfig<IWithConfigurationValue>();
 
-			Assert.Equal(config.WithValue, TestsConstanst.AppSettingsValue);
+			Assert.Equal(config.WithValue, TestsConstants.AppSettingsValue);
 			//Assert.Null(config.WithoutValue);
 		}
 	}

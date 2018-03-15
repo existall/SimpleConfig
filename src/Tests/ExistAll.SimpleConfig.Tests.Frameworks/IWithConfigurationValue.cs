@@ -5,19 +5,10 @@ namespace ExistAll.SimpleConfig.Tests.Frameworks
 	[ConfigSection]
 	public interface IWithConfigurationValue
 	{
-		[AppSettingsValue(TestsConstanst.AppSettingsKeyWithValue)]
+		[AppSettingsValue(TestsConstants.AppSettingsKeyWithValue)]
 		string WithValue { get; set; }
 
-		[AppSettingsValue(TestsConstanst.AppSettingsKeyWithoutValue)]
+		[AppSettingsValue(TestsConstants.AppSettingsKeyWithoutValue)]
 		string WithoutValue { get; set; }
-	}
-
-	public class TestsConstanst
-	{
-		public const string AppSettingsKeyWithValue = "key";
-
-		public const string AppSettingsValue = "someValue";
-
-		public const string AppSettingsKeyWithoutValue = "noValue";
 	}
 }
