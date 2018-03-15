@@ -7,21 +7,23 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 {
 	internal class TypeConverter : ITypeConverter
 	{
-		public object ConvertValue(object value, Type propertyType, ConfigOptions options)
+		public object ConvertValue(object value, PropertyInfo propertyInfo, ConfigOptions options)
 		{
+			var propertyType = propertyInfo.PropertyType;
+
 			if (value == null)
 				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
 
 			var strippedType = StripIfNullable(propertyType);
 
-			var configTypeConverter = GetConverter(strippedType, propertyType, options);
+			var configTypeConverter = GetConverter(strippedType, propertyInfo, options);
 
 			return configTypeConverter.Convert(value, strippedType);
 		}
 
-		private IConfigTypeConverter GetConverter(Type strippedType, Type propertyType, ConfigOptions options)
+		private IConfigTypeConverter GetConverter(Type strippedType, PropertyInfo propertyInfo, ConfigOptions options)
 		{
-			var attribute = propertyType.GetTypeInfo()
+			var attribute = propertyInfo
 				.GetCustomAttribute<ConfigPropertyAttribute>();
 
 			if (attribute?.ConvertorType == null)

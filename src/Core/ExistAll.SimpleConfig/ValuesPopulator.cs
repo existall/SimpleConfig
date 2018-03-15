@@ -63,7 +63,7 @@ namespace ExistAll.SimpleConfig
 			{
 				value = GetValueOrDefault(value, property, hasBinderSetValue);
 
-				var propertyValue = _typeConverter.ConvertValue(value, property.PropertyType, options);
+				var propertyValue = _typeConverter.ConvertValue(value, property, options);
 
 				return propertyValue;
 			}

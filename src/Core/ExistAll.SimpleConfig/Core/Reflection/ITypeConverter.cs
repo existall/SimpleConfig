@@ -1,9 +1,9 @@
-using System;
+using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
 {
 	internal interface ITypeConverter
 	{
-		object ConvertValue(object value, Type propertyType, ConfigOptions options);
+		object ConvertValue(object value, PropertyInfo propertyInfo, ConfigOptions options);
 	}
 }
