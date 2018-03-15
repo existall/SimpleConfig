@@ -1,7 +1,7 @@
 namespace ExistAll.SimpleConfig.UnitTests
 {
 	[ConfigSection]
-	public interface IX2
+	public interface IInterfaceTwo
 	{
 		[DefaultValue(4)] int Number { get; set; }
 

@@ -22,7 +22,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 
-			var config = configCollection.GetConfig<IX3>();
+			var config = configCollection.GetConfig<IInterfaceThree>();
 
 			Assert.Equal(34, config.Age);
 		}
@@ -38,7 +38,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 
-			var config = configCollection.GetConfig<IX4>();
+			var config = configCollection.GetConfig<IInterfaceFour>();
 
 			Assert.Equal(55, config.Age);
 		}
@@ -55,7 +55,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 			var config = configCollection.GetConfig<IInterfaceOne>();
-		    var configx = configCollection.GetConfig<IX2>();
+		    var configx = configCollection.GetConfig<IInterfaceTwo>();
         }
 
 		[Fact]
@@ -70,7 +70,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
 			var config = configCollection.GetConfig<IInterfaceOne>();
-			var configx = configCollection.GetConfig<IX2>();
+			var configx = configCollection.GetConfig<IInterfaceTwo>();
 		}
 
 		[Fact]
@@ -85,7 +85,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly}, new ConfigOptions());
 			var config = configCollection.GetConfig<IInterfaceOne>();
-			var config1 = configCollection.GetConfig<IX2>();
+			var config1 = configCollection.GetConfig<IInterfaceTwo>();
 		}
 	}
 }

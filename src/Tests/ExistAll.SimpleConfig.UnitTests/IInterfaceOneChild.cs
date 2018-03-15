@@ -1,7 +1,6 @@
 namespace ExistAll.SimpleConfig.UnitTests
 {
-	[ConfigSection(Name = "dude")]
-	public interface IX3
+	public interface IInterfaceOneChild : IInterfaceOne
 	{
 		int Age { get; set; }
 	}
