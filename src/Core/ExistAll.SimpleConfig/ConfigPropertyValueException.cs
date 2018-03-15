@@ -5,7 +5,8 @@ namespace ExistAll.SimpleConfig
 {
 	internal class ConfigPropertyValueException : Exception
 	{
-		public ConfigPropertyValueException(Type interfaceType ,
+		public ConfigPropertyValueException(
+			Type interfaceType,
 			object value,
 			PropertyInfo property,
 			Exception exception)
