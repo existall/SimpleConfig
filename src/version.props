@@ -6,11 +6,11 @@
 			SimpleConfig allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
 			This framework should be used instead of .Net Core IOptions&lt;T&gt;.
 		</Description>
-		<Company>ExistAll</Company>
+		<Company>ExistsForAll</Company>
 		<PackageLicenseUrl>https://github.com/existall/SimpleConfig/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/existall/SimpleConfig</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/existall/SimpleConfig</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
+		<PackageTags>Configuration, Settings, Ioc, DI, ExistsForAll, Dependency injection, Options</PackageTags>
 	</PropertyGroup>
 </Project>
-

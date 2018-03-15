@@ -1,6 +1,6 @@
 namespace ExistAll.SimpleConfig.UnitTests
 {
-	public interface IX1 : IConfigSection
+	public interface IInterfaceOne : IConfigSection
 	{
 		string Name { get; set; }
 	}

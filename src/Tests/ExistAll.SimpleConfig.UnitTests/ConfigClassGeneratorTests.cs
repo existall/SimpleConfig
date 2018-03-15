@@ -5,16 +5,22 @@ using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests
 {
-	public class UnitTest1
+	public class ConfigClassGeneratorTests
 	{
 		[Fact]
-		public void Test1()
+		public void GenerateType_WhenGivenAnInterface_ShouldCreateType()
 		{
-			ConfigClassGenerator generator = new ConfigClassGenerator();
-			var generateType = generator.GenerateType(typeof(IX1));
-			var generateType1 = generator.GenerateType(typeof(IX2));
+			var generator = new ConfigClassGenerator();
 
-			var instance = (IX1) Activator.CreateInstance(generateType);
+			var type = typeof(IInterfaceOne);
+
+			var result = generator.GenerateType(type);
+
+			var instance = (IInterfaceOne) Activator.CreateInstance(result);
+
+			var isAssignableFrom = type.IsInstanceOfType(instance);
+
+			Assert.True(isAssignableFrom);
 		}
 
 		[Fact]
@@ -22,7 +28,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configCollection = new ConfigBuilder().Build(new[] {GetType().GetTypeInfo().Assembly}, new ConfigOptions());
 
-			var config = configCollection.GetConfig<IX1>();
+			var config = configCollection.GetConfig<IInterfaceOne>();
 
 			foreach (var configItem in configCollection)
 			{

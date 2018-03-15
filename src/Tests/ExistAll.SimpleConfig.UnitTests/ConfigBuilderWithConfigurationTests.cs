@@ -54,7 +54,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 
 			var configCollection = t.Build(new []{ GetType().GetTypeInfo().Assembly }, new ConfigOptions());
-			var config = configCollection.GetConfig<IX1>();
+			var config = configCollection.GetConfig<IInterfaceOne>();
 		    var configx = configCollection.GetConfig<IX2>();
         }
 
@@ -69,7 +69,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 
 			var configCollection = t.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
-			var config = configCollection.GetConfig<IX1>();
+			var config = configCollection.GetConfig<IInterfaceOne>();
 			var configx = configCollection.GetConfig<IX2>();
 		}
 
@@ -84,7 +84,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 
 			var configCollection = t.Build(new []{GetType().GetTypeInfo().Assembly}, new ConfigOptions());
-			var config = configCollection.GetConfig<IX1>();
+			var config = configCollection.GetConfig<IInterfaceOne>();
 			var config1 = configCollection.GetConfig<IX2>();
 		}
 	}
