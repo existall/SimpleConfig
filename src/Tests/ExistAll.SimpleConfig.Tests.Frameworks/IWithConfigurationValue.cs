@@ -10,5 +10,9 @@ namespace ExistAll.SimpleConfig.Tests.Frameworks
 
 		[AppSettingsValue(TestsConstants.AppSettingsKeyWithoutValue)]
 		string WithoutValue { get; set; }
+
+		[AppSettingsValue("")]
+		string NonExistence { get; set; }
+
 	}
 }
