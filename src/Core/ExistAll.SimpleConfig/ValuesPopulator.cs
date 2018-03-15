@@ -54,7 +54,8 @@ namespace ExistAll.SimpleConfig
 			}
 		}
 
-		private object ConvertPropertyValue(Type configType,object value,
+		private object ConvertPropertyValue(Type configType,
+			object value,
 			PropertyInfo property,
 			ConfigOptions options,
 			bool hasBinderSetValue)

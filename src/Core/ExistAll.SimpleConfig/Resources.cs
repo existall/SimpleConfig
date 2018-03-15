@@ -38,5 +38,8 @@ see inner exception for more details";
 		public static string ConfigPropertiesExtractionMessage(Type type) =>
 			$@"An error has occurred while trying to extract
 				all properties from type [{type.FullName}]";
+
+		public static string PropertyNotAllowNullMessage(string propertyName) =>
+			$@"[{propertyName}] is marked as Null not allowed, yet the value is null. please provide value via binder or attribute";
 	}
 }

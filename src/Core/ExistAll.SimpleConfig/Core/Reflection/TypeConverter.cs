@@ -12,7 +12,10 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			var propertyType = propertyInfo.PropertyType;
 
 			if (value == null)
+			{
+				ValidateNullAcceptance(propertyInfo);
 				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
+			}
 
 			var strippedType = StripIfNullable(propertyType);
 
@@ -39,6 +42,17 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) ?
 				type.GetTypeInfo().GetGenericArguments()[0] :
 				type;
+		}
+
+		private static void ValidateNullAcceptance(PropertyInfo propertyInfo)
+		{
+			var attribute = propertyInfo.GetCustomAttribute<ConfigPropertyAttribute>();
+
+			if(attribute == null)
+				return;
+
+			if(!attribute.AllowEmpty)
+				throw new Exception(Resources.PropertyNotAllowNullMessage(propertyInfo.Name));
 		}
 	}
 }

@@ -8,5 +8,7 @@ namespace ExistAll.SimpleConfig
 		public string Name { get; set; }
 
 		public Type ConvertorType { get; set; }
+
+		public bool AllowEmpty { get; set; } = true;
 	}
 }

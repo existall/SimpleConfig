@@ -8,13 +8,12 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsDev_ShouldReturnTrue()
 		{
-			AspNetTestHelper.SetEnvVariable(Environments.Staging);
+			using (new AspCoreDisposableEnvironmentVariable(Environments.Staging))
+			{
+				var sut = new StagingDefaultValue("hello");
 
-			var sut = new StagingDefaultValue("hello");
-
-			Assert.True(sut.ShouldUse);
-
-			AspNetTestHelper.ResetEnvVariable();
+				Assert.True(sut.ShouldUse);
+			}
 		}
 
 		[Fact]
@@ -23,20 +22,17 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 			var sut = new StagingDefaultValue("hello");
 
 			Assert.False(sut.ShouldUse);
-
-			AspNetTestHelper.ResetEnvVariable();
 		}
 
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsStaging_ShouldReturnFalse()
 		{
-			AspNetTestHelper.SetEnvVariable(Environments.Production);
+			using (new AspCoreDisposableEnvironmentVariable(Environments.Production))
+			{
+				var sut = new StagingDefaultValue("hello");
 
-			var sut = new StagingDefaultValue("hello");
-
-			Assert.False(sut.ShouldUse);
-
-			AspNetTestHelper.ResetEnvVariable();
+				Assert.False(sut.ShouldUse);
+			}
 		}
 	}
 }
