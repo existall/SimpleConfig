@@ -1,4 +1,3 @@
-using System.Net;
 using ExistAll.SimpleConfig.Core.AspNet;
 using Xunit;
 

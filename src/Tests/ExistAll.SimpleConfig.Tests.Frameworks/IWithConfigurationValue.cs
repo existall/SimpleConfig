@@ -1,5 +1,4 @@
-﻿using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using ExistAll.SimpleConfig.DotNet.Frameworks;
+﻿using ExistAll.SimpleConfig.DotNet.Frameworks;
 
 namespace ExistAll.SimpleConfig.Tests.Frameworks
 {

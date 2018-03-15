@@ -5,10 +5,11 @@ namespace ExistAll.SimpleConfig
 {
 	internal class ConfigPropertyValueException : Exception
 	{
-		public ConfigPropertyValueException(object value, PropertyInfo property, Exception exception)
-			: base(Resources.PropertySetterExceptionMessage(value, property), exception)
-		{
-
-		}
+		public ConfigPropertyValueException(Type interfaceType ,
+			object value,
+			PropertyInfo property,
+			Exception exception)
+			: base(Resources.PropertySetterExceptionMessage(interfaceType, value, property), exception)
+		{}
 	}
 }

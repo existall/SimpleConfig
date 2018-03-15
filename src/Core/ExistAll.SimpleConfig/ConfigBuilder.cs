@@ -49,16 +49,18 @@ namespace ExistAll.SimpleConfig
 			return InnerBuild(interfaces, Options);
 		}
 
-		public void AddSectionBinder(ISectionBinder sectionBinder)
+		public ConfigBuilder AddSectionBinder(ISectionBinder sectionBinder)
 		{
 			if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
 			_binders.Add(_counter++, sectionBinder);
+			return this;
 		}
 
-		public void AddTypeConverter(IConfigTypeConverter configTypeConverter)
+		public ConfigBuilder AddTypeConverter(IConfigTypeConverter configTypeConverter)
 		{
 			if (configTypeConverter == null) throw new ArgumentNullException(nameof(configTypeConverter));
 			Options.Converters.AddFirst(configTypeConverter);
+			return this;
 		}
 		
 		private IConfigCollection InnerBuild(IEnumerable<Type> interfaces, ConfigOptions options)

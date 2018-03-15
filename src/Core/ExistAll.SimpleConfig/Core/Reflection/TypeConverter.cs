@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using ExistAll.SimpleConfig.Convertion;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
 {
@@ -14,7 +14,22 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 
 			var strippedType = StripIfNullable(propertyType);
 
-			return options.Converters.First(x => x.CanConvert(strippedType)).Convert(value, strippedType);
+			var configTypeConverter = GetConverter(strippedType, propertyType, options);
+
+			return configTypeConverter.Convert(value, strippedType);
+		}
+
+		private IConfigTypeConverter GetConverter(Type strippedType, Type propertyType, ConfigOptions options)
+		{
+			var attribute = propertyType.GetTypeInfo()
+				.GetCustomAttribute<ConfigPropertyAttribute>();
+
+			if (attribute?.ConvertorType == null)
+				return options.Converters.First(x => x.CanConvert(strippedType));
+
+			var converter = (IConfigTypeConverter)Activator.CreateInstance(attribute.ConvertorType);
+
+			return converter;
 		}
 
 		private static Type StripIfNullable(Type type)

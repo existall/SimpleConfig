@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using ExistAll.SimpleConfig.Core.Reflection;
 
 namespace ExistAll.SimpleConfig
@@ -29,15 +28,15 @@ namespace ExistAll.SimpleConfig
 		{
 			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
 			{
-				var context = new ConfigBindingContext(GetSectionName(config, options), GetPropertyName(property));
+				var context = new ConfigBindingContext(config.GetSectionName(options), property.GetPropertyName());
 
 				string value = null;
 				var hasBinderSetValue = false;
-				foreach (var binder in binders)
+				foreach (var binder in binders.Values)
 				{
 					try
 					{
-						if (!binder.Value.TryGetValue(context, out var tempValue))
+						if (!binder.TryGetValue(context, out var tempValue))
 							continue;
 
 						hasBinderSetValue = true;
@@ -46,52 +45,37 @@ namespace ExistAll.SimpleConfig
 					}
 					catch (Exception e)
 					{
-						throw new ConfigBindingException(binder.Value, context, e);
+						throw new ConfigBindingException(binder, context, e);
 					}
 				}
 
-				ConvertAndSetPropertyValue(value, property, instance, options, hasBinderSetValue);
+				var propertyValue = ConvertPropertyValue(config, value, property, options, hasBinderSetValue);
+				property.SetValue(instance, propertyValue);
 			}
 		}
 
-		private void ConvertAndSetPropertyValue(object value, PropertyInfo property, object instance, ConfigOptions options,
+		private object ConvertPropertyValue(Type configType,object value,
+			PropertyInfo property,
+			ConfigOptions options,
 			bool hasBinderSetValue)
 		{
 			try
 			{
-				value = GetValue(value, property, options, hasBinderSetValue);
+				value = GetValueOrDefault(value, property, hasBinderSetValue);
 
 				var propertyValue = _typeConverter.ConvertValue(value, property.PropertyType, options);
 
-				property.SetValue(instance, propertyValue);
+				return propertyValue;
 			}
 			catch (Exception e)
 			{
-				throw new ConfigPropertyValueException(value, property, e);
+				throw new ConfigPropertyValueException(configType, value, property, e);
 			}
 		}
 
-		private object GetValue(object value, PropertyInfo property, ConfigOptions options, bool hasBinderSetValue)
+		private static object GetValueOrDefault(object value, PropertyInfo property, bool hasBinderSetValue)
 		{
 			return hasBinderSetValue ? value : property.GetDefaultValue();
-		}
-
-		private string GetSectionName(Type configClass, ConfigOptions options)
-		{
-			var attribute = configClass.GetTypeInfo().GetCustomAttribute<ConfigSectionAttribute>(true);
-
-			return !string.IsNullOrWhiteSpace(attribute?.Name) 
-				? attribute.Name 
-				: options.SectionNameFormater(configClass.Name);
-		}
-
-		private string GetPropertyName(PropertyInfo propertyInfo)
-		{
-			var attribute = propertyInfo.GetCustomAttribute<ConfigPropertyAttribute>(true);
-			
-			return !string.IsNullOrWhiteSpace(attribute?.Name) 
-				? attribute.Name 
-				: propertyInfo.Name;
 		}
 	}
 }
