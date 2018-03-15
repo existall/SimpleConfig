@@ -12,7 +12,10 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			try
 			{
 				var info = type.GetTypeInfo();
-				var properties = info.GetProperties().ToList();
+
+				var properties = info.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+					.ToList();
+
 				var inherited = info
 					.GetInterfaces()
 					.SelectMany(x => x.GetTypeInfo().GetProperties())
@@ -25,9 +28,8 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			}
 			catch (Exception e)
 			{
-				throw new ConfigPropertyExtractionException(type,e);
+				throw new ConfigPropertyExtractionException(type, e);
 			}
-
 		}
 	}
 }

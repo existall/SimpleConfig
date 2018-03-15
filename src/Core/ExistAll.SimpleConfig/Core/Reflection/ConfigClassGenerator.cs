@@ -51,20 +51,23 @@ AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAcces
 		{
 			try
 			{
-				var name = interfaceType.Name.TrimStart('I') + "Impl";
+				var name = interfaceType.Name[0] == 'I' ? $"{interfaceType.Name.Substring(1)}Impl" : interfaceType.Name;
 
 				var existingType = _moduleBuilder.Assembly.GetType(name.Replace("+", "\\+"));
+
 				if (existingType != null)
 					return existingType;
-
 
 				var properties = _typePropertiesExtractor.ExtractTypeProperties(interfaceType);
 
 				var typeBuilder = _moduleBuilder.DefineType(name, TypeAttributes.Class | TypeAttributes.Public);
+
 				typeBuilder.AddInterfaceImplementation(interfaceType);
-				List<FieldInfo> fields;
-				_propertyCreator.CreateAnonymousProperties(typeBuilder, properties.ToArray(), out fields);
+
+				_propertyCreator.CreateAnonymousProperties(typeBuilder, properties.ToArray(), out _);
+				
 				var result = typeBuilder.CreateTypeInfo();
+
 				return result.AsType();
 			}
 			catch (Exception e)
