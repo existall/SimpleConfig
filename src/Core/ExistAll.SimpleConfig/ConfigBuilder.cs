@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using ExistAll.SimpleConfig.Convertion;
 using ExistAll.SimpleConfig.Core;
 using ExistAll.SimpleConfig.Core.Reflection;
 
 namespace ExistAll.SimpleConfig
 {
-	public class ConfigBuilder : IConfigBuilder
+	public class ConfigBuilder
 	{
 		private readonly IConfigTypesExtractor _configTypesExtractor;
 		private readonly IConfigOptionsValidator _configOptionsValidator;
@@ -15,6 +16,8 @@ namespace ExistAll.SimpleConfig
 		private int _counter;
 		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
 
+		public ConfigOptions Options { get; } = new ConfigOptions();
+		
 		public ConfigBuilder() 
 			: this(new ConfigTypesExtractor(),
 			new ConfigOptionsValidator(),
@@ -33,27 +36,33 @@ namespace ExistAll.SimpleConfig
 			_valuesPopulator = valuesPopulator;
 		}
 
-		public IConfigCollection Build(IEnumerable<Assembly> assemblies, ConfigOptions options)
+		public IConfigCollection Build(IEnumerable<Assembly> assemblies)
 		{
 			if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
-			if (options == null) throw new ArgumentNullException(nameof(options));
-			var configInterfaces = _configTypesExtractor.ExtractConfigTypes(assemblies, options);
-			return InnerBuild(configInterfaces, options);
+			var configInterfaces = _configTypesExtractor.ExtractConfigTypes(assemblies, Options);
+			return InnerBuild(configInterfaces, Options);
 		}
 
-		public IConfigCollection Build(IEnumerable<Type> interfaces, ConfigOptions options)
+		public IConfigCollection Build(IEnumerable<Type> interfaces)
 		{
 			if (interfaces == null) throw new ArgumentNullException(nameof(interfaces));
-			if (options == null) throw new ArgumentNullException(nameof(options));
-			return InnerBuild(interfaces, options);
+			return InnerBuild(interfaces, Options);
 		}
 
-		public void Add(ISectionBinder sectionBinder)
+		public ConfigBuilder AddSectionBinder(ISectionBinder sectionBinder)
 		{
 			if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
 			_binders.Add(_counter++, sectionBinder);
+			return this;
 		}
 
+		public ConfigBuilder AddTypeConverter(IConfigTypeConverter configTypeConverter)
+		{
+			if (configTypeConverter == null) throw new ArgumentNullException(nameof(configTypeConverter));
+			Options.Converters.AddFirst(configTypeConverter);
+			return this;
+		}
+		
 		private IConfigCollection InnerBuild(IEnumerable<Type> interfaces, ConfigOptions options)
 		{
 			_configOptionsValidator.ValidateOptions(options);

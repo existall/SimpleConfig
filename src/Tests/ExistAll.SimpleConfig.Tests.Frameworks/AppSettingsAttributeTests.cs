@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Xunit;
+﻿using Xunit;
 
 namespace ExistAll.SimpleConfig.Tests.Frameworks
 {
@@ -10,11 +9,13 @@ namespace ExistAll.SimpleConfig.Tests.Frameworks
 		{
 			var sut = new ConfigBuilder();
 
-			var configCollection = sut.Build(new[] { GetType().GetTypeInfo().Assembly }, new ConfigOptions());
-			var config = configCollection.GetConfig<IWithConfigurationValue>();
+			var result = sut.Build(GetType().Assembly);
 
-			Assert.Equal(config.WithValue, TestsConstanst.AppSettingsValue);
-			//Assert.Null(config.WithoutValue);
+			var config = result.GetConfig<IWithConfigurationValue>();
+
+			Assert.Equal(config.WithValue, TestsConstants.AppSettingsValue);
+			Assert.Equal(string.Empty, config.WithoutValue);
+			Assert.Null(config.NonExistence);
 		}
 	}
 }

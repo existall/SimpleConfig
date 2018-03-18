@@ -60,6 +60,7 @@
     <Compile Include="AppSettingsAttributeTests.cs" />
     <Compile Include="IWithConfigurationValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

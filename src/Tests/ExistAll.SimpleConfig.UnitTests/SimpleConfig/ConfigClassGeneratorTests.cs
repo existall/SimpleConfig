@@ -27,11 +27,11 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var generator = new ConfigClassGenerator();
 
-			var type = typeof(IInterfaceOne);
+			var type = typeof(IRoot);
 
 			var result = generator.GenerateType(type);
 
-			var instance = (IInterfaceOne)Activator.CreateInstance(result);
+			var instance = (IRoot)Activator.CreateInstance(result);
 
 			var isAssignableFrom = type.IsInstanceOfType(instance);
 
@@ -43,16 +43,16 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var generator = new ConfigClassGenerator();
 
-			var type = typeof(IInterfaceOneChild);
+			var type = typeof(IRootChild);
 
 			var result = generator.GenerateType(type);
 
-			var instance = (IInterfaceOneChild)Activator.CreateInstance(result);
+			var instance = (IRootChild)Activator.CreateInstance(result);
 
 			var isAssignableFrom = type.IsInstanceOfType(instance);
 
-			Assert.NotNull(result.GetProperty(nameof(IInterfaceOneChild.Age)));
-			Assert.NotNull(result.GetProperty(nameof(IInterfaceOneChild.Name)));
+			Assert.NotNull(result.GetProperty(nameof(IRootChild.Age)));
+			Assert.NotNull(result.GetProperty(nameof(IRootChild.Value)));
 			Assert.True(isAssignableFrom);
 		}
 	}

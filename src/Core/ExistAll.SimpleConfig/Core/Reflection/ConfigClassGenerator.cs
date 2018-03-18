@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -51,7 +50,7 @@ AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAcces
 		{
 			try
 			{
-				var name = interfaceType.Name[0] == 'I' ? $"{interfaceType.Name.Substring(1)}Impl" : interfaceType.Name;
+				var name = $"{interfaceType.GetNormalizeInterfaceName()}Impl";
 
 				var existingType = _moduleBuilder.Assembly.GetType(name.Replace("+", "\\+"));
 

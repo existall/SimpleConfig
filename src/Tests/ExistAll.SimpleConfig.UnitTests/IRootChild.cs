@@ -1,6 +1,6 @@
 namespace ExistAll.SimpleConfig.UnitTests
 {
-	public interface IInterfaceOneChild : IInterfaceOne
+	public interface IRootChild : IRoot
 	{
 		int Age { get; set; }
 	}

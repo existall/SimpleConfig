@@ -1,5 +1,4 @@
-﻿using System;
-using ExistAll.SimpleConfig.Core.AspNet;
+﻿using ExistAll.SimpleConfig.Core.AspNet;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
@@ -8,22 +7,15 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 	{
 		private const string VariableName = "ASPNETCORE_ENVIRONMENT";
 
-		public void ResetEnvironmentVariable()
-		{
-			Environment.SetEnvironmentVariable(VariableName, null);
-		}
-
-
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsDev_ShouldReturnTrue()
 		{
-			Environment.SetEnvironmentVariable(VariableName, Environments.Development);
+			using (new DisposableEnvironmentVariable(VariableName, Environments.Development))
+			{
+				var sut = new DevelopmentDefaultValue("hello");
 
-			var sut = new DevelopmentDefaultValue("hello");
-
-			Assert.True(sut.ShouldUse);
-
-			ResetEnvironmentVariable();
+				Assert.True(sut.ShouldUse);
+			}
 		}
 
 		[Fact]
@@ -32,20 +24,17 @@ namespace ExistAll.SimpleConfig.UnitTests.Core.AspNet
 			var sut = new DevelopmentDefaultValue("hello");
 
 			Assert.False(sut.ShouldUse);
-
-			ResetEnvironmentVariable();
 		}
 
 		[Fact]
 		public void ShouldUse_WhenEnvironmentIsStaging_ShouldReturnTrue()
 		{
-			Environment.SetEnvironmentVariable(VariableName, Environments.Staging);
+			using (new DisposableEnvironmentVariable(VariableName, Environments.Staging))
+			{
+				var sut = new StagingDefaultValue("hello");
 
-			var sut = new StagingDefaultValue("hello");
-
-			Assert.True(sut.ShouldUse);
-
-			ResetEnvironmentVariable();
+				Assert.True(sut.ShouldUse);
+			}
 		}
 	}
 }
