@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace ExistAll.SimpleConfig.Convertion
+namespace ExistAll.SimpleConfig.Conversion
 {
 	internal class DateTimeTypeConverter : IConfigTypeConverter
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ExistAll.SimpleConfig.Convertion
+namespace ExistAll.SimpleConfig.Conversion
 {
 	internal class ArrayTypeConverter : IConfigTypeConverter
 	{

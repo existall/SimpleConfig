@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExistAll.SimpleConfig.Convertion
+namespace ExistAll.SimpleConfig.Conversion
 {
 	public interface IConfigTypeConverter
 	{

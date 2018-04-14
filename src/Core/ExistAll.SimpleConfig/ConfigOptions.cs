@@ -1,5 +1,5 @@
 ﻿using System;
-using ExistAll.SimpleConfig.Convertion;
+using ExistAll.SimpleConfig.Conversion;
 using ExistAll.SimpleConfig.Core.Reflection;
 
 namespace ExistAll.SimpleConfig

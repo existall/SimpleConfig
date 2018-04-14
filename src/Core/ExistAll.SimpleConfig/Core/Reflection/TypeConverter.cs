@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using ExistAll.SimpleConfig.Convertion;
+using ExistAll.SimpleConfig.Conversion;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
 {
@@ -14,7 +14,14 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			if (value == null)
 			{
 				ValidateNullAcceptance(propertyInfo);
-				return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
+
+				if (!propertyType.IsEnumerable())
+					return propertyType.GetTypeInfo().IsValueType ? Activator.CreateInstance(propertyType) : null;
+
+				var genericType = propertyType.GetTypeInfo().GetGenericArguments().First();
+				var method = typeof(Enumerable).GetTypeInfo().GetMethod("Empty").MakeGenericMethod(genericType);
+				var emptyEnumerable = method.Invoke(null, null);
+				return emptyEnumerable;
 			}
 
 			var strippedType = StripIfNullable(propertyType);
