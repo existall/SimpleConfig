@@ -1,3 +1,4 @@
+using System;
 using BenchmarkDotNet.Running;
 
 namespace ExistsForAll.SimpleConfig.Benchmark
@@ -6,9 +7,9 @@ namespace ExistsForAll.SimpleConfig.Benchmark
 	{
 		public static void Main(string[] args)
 		{
-			new SimpleConfigBenchmark().Run();
+			//var results = new SimpleConfigBenchmark().Run();
 
-			//BenchmarkRunner.Run(typeof(SimpleConfigBenchmark));
+			var results = BenchmarkRunner.Run(typeof(SimpleConfigBenchmark));
 		}
 	}
 }
