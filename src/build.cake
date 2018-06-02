@@ -136,6 +136,6 @@ Task("NuGet-Push")
 
 
 Task("Default")
-    .IsDependentOn("NuGet-Push");
+    .IsDependentOn("Pack");
 // Executes the task specified in the target argument.
 RunTarget(target);
