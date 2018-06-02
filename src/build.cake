@@ -109,7 +109,7 @@ Task("NuGet-Push")
     .IsDependentOn("Pack")
     .Does(() =>
 {	
-        var apikey = FileReadText("./params.json");
+        var apikey = FileReadText("./params.txt");
 		
         foreach (var file in GetFiles("./Artifacts/*.nupkg"))
 		{

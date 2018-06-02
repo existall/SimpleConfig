@@ -309,3 +309,4 @@ tools/
 .artifacts/
 /src/.vscode/
 /src/params.json
+/src/params.txt
