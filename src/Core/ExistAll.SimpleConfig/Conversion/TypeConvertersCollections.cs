@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ExistAll.SimpleConfig.Convertion
+namespace ExistAll.SimpleConfig.Conversion
 {
 	internal class TypeConvertersCollections : LinkedList<IConfigTypeConverter>
 	{
@@ -9,6 +9,7 @@ namespace ExistAll.SimpleConfig.Convertion
 			AddLast(new DateTimeTypeConverter(configOptions));
 			AddLast(new UriTypeConvertor());
 			AddLast(new ArrayTypeConverter(configOptions, this));
+			AddLast(new EnumerableTypeConverter(configOptions, this));
 			AddLast(new DefaultTypeConverter());
 		}
 	}

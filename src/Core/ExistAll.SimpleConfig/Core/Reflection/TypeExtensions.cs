@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Core.Reflection
@@ -26,6 +27,13 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			return !string.IsNullOrWhiteSpace(attribute?.Name)
 				? attribute.Name
 				: propertyInfo.Name;
+		}
+
+		public static bool IsEnumerable(this Type type)
+		{
+			var info = type.GetTypeInfo();
+
+			return info.IsGenericType && info.GetGenericTypeDefinition() == typeof(IEnumerable<>);
 		}
 	}
 }

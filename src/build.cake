@@ -1,5 +1,5 @@
 #tool "nuget:?package=xunit.runner.console"
-
+#addin "Cake.FileHelpers"
 
 //build.cake ExampleC#
 
@@ -103,6 +103,38 @@ Task("Pack")
     });
 // The default task to run if none is explicitly specified. In this case, we want
 // to run everything starting from Clean, all the way up to Pack.
+
+
+Task("NuGet-Push")
+    .IsDependentOn("Pack")
+    .Does(() =>
+{	
+        var apikey = FileReadText("./params.json");
+		
+        foreach (var file in GetFiles("./Artifacts/*.nupkg"))
+		{
+			if (file.ToString().Contains(".symbols.nupkg"))
+			{
+				NuGetPush(file, new NuGetPushSettings 
+				{
+					Source = "https://api.nuget.org/v3/package",
+					ApiKey = apikey
+				});
+			}
+			else
+			{
+				NuGetPush(file, new NuGetPushSettings 
+				{
+					Source = "https://api.nuget.org/v3/index.json",
+					ApiKey = apikey
+				});
+			}
+		}
+	
+});
+
+
+
 Task("Default")
     .IsDependentOn("Pack");
 // Executes the task specified in the target argument.

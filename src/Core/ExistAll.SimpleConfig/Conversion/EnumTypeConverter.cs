@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ExistAll.SimpleConfig.Convertion
+namespace ExistAll.SimpleConfig.Conversion
 {
 	internal class EnumTypeConverter : IConfigTypeConverter
 	{

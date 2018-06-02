@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ExistAll.SimpleConfig.Convertion;
+using ExistAll.SimpleConfig.Conversion;
 using ExistAll.SimpleConfig.Core;
 using ExistAll.SimpleConfig.Core.Reflection;
 

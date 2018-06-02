@@ -1,5 +1,5 @@
 ﻿using System;
-using ExistAll.SimpleConfig.Convertion;
+using ExistAll.SimpleConfig.Conversion;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
