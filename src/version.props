@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<Version>4.1.0</Version>
+		<Version>4.2.0</Version>
 		<Authors>Guy Ludvig</Authors>
 		<Description>
 			SimpleConfig allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
@@ -10,6 +10,7 @@
 		<PackageLicenseUrl>https://github.com/existall/SimpleConfig/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/existall/SimpleConfig</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/existall/SimpleConfig</RepositoryUrl>
+		<PackageIconUrl>https://raw.githubusercontent.com/existall/Shepherd/master/art/exitsForAll_icon.png</PackageIconUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>Configuration, Settings, Ioc, DI, ExistsForAll, Dependency injection, Options</PackageTags>
 	</PropertyGroup>
