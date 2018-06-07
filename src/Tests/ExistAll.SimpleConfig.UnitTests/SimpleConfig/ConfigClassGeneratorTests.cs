@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using ExistAll.SimpleConfig.Core.Reflection;
+using FastMember;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
@@ -55,5 +56,30 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 			Assert.NotNull(result.GetProperty(nameof(IRootChild.Value)));
 			Assert.True(isAssignableFrom);
 		}
-	}
+
+	    [Fact]
+	    public void Marc_Demo()
+	    {
+	        var generator = new ConfigClassGenerator();
+
+	        var type = typeof(IRootChild);
+
+	        var newClassType = generator.GenerateType(type);
+
+	        var instance = (IRootChild)Activator.CreateInstance(newClassType);
+
+            // by creating a new accessor from the new type we get ->
+            //System.NotSupportedException: 'A non-collectible assembly may not reference a collectible assembly.'
+            //var accessor = TypeAccessor.Create(result);
+
+            // creating an accessor from the child interface
+	        var accessor = TypeAccessor.Create(type);
+
+            accessor[instance, nameof(IRootChild.Age)] = 1;
+
+            // here we get out of range exception
+	        accessor[instance, nameof(IRootChild.Value)] = "sss";
+
+	    }
+    }
 }

@@ -8,6 +8,7 @@
     <OutputTypeEx>library</OutputTypeEx>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FastMember.Signed" Version="1.3.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
