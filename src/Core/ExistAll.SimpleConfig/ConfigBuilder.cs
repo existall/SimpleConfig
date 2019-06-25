@@ -15,10 +15,16 @@ namespace ExistAll.SimpleConfig
 		private readonly IValuesPopulator _valuesPopulator;
 		private int _counter;
 		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
-
-		public ConfigOptions Options { get; } = new ConfigOptions();
+		private readonly List<Assembly> _assemblies = new List<Assembly>();
 		
-		public ConfigBuilder() 
+		public ConfigOptions Options { get; } = new ConfigOptions();
+
+		public static ConfigBuilder CreateBuilder()
+		{
+			return new ConfigBuilder();
+		}
+		
+		private ConfigBuilder()
 			: this(new ConfigTypesExtractor(),
 			new ConfigOptionsValidator(),
 			new ConfigClassGenerator(),
@@ -36,17 +42,10 @@ namespace ExistAll.SimpleConfig
 			_valuesPopulator = valuesPopulator;
 		}
 
-		public IConfigCollection Build(IEnumerable<Assembly> assemblies)
+		public IConfigCollection Build()
 		{
-			if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
-			var configInterfaces = _configTypesExtractor.ExtractConfigTypes(assemblies, Options);
-			return InnerBuild(configInterfaces, Options);
-		}
-
-		public IConfigCollection Build(IEnumerable<Type> interfaces)
-		{
-			if (interfaces == null) throw new ArgumentNullException(nameof(interfaces));
-			return InnerBuild(interfaces, Options);
+			var configInterfaces = _configTypesExtractor.ExtractConfigTypes(_assemblies, Options);
+			return InnerBuild(configInterfaces);
 		}
 
 		public ConfigBuilder AddSectionBinder(ISectionBinder sectionBinder)
@@ -56,31 +55,40 @@ namespace ExistAll.SimpleConfig
 			return this;
 		}
 
-		public ConfigBuilder AddTypeConverter(IConfigTypeConverter configTypeConverter)
+		public ConfigBuilder AddAssembly(Assembly assembly)
 		{
-			if (configTypeConverter == null) throw new ArgumentNullException(nameof(configTypeConverter));
-			Options.Converters.AddFirst(configTypeConverter);
+			if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+
+			_assemblies.Add(assembly);
+
 			return this;
 		}
 		
-		private IConfigCollection InnerBuild(IEnumerable<Type> interfaces, ConfigOptions options)
+		private IConfigCollection InnerBuild(IEnumerable<Type> interfaces)
 		{
-			_configOptionsValidator.ValidateOptions(options);
+			_configOptionsValidator.ValidateOptions(Options);
 
-			var collection = new ConfigCollection();
+			var collection = new ConfigCollection(this);
 
 			foreach (var configInterface in interfaces)
 			{
-				var generateType = _configClassGenerator.GenerateType(configInterface);
-
-				var instance = Activator.CreateInstance(generateType);
-
-				_valuesPopulator.PopulateInstanceWithValues(instance, configInterface, options, _binders);
+				var instance = BuildInterface(configInterface);
 
 				collection.Add(configInterface, instance);
 			}
 
 			return collection;
+		}
+
+		internal object BuildInterface(Type @interface)
+		{
+			var generateType = _configClassGenerator.GenerateType(@interface);
+
+			var instance = Activator.CreateInstance(generateType);
+
+			_valuesPopulator.PopulateInstanceWithValues(instance, @interface, Options, _binders);
+
+			return instance;
 		}
 	}
 }

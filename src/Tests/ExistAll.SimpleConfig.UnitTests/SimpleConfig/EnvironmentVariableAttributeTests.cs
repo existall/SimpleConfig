@@ -16,9 +16,9 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 
 			using (new DisposableEnvironmentVariable(EnvironmentVariable, guid))
 			{
-				var sut = new ConfigBuilder();
+				var sut = ConfigBuilder.CreateBuilder().AddAssembly(GetType().Assembly);
 
-				var result = sut.Build(GetType().Assembly);
+				var result = sut.Build();
 
 				var config = result.GetConfig<IWithEnvironmentVariable>();
 
@@ -35,10 +35,9 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 			{
 				var collection = new InMemoryCollection();
 				collection.Add(nameof(IWithEnvironmentVariable).TrimStart('I'), nameof(IWithEnvironmentVariable.EnvironmentVariable), guid);
-				var sut = new ConfigBuilder();
+				var sut = ConfigBuilder.CreateBuilder().AddAssembly(GetType().GetTypeInfo().Assembly);
 				sut.AddSectionBinder(new InMemoryBinder(collection));
-
-				var configCollection = sut.Build(GetType().GetTypeInfo().Assembly);
+				var configCollection = sut.Build();
 				var config = configCollection.GetConfig<IWithEnvironmentVariable>();
 
 				Assert.Equal(guid, config.EnvironmentVariable);

@@ -7,9 +7,9 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		[Fact]
 		public void Build_WhenAllowEmptyIsFalse_ShouldThrowException()
 		{
-			var sut = new ConfigBuilder();
+			var sut = ConfigBuilder.CreateBuilder();
 
-			Assert.Throws<ConfigPropertyValueException>(() => sut.Build(new[] {typeof(IWithNonNullInterface)}));
+			Assert.Throws<ConfigPropertyValueException>(() => sut.Build().GetConfig<IWithNonNullInterface>());
 		}
 
 		public interface IWithNonNullInterface

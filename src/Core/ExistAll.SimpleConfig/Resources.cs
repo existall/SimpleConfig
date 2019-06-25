@@ -41,5 +41,8 @@ see inner exception for more details";
 
 		public static string PropertyNotAllowNullMessage(string propertyName) =>
 			$@"[{propertyName}] is marked as Null not allowed, yet the value is null. please provide value via binder or attribute";
+
+		public static string TypeIsNotInterface(string typeName) =>
+			@"[{typeName}] is not an interface, SimpleConfig supports only interfaces";
 	}
 }

@@ -14,9 +14,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration));
-
-			var configCollection = sut.Build(GetType().Assembly);
+			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration))
+				.AddAssembly(GetType().Assembly);
+			
+			var configCollection = sut.Build();
 
 			var config = configCollection.GetConfig<IConfigInterfaceRootName>();
 
@@ -28,9 +29,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration));
+			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration))
+				.AddAssembly(GetType().Assembly);
 
-			var configCollection = sut.Build(GetType().Assembly);
+			var configCollection = sut.Build();
 
 			var config = configCollection.GetConfig<ISectionNameAndProperty>();
 
@@ -42,9 +44,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration));
+			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration))
+				.AddAssembly(GetType().Assembly);
 
-			var result = sut.Build(GetType().Assembly);
+			var result = sut.Build();
 
 			var config = result.GetConfig<IRoot>();
 
@@ -56,9 +59,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 				
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration, "appSettings"));
+			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration, "appSettings"))
+				.AddAssembly(GetType().Assembly);
 
-			var result = sut.Build(GetType().Assembly);
+			var result = sut.Build();
 
 			var config = result.GetConfig<IRoot>();
 
@@ -72,9 +76,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 			var collection = new InMemoryCollection();
 			collection.Add("Root", "Value", value);
 
-			var sut = BuildSutWithBinder(new InMemoryBinder(collection));
+			var sut = BuildSutWithBinder(new InMemoryBinder(collection))
+				.AddAssembly(GetType().Assembly);
 
-			var result = sut.Build(GetType().Assembly);
+			var result = sut.Build();
 
 			var config = result.GetConfig<IRoot>();
 
@@ -90,7 +95,8 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 		private ConfigBuilder BuildSutWithBinder(params ISectionBinder[] binders)
 		{
-			var sut = new ConfigBuilder();
+			var sut = ConfigBuilder.CreateBuilder();
+			
 			foreach (var sectionBinder in binders)
 			{
 				sut.AddSectionBinder(sectionBinder);

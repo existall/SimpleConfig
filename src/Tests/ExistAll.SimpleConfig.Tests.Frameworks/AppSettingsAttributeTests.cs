@@ -7,9 +7,10 @@ namespace ExistAll.SimpleConfig.Tests.Frameworks
 		[Fact]
 		public void Build_WhereVariableHasValue_ShouldSetProperty()
 		{
-			var sut = new ConfigBuilder();
+			var sut = ConfigBuilder.CreateBuilder()
+				.AddAssembly(GetType().Assembly);
 
-			var result = sut.Build(GetType().Assembly);
+			var result = sut.Build();
 
 			var config = result.GetConfig<IWithConfigurationValue>();
 

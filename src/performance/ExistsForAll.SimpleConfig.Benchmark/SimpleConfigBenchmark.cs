@@ -9,8 +9,9 @@ namespace ExistsForAll.SimpleConfig.Benchmark
 		[Benchmark]
 		public void Run()
 		{
-			var configBuilder = new ConfigBuilder();
-			var configCollection = configBuilder.Build(GetType().Assembly);
+			var configBuilder = ConfigBuilder.CreateBuilder()
+				.AddAssembly(GetType().Assembly);
+			var configCollection = configBuilder.Build();
 			var count = configCollection.Count();
 		}
 	}

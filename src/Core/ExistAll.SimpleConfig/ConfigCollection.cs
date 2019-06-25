@@ -2,29 +2,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ExistAll.SimpleConfig
 {
-	public class ConfigCollection : IConfigCollection
+	internal class ConfigCollection : IConfigCollection
 	{
+		private readonly ConfigBuilder _configBuilder;
 		private readonly Dictionary<Type, IConfigHolder> _configHolders = new Dictionary<Type, IConfigHolder>();
 
+		public ConfigCollection(ConfigBuilder configBuilder)
+		{
+			_configBuilder = configBuilder;
+		}
+		
 		internal void Add(Type configType, object impl)
 		{
 			_configHolders.Add(configType, new ConfigHolder(configType, impl));
 		}
 
-		public T GetConfig<T>(bool throwIfNotExist = false) where T : class
+		public object GetConfig(Type type)
 		{
-			var type = typeof(T);
-			IConfigHolder holder;
-			if (_configHolders.TryGetValue(type, out holder))
-				return (T)holder.ConfigImplementation;
-
-			if (throwIfNotExist)
-				throw new ConfigTypeNotFoundException(type);
-
-			return (T)null;
+			if (!type.GetTypeInfo().IsInterface)
+			{
+				throw new InvalidOperationException(Resources.TypeIsNotInterface(type.Name));
+			}
+			
+			return _configHolders.TryGetValue(type, out var holder) ? holder.ConfigImplementation : _configBuilder.BuildInterface(type);
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

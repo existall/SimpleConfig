@@ -20,6 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		appveyor.yml = appveyor.yml
 		build.cake = build.cake
 		version.props = version.props
+		build.ps1 = build.ps1
+		nuget.config = nuget.config
+		build.bat = build.bat
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.Core.AspNet", "Core\ExistAll.SimpleConfig.Core.AspNet\ExistAll.SimpleConfig.Core.AspNet.csproj", "{64F37F2F-6EE2-4AD7-830F-065347743A0B}"

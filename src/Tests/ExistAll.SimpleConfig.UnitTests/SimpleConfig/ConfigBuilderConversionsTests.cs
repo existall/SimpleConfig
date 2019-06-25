@@ -6,14 +6,14 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 {
 	public class ConfigBuilderConversionsTests
 	{
-
 		[Fact]
 		public void Build_WhenAddGlobalConverter_ShouldReturnConverterValue()
 		{
-			var sut = new ConfigBuilder();
-			sut.AddTypeConverter(new GuidConfigConvertor());
+			var sut = ConfigBuilder.CreateBuilder()
+				.AddTypeConverter(new GuidConfigConvertor())
+				.AddAssembly(typeof(IGuidInterface).Assembly);
 
-			var result = sut.Build(new [] { typeof(IGuidInterface) });
+			var result = sut.Build();
 			var config = result.GetConfig<IGuidInterface>();
 
 			Assert.NotEqual(Guid.Empty, config.Guid);
@@ -22,9 +22,10 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		[Fact]
 		public void Build_WhenAddLocalConverter_ShouldReturnConverterValue()
 		{
-			var sut = new ConfigBuilder();
+			var sut = ConfigBuilder.CreateBuilder()
+				.AddAssembly(typeof(IGuidInterfaceWithConversionAttribute).Assembly);
 			
-			var result = sut.Build(new[] { typeof(IGuidInterfaceWithConversionAttribute) });
+			var result = sut.Build();
 			var config = result.GetConfig<IGuidInterfaceWithConversionAttribute>();
 
 			Assert.NotEqual(Guid.Empty, config.Guid);
