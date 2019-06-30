@@ -14,10 +14,9 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration))
-				.AddAssembly(GetType().Assembly);
+			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration));
 			
-			var configCollection = sut.Build();
+			var configCollection = sut.ScanAssemblies(GetType().Assembly);
 
 			var config = configCollection.GetConfig<IConfigInterfaceRootName>();
 
@@ -29,10 +28,9 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration))
-				.AddAssembly(GetType().Assembly);
+            var sut = BuildSutWithBinder(new ConfigurationBinder(configuration));
 
-			var configCollection = sut.Build();
+            var configCollection = sut.ScanAssemblies(GetType().Assembly);
 
 			var config = configCollection.GetConfig<ISectionNameAndProperty>();
 
@@ -44,10 +42,9 @@ namespace ExistAll.SimpleConfig.UnitTests
 		{
 			var configuration = GetConfiguration();
 
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration))
-				.AddAssembly(GetType().Assembly);
+            var sut = BuildSutWithBinder(new ConfigurationBinder(configuration));
 
-			var result = sut.Build();
+            var result = sut.ScanAssemblies(GetType().Assembly);
 
 			var config = result.GetConfig<IRoot>();
 
@@ -58,11 +55,10 @@ namespace ExistAll.SimpleConfig.UnitTests
 		public void Build_WhenConfigurationBinderHasDifferentRootName_ShouldGetDataFromInnerRootSections()
 		{
 			var configuration = GetConfiguration();
-				
-			var sut = BuildSutWithBinder(new ConfigurationBinder(configuration, "appSettings"))
-				.AddAssembly(GetType().Assembly);
 
-			var result = sut.Build();
+            var sut = BuildSutWithBinder(new ConfigurationBinder(configuration, "appSettings"));
+
+			var result = sut.ScanAssemblies(GetType().Assembly);
 
 			var config = result.GetConfig<IRoot>();
 
@@ -76,10 +72,9 @@ namespace ExistAll.SimpleConfig.UnitTests
 			var collection = new InMemoryCollection();
 			collection.Add("Root", "Value", value);
 
-			var sut = BuildSutWithBinder(new InMemoryBinder(collection))
-				.AddAssembly(GetType().Assembly);
+            var sut = BuildSutWithBinder(new InMemoryBinder(collection));
 
-			var result = sut.Build();
+            var result = sut.ScanAssemblies(GetType().Assembly);
 
 			var config = result.GetConfig<IRoot>();
 
@@ -95,14 +90,15 @@ namespace ExistAll.SimpleConfig.UnitTests
 
 		private ConfigBuilder BuildSutWithBinder(params ISectionBinder[] binders)
 		{
-			var sut = ConfigBuilder.CreateBuilder();
-			
-			foreach (var sectionBinder in binders)
-			{
-				sut.AddSectionBinder(sectionBinder);
-			}
+			var sut = ConfigBuilder.CreateBuilder(x =>
+            {
+                foreach (var sectionBinder in binders)
+                {
+                    x.AddSectionBinder(sectionBinder);
+                }
+            });
 
-			return sut;
+            return sut;
 		}
 	}
 }

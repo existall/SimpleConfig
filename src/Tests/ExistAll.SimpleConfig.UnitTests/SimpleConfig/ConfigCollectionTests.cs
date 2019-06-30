@@ -10,9 +10,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
         [Fact]
         public void GetConfig_WhenTypeIsNotInterface_ShouldThrowException()
         {
-            var sut = ConfigBuilder
-                .CreateBuilder()
-                .Build();
+            var sut = ConfigBuilder.CreateBuilder();
 
             Assert.Throws<InvalidOperationException>(() => sut.GetConfig<ConfigBuilder>());
         }
@@ -20,9 +18,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
         [Fact]
         public void GetConfig_BuildingInterfaceNotFromAssembly_ShouldReturnInstanceWithValues()
         {
-            var sut = ConfigBuilder
-                .CreateBuilder()
-                .Build();
+            var sut = ConfigBuilder.CreateBuilder();
 
             var result = sut.GetConfig<ISomeInterface>();
 			

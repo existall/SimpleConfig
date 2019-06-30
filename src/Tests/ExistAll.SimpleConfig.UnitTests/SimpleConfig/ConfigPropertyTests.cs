@@ -9,7 +9,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var sut = ConfigBuilder.CreateBuilder();
 
-			Assert.Throws<ConfigPropertyValueException>(() => sut.Build().GetConfig<IWithNonNullInterface>());
+			Assert.Throws<ConfigPropertyValueException>(() => sut.GetConfig<IWithNonNullInterface>());
 		}
 
 		public interface IWithNonNullInterface

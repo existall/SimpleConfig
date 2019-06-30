@@ -8,6 +8,6 @@ namespace ExistAll.SimpleConfig
 		void PopulateInstanceWithValues(object instance,
 			Type config,
 			ConfigOptions options,
-			SortedList<int, ISectionBinder> binders);
+			IEnumerable<ISectionBinder> binders);
 	}
 }

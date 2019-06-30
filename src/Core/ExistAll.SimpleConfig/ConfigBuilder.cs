@@ -1,94 +1,110 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ExistAll.SimpleConfig.Conversion;
 using ExistAll.SimpleConfig.Core;
 using ExistAll.SimpleConfig.Core.Reflection;
 
 namespace ExistAll.SimpleConfig
 {
-	public class ConfigBuilder
-	{
-		private readonly IConfigTypesExtractor _configTypesExtractor;
-		private readonly IConfigOptionsValidator _configOptionsValidator;
-		private readonly IConfigClassGenerator _configClassGenerator;
-		private readonly IValuesPopulator _valuesPopulator;
-		private int _counter;
-		private readonly SortedList<int, ISectionBinder> _binders = new SortedList<int, ISectionBinder>();
-		private readonly List<Assembly> _assemblies = new List<Assembly>();
-		
-		public ConfigOptions Options { get; } = new ConfigOptions();
+    public class ConfigBuilder
+    {
+        private readonly IConfigTypesExtractor _configTypesExtractor;
+        private readonly IConfigOptionsValidator _configOptionsValidator;
+        private readonly IConfigClassGenerator _configClassGenerator;
+        private readonly IValuesPopulator _valuesPopulator;
 
-		public static ConfigBuilder CreateBuilder()
-		{
-			return new ConfigBuilder();
-		}
-		
-		private ConfigBuilder()
-			: this(new ConfigTypesExtractor(),
-			new ConfigOptionsValidator(),
-			new ConfigClassGenerator(),
-			 new ValuesPopulator())
-		{ }
+        private ConfigOptions Options { get; }
+        private IEnumerable<ISectionBinder> SectionBinders { get; }
 
-		internal ConfigBuilder(IConfigTypesExtractor configTypesExtractor,
-			IConfigOptionsValidator configOptionsValidator,
-			IConfigClassGenerator configClassGenerator,
-			IValuesPopulator valuesPopulator)
-		{
-			_configTypesExtractor = configTypesExtractor;
-			_configOptionsValidator = configOptionsValidator;
-			_configClassGenerator = configClassGenerator;
-			_valuesPopulator = valuesPopulator;
-		}
+        internal ConfigBuilder(ConfigOptions options,
+            IEnumerable<ISectionBinder> sectionBinders)
+            : this(options,
+                sectionBinders,
+                new ConfigTypesExtractor(),
+                new ConfigOptionsValidator(),
+                new ConfigClassGenerator(),
+                new ValuesPopulator())
+        { }
 
-		public IConfigCollection Build()
-		{
-			var configInterfaces = _configTypesExtractor.ExtractConfigTypes(_assemblies, Options);
-			return InnerBuild(configInterfaces);
-		}
+        internal ConfigBuilder(ConfigOptions options,
+            IEnumerable<ISectionBinder> sectionBinders,
+            IConfigTypesExtractor configTypesExtractor,
+            IConfigOptionsValidator configOptionsValidator,
+            IConfigClassGenerator configClassGenerator,
+            IValuesPopulator valuesPopulator)
+        {
+            Options = options;
+            SectionBinders = sectionBinders;
+            _configTypesExtractor = configTypesExtractor;
+            _configOptionsValidator = configOptionsValidator;
+            _configClassGenerator = configClassGenerator;
+            _valuesPopulator = valuesPopulator;
+        }
 
-		public ConfigBuilder AddSectionBinder(ISectionBinder sectionBinder)
-		{
-			if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
-			_binders.Add(_counter++, sectionBinder);
-			return this;
-		}
+        public static ConfigBuilder CreateBuilder(Action<IConfigBuilderFactory> buildAction)
+        {
+            if (buildAction == null) throw new ArgumentNullException(nameof(buildAction));
 
-		public ConfigBuilder AddAssembly(Assembly assembly)
-		{
-			if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+            var factory = new ConfigBuilderFactory();
 
-			_assemblies.Add(assembly);
+            buildAction(factory);
 
-			return this;
-		}
-		
-		private IConfigCollection InnerBuild(IEnumerable<Type> interfaces)
-		{
-			_configOptionsValidator.ValidateOptions(Options);
+            return new ConfigBuilder(factory.Options, factory.Binders);
+        }
 
-			var collection = new ConfigCollection(this);
+        public static ConfigBuilder CreateBuilder()
+        {
+            var factory = new ConfigBuilderFactory();
 
-			foreach (var configInterface in interfaces)
-			{
-				var instance = BuildInterface(configInterface);
+            return new ConfigBuilder(factory.Options, factory.Binders);
+        }
 
-				collection.Add(configInterface, instance);
-			}
+        public object GetConfig(Type configType)
+        {
+            if (configType == null) throw new ArgumentNullException(nameof(configType));
 
-			return collection;
-		}
+            if (!configType.GetTypeInfo().IsInterface)
+            {
+                throw new InvalidOperationException(Resources.TypeIsNotInterface(configType.Name));
+            }
 
-		internal object BuildInterface(Type @interface)
-		{
-			var generateType = _configClassGenerator.GenerateType(@interface);
+            return InnerBuild(configType);
+        }
 
-			var instance = Activator.CreateInstance(generateType);
+        public IConfigCollection ScanAssemblies(IEnumerable<Assembly> assemblies)
+        {
+            if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
 
-			_valuesPopulator.PopulateInstanceWithValues(instance, @interface, Options, _binders);
+            var extractedConfigTypes = _configTypesExtractor.ExtractConfigTypes(assemblies, Options);
 
-			return instance;
-		}
-	}
+            return InnerBuild(extractedConfigTypes);
+        }
+
+        private IConfigCollection InnerBuild(IEnumerable<Type> interfaces)
+        {
+            _configOptionsValidator.ValidateOptions(Options);
+
+            var collection = new ConfigCollection();
+
+            foreach (var configInterface in interfaces)
+            {
+                var instance = InnerBuild(configInterface);
+
+                collection.Add(configInterface, instance);
+            }
+
+            return collection;
+        }
+
+        internal object InnerBuild(Type @interface)
+        {
+            var generateType = _configClassGenerator.GenerateType(@interface);
+
+            var instance = Activator.CreateInstance(generateType);
+
+            _valuesPopulator.PopulateInstanceWithValues(instance, @interface, Options, SectionBinders);
+
+            return instance;
+        }
+    }
 }

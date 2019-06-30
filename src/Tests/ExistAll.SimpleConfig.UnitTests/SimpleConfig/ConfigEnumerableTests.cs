@@ -13,11 +13,10 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 
 		[Fact]
 		public void Build_WhereVariableHasValue_ShouldSetProperty()
-		{
-			var sut = ConfigBuilder.CreateBuilder()
-				.AddAssembly(typeof(IEnumerableInterface).Assembly);
+        {
+            var sut = ConfigBuilder.CreateBuilder();
 
-			var result = sut.Build();
+			var result = sut.ScanAssemblies(typeof(IEnumerableInterface).Assembly);
 
 			var enumerable = result.GetConfig<IEnumerableInterface>();
 

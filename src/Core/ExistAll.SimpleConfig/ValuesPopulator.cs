@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ExistAll.SimpleConfig.Core.Reflection;
 
@@ -24,15 +25,16 @@ namespace ExistAll.SimpleConfig
 		public void PopulateInstanceWithValues(object instance, 
 			Type config,
 			ConfigOptions options,
-			SortedList<int, ISectionBinder> binders)
-		{
-			foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
+			IEnumerable<ISectionBinder> binders)
+        {
+            var sectionBinders = binders as ISectionBinder[] ?? binders.ToArray();
+            foreach (var property in _typePropertiesExtractor.ExtractTypeProperties(config))
 			{
 				var context = new ConfigBindingContext(config.GetSectionName(options), property.GetPropertyName());
 
 				string value = null;
 				var hasBinderSetValue = false;
-				foreach (var binder in binders.Values)
+				foreach (var binder in sectionBinders)
 				{
 					try
 					{
@@ -52,7 +54,7 @@ namespace ExistAll.SimpleConfig
 				var propertyValue = ConvertPropertyValue(config, value, property, options, hasBinderSetValue);
 				property.SetValue(instance, propertyValue);
 			}
-		}
+        }
 
 		private object ConvertPropertyValue(Type configType,
 			object value,

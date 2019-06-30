@@ -8,15 +8,9 @@ namespace ExistAll.SimpleConfig
 {
 	internal class ConfigCollection : IConfigCollection
 	{
-		private readonly ConfigBuilder _configBuilder;
 		private readonly Dictionary<Type, IConfigHolder> _configHolders = new Dictionary<Type, IConfigHolder>();
 
-		public ConfigCollection(ConfigBuilder configBuilder)
-		{
-			_configBuilder = configBuilder;
-		}
-		
-		internal void Add(Type configType, object impl)
+        internal void Add(Type configType, object impl)
 		{
 			_configHolders.Add(configType, new ConfigHolder(configType, impl));
 		}
@@ -28,10 +22,27 @@ namespace ExistAll.SimpleConfig
 				throw new InvalidOperationException(Resources.TypeIsNotInterface(type.Name));
 			}
 			
-			return _configHolders.TryGetValue(type, out var holder) ? holder.ConfigImplementation : _configBuilder.BuildInterface(type);
+			return _configHolders.TryGetValue(type, out var holder) ? holder.ConfigImplementation : throw new ConfigTypeNotFoundException(type);
 		}
 
-		IEnumerator IEnumerable.GetEnumerator()
+        public bool TryGetConfig(Type type, out object config)
+        {
+            if (!type.GetTypeInfo().IsInterface)
+            {
+                throw new InvalidOperationException(Resources.TypeIsNotInterface(type.Name));
+            }
+
+            if(_configHolders.TryGetValue(type, out var holder))
+            {
+                config = holder.ConfigImplementation;
+                return true;
+            }
+
+            config = null;
+            return false;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
