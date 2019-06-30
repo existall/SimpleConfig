@@ -2,17 +2,11 @@
 
 	<PropertyGroup>
 		<OutputTypeEx>library</OutputTypeEx>
-		<TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.5'">
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="1.1.2" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
