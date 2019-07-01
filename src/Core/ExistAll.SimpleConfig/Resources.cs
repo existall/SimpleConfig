@@ -44,5 +44,9 @@ see inner exception for more details";
 
 		public static string TypeIsNotInterface(string typeName) =>
 			@"[{typeName}] is not an interface, SimpleConfig supports only interfaces";
-	}
+
+        public static string ConfigOptionAttributeTypeMessage(Type type) =>
+            $"SimpleConfig support Attribute indication of interfaces, the type provided [${type.FullName}] is not an attribute.";
+
+    }
 }

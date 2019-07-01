@@ -6,9 +6,9 @@ using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 {
-	public class ConfigTypesExtractorTests
+    public class ConfigTypesExtractorTests
 	{
-		[Fact]
+        [Fact]
 		public void ExtractConfigTypes_WhenTypeHasNoIndications_ShouldNotExtractType()
 		{
 			var sut = new ConfigTypesExtractor();

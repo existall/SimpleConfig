@@ -27,7 +27,33 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 			Assert.Throws<ConfigOptionsArgumentNullException>(() => sut.ValidateOptions(options));
 		}
 
-		[Theory]
+        [Fact]
+        public void ValidateOptions_WhenAttributeTypeIsNotAnAttribute_ShouldThrowException()
+        {
+            var options = new ConfigOptions()
+            {
+                AttributeType = typeof(NotAttribute)
+            };
+
+            var sut = GetSut();
+
+            Assert.Throws<ConfigOptionNonAttributeException>(() => sut.ValidateOptions(options));
+        }
+
+        [Fact]
+        public void ValidateOptions_WhenAttributeTypeIAnAttribute_ShouldPassValidation()
+        {
+            var options = new ConfigOptions()
+            {
+                AttributeType = typeof(SomeAttribute)
+            };
+
+            var sut = GetSut();
+
+            sut.ValidateOptions(options);
+        }
+
+        [Theory]
 		[InlineData(null)]
 		[InlineData(" ")]
 		[InlineData("")]
@@ -64,7 +90,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			var options = new ConfigOptions
 			{
-				SectionNameFormater = null
+				SectionNameFormatter = null
 			};
 			var sut = GetSut();
 
@@ -75,5 +101,15 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		{
 			return new ConfigOptionsValidator();
 		}
+
+        private class SomeAttribute : Attribute
+        {
+
+        }
+
+        private class NotAttribute
+        {
+
+        }
 	}
 }

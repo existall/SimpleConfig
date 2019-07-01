@@ -13,7 +13,7 @@ namespace ExistAll.SimpleConfig
 		public string ConfigSuffix { get; set; } = "Config";
 		public string ArraySplitDelimiter { get; set; } = ",";
 		public string DateTimeFormat { get; set; } = "yyyy-MM-dd";
-		public Func<Type, string> SectionNameFormater { get; set; } = (interfaceType) => interfaceType.GetNormalizeInterfaceName();
+		public Func<Type, string> SectionNameFormatter { get; set; } = (interfaceType) => interfaceType.GetNormalizeInterfaceName();
 
 		public ConfigOptions()
 		{

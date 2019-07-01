@@ -1,3 +1,6 @@
+using System;
+using System.Reflection;
+
 namespace ExistAll.SimpleConfig.Core
 {
 	internal class ConfigOptionsValidator : IConfigOptionsValidator
@@ -11,14 +14,18 @@ namespace ExistAll.SimpleConfig.Core
 				throw new ConfigOptionsArgumentNullException();
 			}
 
-			if (string.IsNullOrWhiteSpace(configOptions.ArraySplitDelimiter))
+            if (!typeof(Attribute).GetTypeInfo().IsAssignableFrom(configOptions.AttributeType)) 
+                throw new ConfigOptionNonAttributeException(configOptions.AttributeType);
+
+
+            if (string.IsNullOrWhiteSpace(configOptions.ArraySplitDelimiter))
 				throw new ConfigOptionsArgumentMissingException(nameof(configOptions.ArraySplitDelimiter));
 
 			if (string.IsNullOrWhiteSpace(configOptions.DateTimeFormat))
 				throw new ConfigOptionsArgumentMissingException(nameof(configOptions.DateTimeFormat));
 
-			if (configOptions.SectionNameFormater == null)
-				throw new ConfigOptionsArgumentMissingException("SectionNameFormater");
+			if (configOptions.SectionNameFormatter == null)
+				throw new ConfigOptionsArgumentMissingException("SectionNameFormatter");
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 
 			return !string.IsNullOrWhiteSpace(attribute?.Name)
 				? attribute.Name
-				: options.SectionNameFormater(configClass);
+				: options.SectionNameFormatter(configClass);
 		}
 
 		public static string GetPropertyName(this PropertyInfo propertyInfo)
