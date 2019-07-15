@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using ExistAll.SimpleConfig.Binder;
+using ExistAll.SimpleConfig.Binders;
 using Xunit;
 
 namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
@@ -16,7 +17,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 
 			using (new DisposableEnvironmentVariable(EnvironmentVariable, guid))
             {
-                var sut = ConfigBuilder.CreateBuilder();
+                var sut = ConfigBuilder.CreateBuilder(x => x.AddEnvironmentVariable());
 
                 var result = sut.ScanAssemblies(GetType().Assembly);
 
@@ -27,23 +28,51 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 		}
 		
 		[Fact]
-		public void TryGetValue_WhenVariablePresentAndHasOverride_ShouldSetValueFromBinder()
+		public void TryGetValue_WhenEnvVariableIsLast_ShouldSetValueFromEnv()
 		{
 			var guid = Guid.NewGuid().ToString();
-
+			var badGuid = Guid.NewGuid().ToString();
+			
             using (new DisposableEnvironmentVariable(EnvironmentVariable, guid))
             {
                 var collection = new InMemoryCollection();
                 collection.Add(nameof(IWithEnvironmentVariable).TrimStart('I'),
-                    nameof(IWithEnvironmentVariable.EnvironmentVariable), guid);
+	                EnvironmentVariable, badGuid);
 
-                var sut = ConfigBuilder.CreateBuilder(x => { x.AddSectionBinder(new InMemoryBinder(collection)); });
+                var sut = ConfigBuilder.CreateBuilder(x => 
+                { 
+	                x.AddInMemoryCollection(collection)
+	                .AddEnvironmentVariable(); 
+                });
 
-                var configCollection = sut.ScanAssemblies(GetType().GetTypeInfo().Assembly);
-                var config = configCollection.GetConfig<IWithEnvironmentVariable>();
+                var config = sut.GetConfig<IWithEnvironmentVariable>();
 
                 Assert.Equal(guid, config.EnvironmentVariable);
             }
         }
+		
+		[Fact]
+		public void TryGetValue_WhenMemoryCollectionIsLast_ShouldSetValueFromMemoryBinder()
+		{
+			var guid = Guid.NewGuid().ToString();
+			var badGuid = Guid.NewGuid().ToString();
+			
+			using (new DisposableEnvironmentVariable(EnvironmentVariable, badGuid))
+			{
+				var collection = new InMemoryCollection();
+				collection.Add(nameof(IWithEnvironmentVariable).TrimStart('I'),
+					EnvironmentVariable, guid);
+
+				var sut = ConfigBuilder.CreateBuilder(x => 
+				{ 
+					x.AddEnvironmentVariable()
+						.AddInMemoryCollection(collection); 
+				});
+
+				var config = sut.GetConfig<IWithEnvironmentVariable>();
+
+				Assert.Equal(guid, config.EnvironmentVariable);
+			}
+		}
 	}
 }

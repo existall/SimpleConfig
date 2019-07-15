@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace ExistAll.SimpleConfig.UnitTests
 {
@@ -15,6 +16,12 @@ namespace ExistAll.SimpleConfig.UnitTests
 		public void Dispose()
 		{
 			Environment.SetEnvironmentVariable(_name, null);
+			
+			if (Environment.GetEnvironmentVariable(_name) != null)
+			{
+				Thread.Sleep(200);
+			}
+			
 		}
 	}
 }

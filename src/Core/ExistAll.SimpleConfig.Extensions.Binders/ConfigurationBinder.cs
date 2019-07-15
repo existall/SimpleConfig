@@ -14,24 +14,22 @@ namespace ExistAll.SimpleConfig.Binders
 			_configuration = configuration;
 		}
 
-		public bool TryGetValue(ConfigBindingContext bindingContext, out string value)
-		{
-			value = null;
-			var configurationSection = _configuration.GetSection(GetSection(bindingContext));
-
-			if (configurationSection == null)
-				return false;
-
-			value = configurationSection[bindingContext.Key];
-			return value != null;
-		}
-
-		private string GetSection(ConfigBindingContext context)
+		private string GetSection(BindingContext context)
 		{
 			if (string.IsNullOrWhiteSpace(RootSection))
 				return context.Section;
 
 			return $"{RootSection}:{context.Section}";
+		}
+
+		public void BindPropertyConfig(BindingContext context)
+		{
+			var configurationSection = _configuration.GetSection(GetSection(context));
+
+			var value = configurationSection?[context.Key];
+
+			if (value != null)
+				context.SetNewValue(value);
 		}
 	}
 }
