@@ -36,5 +36,27 @@ namespace ExistAll.SimpleConfig.Binders
 
             return target;
         }
+        
+        public static IConfigBuilderFactory AddCommandLine(this IConfigBuilderFactory target,
+            Action<CommandLineConfigBinderOptions> action = null)
+        {
+            var args = Environment.CommandLine.Trim().Split(' ');
+            
+            target.AddArguments(args, action);
+		    
+            return target;
+        }
+        
+        public static IConfigBuilderFactory AddArguments(this IConfigBuilderFactory target,
+            string[] args 
+            ,Action<CommandLineConfigBinderOptions> action = null)
+        {
+            var options =new CommandLineConfigBinderOptions();
+            action?.Invoke(options);
+            
+            target.AddSectionBinder(new CommandLineConfigBinder(args, options));
+		    
+            return target;
+        }
     }
 }

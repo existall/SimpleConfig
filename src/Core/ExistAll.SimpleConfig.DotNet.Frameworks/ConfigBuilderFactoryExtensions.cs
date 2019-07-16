@@ -1,4 +1,5 @@
 using System;
+using ExistAll.SimpleConfig.Binder;
 
 namespace ExistAll.SimpleConfig.DotNet.Frameworks
 {

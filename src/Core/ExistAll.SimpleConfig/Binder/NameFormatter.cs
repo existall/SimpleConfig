@@ -1,4 +1,4 @@
-namespace ExistAll.SimpleConfig.DotNet.Frameworks
+namespace ExistAll.SimpleConfig.Binder
 {
     public delegate string NameFormatter(string section, string key);
 }
