@@ -88,7 +88,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 				.Build();
 		}
 
-		private ConfigBuilder BuildSutWithBinder(params ISectionBinder[] binders)
+		private static ConfigBuilder BuildSutWithBinder(params ISectionBinder[] binders)
 		{
 			var sut = ConfigBuilder.CreateBuilder(x =>
             {

@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using ExistAll.SimpleConfig.DotNet.Frameworks;
+using Xunit;
 
 namespace ExistAll.SimpleConfig.Tests.Frameworks
 {
@@ -7,7 +8,7 @@ namespace ExistAll.SimpleConfig.Tests.Frameworks
 		[Fact]
 		public void Build_WhereVariableHasValue_ShouldSetProperty()
         {
-            var sut = ConfigBuilder.CreateBuilder();
+            var sut = ConfigBuilder.CreateBuilder(x => x.AddAppSettings());
 
 			var result = sut.ScanAssemblies(GetType().Assembly);
 

@@ -9,9 +9,12 @@
 			_collection = collection;
 		}
 
-		public bool TryGetValue(ConfigBindingContext bindingContext, out string value)
+		public void BindPropertyConfig(BindingContext context)
 		{
-			return _collection.TryGetValue(bindingContext.Section, bindingContext.Key, out value);
+			if (_collection.TryGetValue(context.Section, context.Key, out var value))
+			{
+				context.SetNewValue(value);
+			}
 		}
 	}
 }

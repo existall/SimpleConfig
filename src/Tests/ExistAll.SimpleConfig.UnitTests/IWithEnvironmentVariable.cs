@@ -5,7 +5,7 @@ namespace ExistAll.SimpleConfig.UnitTests
 	[ConfigSection]
 	public interface IWithEnvironmentVariable
 	{
-		[EnvironmentVariable(EnvironmentVariableAttributeTests.EnvironmentVariable)]
+		[ConfigProperty(EnvironmentVariableAttributeTests.EnvironmentVariable)]
 		string EnvironmentVariable { get; set; }
 	}
 }
