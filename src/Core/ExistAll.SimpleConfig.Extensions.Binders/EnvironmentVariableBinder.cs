@@ -1,20 +1,26 @@
 using System;
+using System.Collections;
 using System.Text;
 
 namespace ExistAll.SimpleConfig.Binders
 {
     public class EnvironmentVariableBinder : ISectionBinder
     {
+        private readonly IDictionary _environmentVariables;
         public string Prefix { get; }
 
         public Func<string, string, string> VariableNameFormatter { get; set; }
 
         public EnvironmentVariableBinder(string prefix)
+            : this()
         {
             Prefix = prefix ?? throw new ArgumentNullException(nameof(prefix));
         }
-		
-        public EnvironmentVariableBinder() { }
+
+        public EnvironmentVariableBinder()
+        {
+            _environmentVariables = Environment.GetEnvironmentVariables();
+        }
 
         public void BindPropertyConfig(BindingContext context)
         {
@@ -28,10 +34,9 @@ namespace ExistAll.SimpleConfig.Binders
                 : context.Key);
 
             var variableName = sb.ToString();
-
-            var environmentVariable = Environment.GetEnvironmentVariable(variableName);
-			
-            context.SetNewValue(environmentVariable);
+            
+            if(_environmentVariables.Contains(variableName))
+                context.SetNewValue(_environmentVariables[variableName]);
         }
     }
 }
