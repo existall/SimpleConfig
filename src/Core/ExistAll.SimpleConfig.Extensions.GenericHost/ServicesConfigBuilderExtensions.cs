@@ -12,7 +12,7 @@ namespace ExistAll.SimpleConfig.Extensions.GenericHost
         }
 
         public static IServiceCollection AddSimpleConfig(this IServiceCollection services,
-            Action<ConfigBuilderOptions> action)
+            Action<IConfigBuilderOptions> action)
         {
             if (action == null) throw new ArgumentNullException(nameof(action));
             IntegrateSimpleConfig(services, action);
@@ -20,7 +20,7 @@ namespace ExistAll.SimpleConfig.Extensions.GenericHost
         }
 
         private static void IntegrateSimpleConfig(this IServiceCollection services,
-            Action<ConfigBuilderOptions> action = null)
+            Action<IConfigBuilderOptions> action = null)
         {
             ConfigBuilderOptions options = null;
 

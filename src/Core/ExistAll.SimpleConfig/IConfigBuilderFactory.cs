@@ -2,7 +2,7 @@ namespace ExistAll.SimpleConfig
 {
     public interface IConfigBuilderFactory
     {
-        IConfigBuilderFactory AddSectionBinder(ISectionBinder sectionBinder);
+        void AddSectionBinder(ISectionBinder sectionBinder);
         ConfigOptions Options { get; }
     }
 }

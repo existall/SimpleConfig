@@ -12,11 +12,10 @@ namespace ExistAll.SimpleConfig
 
         public ConfigOptions Options { get; } = new ConfigOptions();
 
-        public IConfigBuilderFactory AddSectionBinder(ISectionBinder sectionBinder)
+        public void AddSectionBinder(ISectionBinder sectionBinder)
         {
             if (sectionBinder == null) throw new ArgumentNullException(nameof(sectionBinder));
             _binders.Add(_counter++, sectionBinder);
-            return this;
         }
     }
 }
