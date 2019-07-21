@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Linq;
 using ExistAll.SimpleConfig.Binder;
 
 namespace ExistAll.SimpleConfig.DotNet.Frameworks
@@ -11,8 +12,10 @@ namespace ExistAll.SimpleConfig.DotNet.Frameworks
 		{
 			var key = VariableNameFormatter != null ? VariableNameFormatter(context.Section, context.Key) : context.Key;
 
-			var value = ConfigurationManager.AppSettings[key];
+			if (!ConfigurationManager.AppSettings.AllKeys.Contains(key)) 
+				return;
 			
+			var value = ConfigurationManager.AppSettings[key];
 			context.SetNewValue(value);
 		}
 	}
