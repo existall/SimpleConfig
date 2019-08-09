@@ -32,8 +32,5 @@ namespace ExistAll.SimpleConfig.Extensions.GenericHost
         {
             _configBuilderFactory.AddSectionBinder(sectionBinder);
         }
-
-       
     }
-
 }

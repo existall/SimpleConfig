@@ -5,22 +5,22 @@ namespace ExistAll.SimpleConfig.Binders
 {
     public static class ConfigBuilderFactoryExtensions
     {
-        public static IConfigBuilderFactory AddConfiguration(this IConfigBuilderFactory target, IConfiguration configuration)
+        public static T AddConfiguration<T>(this T target, IConfiguration configuration) where T : IConfigBuilderFactory
         {
             target.AddSectionBinder(new ConfigurationBinder(configuration));
 
             return target;
         }
-        
-        public static IConfigBuilderFactory AddEnvironmentVariable(this IConfigBuilderFactory target)
+
+        public static T AddEnvironmentVariable<T>(this T target) where T : IConfigBuilderFactory
         {
             target.AddSectionBinder(new EnvironmentVariableBinder());
 
             return target;
         }
-        
-        public static IConfigBuilderFactory AddEnvironmentVariable(this IConfigBuilderFactory target,
-            Action<EnvironmentVariableBinderOptions> action)
+
+        public static T AddEnvironmentVariable<T>(this T target,
+            Action<EnvironmentVariableBinderOptions> action) where T : IConfigBuilderFactory
         {
             var options = new EnvironmentVariableBinderOptions();
             action(options);
@@ -36,26 +36,26 @@ namespace ExistAll.SimpleConfig.Binders
 
             return target;
         }
-        
-        public static IConfigBuilderFactory AddCommandLine(this IConfigBuilderFactory target,
-            Action<CommandLineConfigBinderOptions> action = null)
+
+        public static T AddCommandLine<T>(this T target,
+            Action<CommandLineConfigBinderOptions> action = null) where T : IConfigBuilderFactory
         {
             var args = Environment.CommandLine.Trim().Split(' ');
-            
+
             target.AddArguments(args, action);
-		    
+
             return target;
         }
-        
-        public static IConfigBuilderFactory AddArguments(this IConfigBuilderFactory target,
-            string[] args 
-            ,Action<CommandLineConfigBinderOptions> action = null)
+
+        public static T AddArguments<T>(this T target,
+            string[] args
+            , Action<CommandLineConfigBinderOptions> action = null) where T : IConfigBuilderFactory
         {
-            var options =new CommandLineConfigBinderOptions();
+            var options = new CommandLineConfigBinderOptions();
             action?.Invoke(options);
-            
+
             target.AddSectionBinder(new CommandLineConfigBinder(args, options));
-		    
+
             return target;
         }
     }
