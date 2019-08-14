@@ -3,13 +3,13 @@ namespace ExistAll.SimpleConfig.UnitTests
 	[ConfigSection]
 	public interface IArraysInterface
 	{
-		[DefaultValue(4)]
+		[ConfigProperty(DefaultValue = 4)]
 		int Number { get; set; }
 
-		[DefaultValue("x", "y")]
+		[ConfigProperty(DefaultValue = new [] {"x", "y"})]
 		string[] Array { get; set; }
 
-		[DefaultValue(1, 2)]
+		[ConfigProperty(DefaultValue = new [] {1, 1})]
 		int[] Array2 { get; set; }
 	}
 }

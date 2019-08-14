@@ -31,19 +31,18 @@ namespace ExistAll.SimpleConfig.Conversion
 					.ToArray();
 			}
 
-			var values = value.GetType().IsArray ? (object[])value : new[] { value };
+			var values = value.GetType().IsArray ? (IEnumerable)value : new[] { value };
 
 			var elementType = configType.GetTypeInfo().GetGenericArguments().First();
 
 			var configTypeConverter = _converters.First(x => x.CanConvert(elementType));
 
-			var objects = values.Select(x => configTypeConverter.Convert(x, elementType)).ToArray();
-
 			var instance = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
-
-			for (var i = 0; i < objects.Count() ; i++)
+			
+			foreach (var item in values)
 			{
-				instance.Add(objects[i]);
+				var convertedValue = configTypeConverter.Convert(item, elementType);
+				instance.Add(convertedValue);
 			}
 
 			return instance;

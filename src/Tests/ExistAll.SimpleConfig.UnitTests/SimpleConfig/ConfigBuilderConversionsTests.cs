@@ -32,15 +32,16 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 
 		public interface IGuidInterfaceWithConversionAttribute
 		{
-			[EmptyGuid, ConfigProperty(ConvertorType = typeof(GuidConfigConvertor))]
+			[EmptyGuid(ConverterType = typeof(GuidConfigConvertor))]
 			Guid Guid { get; set; }
 		}
 
-		private class EmptyGuidAttribute : DefaultValueAttribute
+		private class EmptyGuidAttribute : ConfigPropertyAttribute
 		{
 			public EmptyGuidAttribute()
-				: base(Guid.Empty)
+				: base()
 			{
+				DefaultValue = Guid.Empty;
 			}
 		}
 

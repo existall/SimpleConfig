@@ -72,6 +72,5 @@ namespace ExistAll.SimpleConfig
 				throw new ConfigPropertyValueException(configType, value, property, e);
 			}
 		}
-
 	}
 }

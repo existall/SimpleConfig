@@ -1,48 +1,57 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ExistAll.SimpleConfig.Conversion
 {
-	internal class ArrayTypeConverter : IConfigTypeConverter
-	{
-		private readonly ConfigOptions _configOptions;
-		private readonly TypeConvertersCollections _converters;
+    internal class ArrayTypeConverter : IConfigTypeConverter
+    {
+        private readonly ConfigOptions _configOptions;
+        private readonly TypeConvertersCollections _converters;
 
-		public ArrayTypeConverter(ConfigOptions configOptions, TypeConvertersCollections converters)
-		{
-			_configOptions = configOptions;
-			_converters = converters;
-		}
+        public ArrayTypeConverter(ConfigOptions configOptions, TypeConvertersCollections converters)
+        {
+            _configOptions = configOptions;
+            _converters = converters;
+        }
 
-		public bool CanConvert(Type configType)
-		{
-			return configType.IsArray;
-		}
+        public bool CanConvert(Type configType)
+        {
+            return configType.IsArray;
+        }
 
-		public object Convert(object value, Type configType)
-		{
-			if (value is string stringArray)
-			{
-				value = stringArray.Split(new[] {_configOptions.ArraySplitDelimiter}, StringSplitOptions.RemoveEmptyEntries)
-					.ToArray();
-			}
+        public object Convert(object value, Type configType)
+        {
+            if (value is string stringArray)
+            {
+                value = stringArray.Split(new[] {_configOptions.ArraySplitDelimiter},
+                        StringSplitOptions.RemoveEmptyEntries)
+                    .ToArray();
+            }
 
-			var values = value.GetType().IsArray ? (object[]) value : new[] {value};
+            var values = value.GetType().IsArray ? (IEnumerable) value : new[] {value};
 
-			var elementType = configType.GetElementType();
+            var elementType = configType.GetElementType();
 
-			var configTypeConverter = _converters.First(x => x.CanConvert(elementType));
+            var configTypeConverter = _converters.First(x => x.CanConvert(elementType));
 
-			var objects = values.Select(x => configTypeConverter.Convert(x, elementType)).ToArray();
+            var list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
 
-			var instance = Array.CreateInstance(configType.GetElementType(), objects.Length);
+            foreach (var item in values)
+            {
+                var convertedValue = configTypeConverter.Convert(item, elementType);
+                list.Add(convertedValue);
+            }
 
-			for (var i = 0; i < instance.Length; i++)
-			{
-				instance.SetValue(objects[i], i);
-			}
+            var toArray = typeof(Enumerable).GetTypeInfo()
+                .GetMethod("ToArray")
+                .MakeGenericMethod(elementType);
 
-			return instance;
-		}
-	}
+            var array = toArray.Invoke(null, new object[] {list});
+
+            return array;
+        }
+    }
 }

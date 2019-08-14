@@ -8,7 +8,7 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 	{
 		public static object GetDefaultValue(this PropertyInfo property)
 		{
-			var attribute = property.GetCustomAttribute<DefaultValueBaseAttribute>();
+			var attribute = property.GetCustomAttribute<ConfigPropertyAttribute>();
 
 			return attribute?.DefaultValue;
 		}
