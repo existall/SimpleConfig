@@ -36,10 +36,10 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			var attribute = propertyInfo
 				.GetCustomAttribute<ConfigPropertyAttribute>();
 
-			if (attribute?.ConvertorType == null)
+			if (attribute?.ConverterType == null)
 				return options.Converters.First(x => x.CanConvert(strippedType));
 
-			var converter = (IConfigTypeConverter)Activator.CreateInstance(attribute.ConvertorType);
+			var converter = (IConfigTypeConverter)Activator.CreateInstance(attribute.ConverterType);
 
 			return converter;
 		}

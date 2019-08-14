@@ -27,7 +27,7 @@ namespace ExistAll.SimpleConfig.UnitTests.SimpleConfig
 
         public interface ISomeInterface
         {
-            [DefaultValue(SomeName)]
+            [ConfigProperty(DefaultValue = SomeName)]
             string Name { get; set; }
         }
 		

@@ -3,8 +3,8 @@ namespace ExistAll.SimpleConfig.UnitTests
 	[ConfigSection]
 	public interface IEmailSenderConfig
 	{
-		[DefaultValue("SomeUrl")] string EmailServiceUrl { get; set; }
+		[ConfigProperty(DefaultValue ="SomeUrl")] string EmailServiceUrl { get; set; }
 
-		[DefaultValue(3)] int Retries { get; set; }
+		[ConfigProperty(DefaultValue = 3)] int Retries { get; set; }
 	}
 }
