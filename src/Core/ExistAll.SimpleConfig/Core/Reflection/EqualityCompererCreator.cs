@@ -15,10 +15,10 @@ namespace ExistAll.SimpleConfig.Core.Reflection
 			var method = typeBuilder.DefineMethod("Equals", MethodAttributes.Public | MethodAttributes.ReuseSlot | MethodAttributes.Virtual | MethodAttributes.HideBySig, typeof(bool), new[] { typeof(object) });
 
 			var methodGenerator = method.GetILGenerator();
-			var other = methodGenerator.DeclareLocal(typeBuilder.AsType());
+			var other = methodGenerator.DeclareLocal(typeBuilder.DeclaringType);
 			var next = methodGenerator.DefineLabel();
 			methodGenerator.Emit(OpCodes.Ldarg_1);
-			methodGenerator.Emit(OpCodes.Isinst, typeBuilder.AsType());
+			methodGenerator.Emit(OpCodes.Isinst, typeBuilder.DeclaringType);
 			methodGenerator.Emit(OpCodes.Stloc, other);
 			methodGenerator.Emit(OpCodes.Ldloc, other);
 			methodGenerator.Emit(OpCodes.Brtrue_S, next);
