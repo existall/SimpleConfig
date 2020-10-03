@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F453979D-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{9F57AE40-DD26-4BA6-A36D-606B9AC8ED98}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig", "Core\ExistAll.SimpleConfig\ExistAll.SimpleConfig.csproj", "{467733B6-EC78-4F29-A5B7-79F7262F350D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleSettings", "Core\ExistAll.SimpleSettings\ExistAll.SimpleSettings.csproj", "{467733B6-EC78-4F29-A5B7-79F7262F350D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.Binders", "Core\ExistAll.SimpleConfig.Extensions.Binders\ExistAll.SimpleConfig.Binders.csproj", "{912362E1-5F70-444C-BC74-2986C3652935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleSettings.Binders", "Core\ExistAll.SimpleConfig.Extensions.Binders\ExistAll.SimpleSettings.Binders.csproj", "{912362E1-5F70-444C-BC74-2986C3652935}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.UnitTests", "Tests\ExistAll.SimpleConfig.UnitTests\ExistAll.SimpleConfig.UnitTests.csproj", "{C2605E30-CB86-4E77-A469-2063A8C91D12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleSettings.UnitTests", "Tests\ExistAll.SimpleSettings.UnitTests\ExistAll.SimpleSettings.UnitTests.csproj", "{C2605E30-CB86-4E77-A469-2063A8C91D12}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{35C73CB5-12BD-4224-9ED6-9CE1A5E30F4E}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,17 +25,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		version.props = version.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.Core.AspNet", "Core\ExistAll.SimpleConfig.Core.AspNet\ExistAll.SimpleConfig.Core.AspNet.csproj", "{64F37F2F-6EE2-4AD7-830F-065347743A0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleSettings.Core.AspNet", "Core\ExistAll.SimpleSettings.Core.AspNet\ExistAll.SimpleSettings.Core.AspNet.csproj", "{64F37F2F-6EE2-4AD7-830F-065347743A0B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleConfig.DotNet.Frameworks", "Core\ExistAll.SimpleConfig.DotNet.Frameworks\ExistAll.SimpleConfig.DotNet.Frameworks.csproj", "{079FA970-9F21-4278-935B-A648CDE1C76C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.SimpleSettings.DotNet.Frameworks", "Core\ExistAll.SimpleSettings.DotNet.Frameworks\ExistAll.SimpleSettings.DotNet.Frameworks.csproj", "{079FA970-9F21-4278-935B-A648CDE1C76C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistAll.SimpleConfig.Tests.Frameworks", "Tests\ExistAll.SimpleConfig.Tests.Frameworks\ExistAll.SimpleConfig.Tests.Frameworks.csproj", "{C0D8ECB9-1E3C-45BA-A18A-CE9FDE372B09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistAll.SimpleSettings.Tests.Frameworks", "Tests\ExistAll.SimpleSettings.Tests.Frameworks\ExistAll.SimpleSettings.Tests.Frameworks.csproj", "{C0D8ECB9-1E3C-45BA-A18A-CE9FDE372B09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Performance", "Performance", "{CC4FB58C-2B0C-4F78-A78F-EB53D7A221CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.SimpleConfig.Benchmark", "performance\ExistsForAll.SimpleConfig.Benchmark\ExistsForAll.SimpleConfig.Benchmark.csproj", "{4348D98E-C4B6-436C-A51D-397401DA8F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.SimpleSettings.Benchmark", "performance\ExistsForAll.SimpleSettings.Benchmark\ExistsForAll.SimpleSettings.Benchmark.csproj", "{4348D98E-C4B6-436C-A51D-397401DA8F13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistAll.SimpleConfig.Extensions.GenericHost", "Core\ExistAll.SimpleConfig.Extensions.GenericHost\ExistAll.SimpleConfig.Extensions.GenericHost.csproj", "{76C6B30F-5E1E-4109-8233-E455DC159F8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistAll.SimpleSettings.Extensions.GenericHost", "Core\ExistAll.SimpleSettings.Extensions.GenericHost\ExistAll.SimpleSettings.Extensions.GenericHost.csproj", "{76C6B30F-5E1E-4109-8233-E455DC159F8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

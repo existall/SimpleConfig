@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputTypeEx>library</OutputTypeEx>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExistAll.SimpleSettings\ExistAll.SimpleSettings.csproj" />
+  </ItemGroup>
+
+  <Import Project="../../version.props" />
+  
+</Project>
