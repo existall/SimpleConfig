@@ -1,8 +1,8 @@
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-using ExistAll.SimpleSettings;
+using ExistForAll.SimpleSettings;
 
-namespace ExistsForAll.SimpleConfig.Benchmark
+namespace ExistsForAll.SimpleSettings.Benchmark
 {
 	public class SimpleSettingsBenchmark
 	{

@@ -1,9 +1,9 @@
 <Project>
 	<PropertyGroup>
-		<Version>8.1.0</Version>
+		<Version>1.0.0</Version>
 		<Authors>Guy Ludvig</Authors>
 		<Description>
-			SimpleConfig allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
+			SimpleSettings allow applications to use configurations values from any data store in the type of interfaces, thus decouples the frameworks from your appliaction and allowing application to inject interfaces and nothing else.
 			This framework should be used instead of .Net Core IOptions&lt;T&gt;.
 		</Description>
 		<Company>ExistsForAll</Company>
@@ -12,6 +12,6 @@
 		<RepositoryUrl>https://github.com/existall/SimpleConfig</RepositoryUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/existall/Shepherd/master/art/exitsForAll_icon.png</PackageIconUrl>
 		<RepositoryType>GIT</RepositoryType>
-		<PackageTags>Configuration, Settings, Ioc, DI, ExistsForAll, Dependency injection, Options</PackageTags>
+		<PackageTags>Configuration, Settings, Ioc, DI, ExistsForAll, Dependency injection, Options, SimpleConfig</PackageTags>
 	</PropertyGroup>
 </Project>

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExistAll.SimpleSettings;
+using ExistForAll.SimpleSettings;
+using ExistForAll.SimpleSettings.Binders;
 
-namespace ExistAll.SimpleSettings.Binders
+namespace ExistsForAll.SimpleSettings.Binders
 {
    public class CommandLineSettingsBinder : ISectionBinder
    {

@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Text;
-using ExistAll.SimpleSettings;
 
-namespace ExistAll.SimpleSettings.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
     public class EnvironmentVariableBinder : ISectionBinder
     {

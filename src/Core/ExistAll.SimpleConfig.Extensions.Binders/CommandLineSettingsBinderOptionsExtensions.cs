@@ -1,6 +1,6 @@
-using ExistAll.SimpleSettings.Binder;
+using ExistForAll.SimpleSettings.Binder;
 
-namespace ExistAll.SimpleSettings.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
     public static class CommandLineSettingsBinderOptionsExtensions
     {

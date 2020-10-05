@@ -1,6 +1,6 @@
 using BenchmarkDotNet.Running;
 
-namespace ExistsForAll.SimpleConfig.Benchmark
+namespace ExistsForAll.SimpleSettings.Benchmark
 {
 	public static class Program
 	{

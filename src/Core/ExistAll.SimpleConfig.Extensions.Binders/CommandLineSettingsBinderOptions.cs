@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ExistAll.SimpleSettings.Binder;
+using ExistForAll.SimpleSettings.Binder;
 
-namespace ExistAll.SimpleSettings.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
     public class CommandLineSettingsBinderOptions
     {

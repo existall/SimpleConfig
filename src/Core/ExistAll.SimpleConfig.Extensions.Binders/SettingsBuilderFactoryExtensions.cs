@@ -1,9 +1,8 @@
 using System;
-using ExistAll.SimpleSettings;
+using ExistsForAll.SimpleSettings.Binders;
 using Microsoft.Extensions.Configuration;
 
-
-namespace ExistAll.SimpleSettings.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
     public static class SettingsBuilderFactoryExtensions
     {

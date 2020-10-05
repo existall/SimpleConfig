@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
 	  <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
-    <RootNamespace>ExistsForAll.SimpleConfig.Benchmark</RootNamespace>
+    <RootNamespace>ExistsForAll.SimpleSettings.Benchmark</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\ExistAll.SimpleSettings\ExistAll.SimpleSettings.csproj" />
+    <ProjectReference Include="..\..\Core\ExistForAll.SimpleSettings\ExistForAll.SimpleSettings.csproj" />
   </ItemGroup>
 
 
