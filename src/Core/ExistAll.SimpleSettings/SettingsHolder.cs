@@ -6,8 +6,8 @@ namespace ExistAll.SimpleSettings
 	{
 		public SettingsHolder(Type settingsType, object settingsImplementation)
 		{
-			settingsType = settingsType;
-			settingsImplementation = settingsImplementation;
+			SettingsType = settingsType;
+			SettingsImplementation = settingsImplementation;
 		}
 
 		public Type SettingsType { get; }

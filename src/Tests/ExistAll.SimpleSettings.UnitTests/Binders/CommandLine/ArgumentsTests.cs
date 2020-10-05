@@ -62,8 +62,8 @@ namespace ExistAll.SimpleSettings.UnitTests.Binders.CommandLine
 
         public interface ICommandLineInterface
         {
-            [SettingsProperty("name")] string Name { get; set; }
-
+            [SettingsProperty("name")] 
+            string Name { get; set; }
             int Age { get; set; }
         }
     }

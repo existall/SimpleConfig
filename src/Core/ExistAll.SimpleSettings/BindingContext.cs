@@ -33,7 +33,7 @@ namespace ExistAll.SimpleSettings
 
 			Section = section;
 			Key = key;
-			settingsType = SettingsType ?? throw new ArgumentNullException(nameof(SettingsType));
+			SettingsType = settingsType ?? throw new ArgumentNullException(nameof(settingsType));
 			PropertyInfo = propertyInfo ?? throw new ArgumentNullException(nameof(propertyInfo));
 			PropertyType = propertyInfo.DeclaringType;
 			CurrentValue = currentValue;
