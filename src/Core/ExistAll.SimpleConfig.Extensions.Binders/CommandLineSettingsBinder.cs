@@ -25,7 +25,7 @@ namespace ExistAll.SimpleSettings.Binders
 
       public void BindPropertySettings(BindingContext context)
       {
-         var key = _options?.NameFormatter(context.Section, context.Key) ?? context.Key;
+         var key = _options.NameFormatter != null ? _options.NameFormatter(context.Section, context.Key) : context.Key;
          
          if(_argumentStore.TryGetValue(key, out var value))
          {

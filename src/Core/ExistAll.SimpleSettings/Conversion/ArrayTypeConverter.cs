@@ -22,7 +22,7 @@ namespace ExistAll.SimpleSettings.Conversion
             return settingsType.IsArray;
         }
 
-        public object Convert(object value, Type configType)
+        public object Convert(object value, Type settingsType)
         {
             if (value is string stringArray)
             {
@@ -33,15 +33,15 @@ namespace ExistAll.SimpleSettings.Conversion
 
             var values = value.GetType().IsArray ? (IEnumerable) value : new[] {value};
 
-            var elementType = configType.GetElementType();
+            var elementType = settingsType.GetElementType();
 
-            var configTypeConverter = _converters.First(x => x.CanConvert(elementType));
+            var settingsTypeConverter = _converters.First(x => x.CanConvert(elementType));
 
             var list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
 
             foreach (var item in values)
             {
-                var convertedValue = configTypeConverter.Convert(item, elementType);
+                var convertedValue = settingsTypeConverter.Convert(item, elementType);
                 list.Add(convertedValue);
             }
 

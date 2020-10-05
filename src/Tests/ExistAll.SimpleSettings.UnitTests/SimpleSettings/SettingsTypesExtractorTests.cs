@@ -49,11 +49,11 @@ namespace ExistAll.SimpleSettings.UnitTests.SimpleSettings
 		{
 			var sut = new SettingsTypesExtractor();
 
-			var assemblyCollection = MockAssemblies(typeof(IIndicationInterfaceConfig));
+			var assemblyCollection = MockAssemblies(typeof(IIndicationInterfaceSettings));
 
 			var results = sut.ExtractSettingsTypes(assemblyCollection, new SettingsOptions());
 
-			Assert.Contains(typeof(IIndicationInterfaceConfig), results);
+			Assert.Contains(typeof(IIndicationInterfaceSettings), results);
 		}
 
 		private IEnumerable<Assembly> MockAssemblies(Type returnType)

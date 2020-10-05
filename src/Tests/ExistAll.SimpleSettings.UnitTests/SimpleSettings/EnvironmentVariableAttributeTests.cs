@@ -68,9 +68,9 @@ namespace ExistAll.SimpleSettings.UnitTests.SimpleSettings
 						.AddInMemoryCollection(collection); 
 				});
 
-				var config = sut.GetSettings<IWithEnvironmentVariable>();
+				var settings = sut.GetSettings<IWithEnvironmentVariable>();
 
-				Assert.Equal(guid, config.EnvironmentVariable);
+				Assert.Equal(guid, settings.EnvironmentVariable);
 			}
 		}
 	}

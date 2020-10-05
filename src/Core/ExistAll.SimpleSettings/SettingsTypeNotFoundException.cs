@@ -4,8 +4,8 @@ namespace ExistAll.SimpleSettings
 {
 	public class SettingsTypeNotFoundException : Exception
 	{
-		public SettingsTypeNotFoundException(Type configType)
-			:base(Resources.GetSettingsNotFoundMessageFormatMessage(configType))
+		public SettingsTypeNotFoundException(Type settingsType)
+			:base(Resources.GetSettingsNotFoundMessageFormatMessage(settingsType))
 		{
 		}
 	}
