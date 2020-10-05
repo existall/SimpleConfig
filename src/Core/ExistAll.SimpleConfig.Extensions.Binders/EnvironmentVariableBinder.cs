@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Text;
 
-namespace ExistAll.SimpleConfig.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
     public class EnvironmentVariableBinder : ISectionBinder
     {
@@ -22,7 +22,7 @@ namespace ExistAll.SimpleConfig.Binders
             _environmentVariables = Environment.GetEnvironmentVariables();
         }
 
-        public void BindPropertyConfig(BindingContext context)
+        public void BindPropertySettings(BindingContext context)
         {
             var sb = new StringBuilder();
 

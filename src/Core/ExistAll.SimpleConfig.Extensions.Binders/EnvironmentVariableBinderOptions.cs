@@ -1,6 +1,6 @@
 using System;
 
-namespace ExistAll.SimpleConfig.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
     public class EnvironmentVariableBinderOptions
     {

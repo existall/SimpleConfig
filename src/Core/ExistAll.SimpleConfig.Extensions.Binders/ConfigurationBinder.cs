@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace ExistAll.SimpleConfig.Binders
+namespace ExistForAll.SimpleSettings.Binders
 {
 	public class ConfigurationBinder : ISectionBinder
 	{
@@ -22,7 +22,7 @@ namespace ExistAll.SimpleConfig.Binders
 			return $"{RootSection}:{context.Section}";
 		}
 
-		public void BindPropertyConfig(BindingContext context)
+		public void BindPropertySettings(BindingContext context)
 		{
 			var configurationSection = _configuration.GetSection(GetSection(context));
 
