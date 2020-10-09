@@ -38,7 +38,7 @@ All of the good IOC containers out there will tell you that injecting a string i
 The best of them won't let you do it.
 
 `IOptions<>` to the rescue, with `IOptions<>` you can request the option class that can provide the string you want provided from any data store you want (json file, database and so on).
-
+``` c#
     public class EmailSender
     {
         public EmailSender(IOption<EmailProviderConfiguratation> configuration, ... )
@@ -46,7 +46,7 @@ The best of them won't let you do it.
 
         }
     }
-
+```
 BUT `IOptions<>` is not the way to do this.
 
 Why you ask ?
@@ -63,15 +63,15 @@ For better understanding you can read this [explenation](http://https://simplein
 Remember the `IOption<EmailProviderConfiguratation> configuration`?
 
 what if we could build an interface like so
-
+``` c#
     public interface IEmailServiceConfig
     {
         [DefaultValue("SomeUrl")]
         string ServiceUrl {get; set;}
     }
-
+```
 and use it like so
-
+``` c#
     public class EmailSender : IEmailSender
     {
         public EmailSender(IEmailServiceConfig emailServiceConfig, ... )
@@ -84,3 +84,4 @@ and use it like so
             Send(emailServiceConfig.ServiceUrl, ...);
         }
     }
+```
