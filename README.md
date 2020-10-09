@@ -4,7 +4,7 @@ ExistsForAll.SimpleSetting (previously SimpleConfig)
 =====================
 
 ## Installation 
-`Install-Package ExistAll.SimpleSettings`
+`Install-Package ExistForAll.SimpleSettings`
 
 ## Table of Content
 1.Introduction  
