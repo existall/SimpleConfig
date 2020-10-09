@@ -39,13 +39,10 @@ The best of them won't let you do it.
 
 `IOptions<>` to the rescue, with `IOptions<>` you can request the option class that can provide the string you want provided from any data store you want (json file, database and so on).
 ``` c#
-    public class EmailSender
-    {
-        public EmailSender(IOption<EmailProviderConfiguratation> configuration, ... )
-        {
-
-        }
-    }
+public class EmailSender
+{
+    public EmailSender(IOption<EmailProviderConfiguratation> configuration, ... ) { }
+}
 ```
 BUT `IOptions<>` is not the way to do this.
 
@@ -64,11 +61,11 @@ Remember the `IOption<EmailProviderConfiguratation> configuration`?
 
 what if we could build an interface like so
 ``` c#
-    public interface IEmailServiceConfig
-    {
-        [DefaultValue("SomeUrl")]
-        string ServiceUrl {get; set;}
-    }
+public interface IEmailServiceConfig
+{
+    [DefaultValue("SomeUrl")]
+    string ServiceUrl {get; set;}
+}
 ```
 and use it like so
 ``` c#
