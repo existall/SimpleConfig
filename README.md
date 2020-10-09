@@ -1,10 +1,10 @@
 <img src="https://raw.githubusercontent.com/existall/Shepherd/master/art/logo.png" alt="ExistsForAll">
 
-ExistsForAll.SimpleConfig
+ExistsForAll.SimpleSetting (previously SimpleConfig)
 =====================
 
 ## Installation 
-`Install-Package ExistAll.SimpleConfig`
+`Install-Package ExistAll.SimpleSettings`
 
 ## Table of Content
 1.Introduction  
