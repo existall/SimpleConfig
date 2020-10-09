@@ -72,16 +72,13 @@ what if we could build an interface like so
 ```
 and use it like so
 ``` c#
-    public class EmailSender : IEmailSender
-    {
-        public EmailSender(IEmailServiceConfig emailServiceConfig, ... )
-        {
+public class EmailSender : IEmailSender
+{
+   public EmailSender(IEmailServiceConfig emailServiceConfig, ... ) { }
 
-        }
-
-        public void SendEmail(...)
-        {
-            Send(emailServiceConfig.ServiceUrl, ...);
-        }
+   public void SendEmail(...)
+   {
+        Send(emailServiceConfig.ServiceUrl, ...);
     }
+}
 ```
