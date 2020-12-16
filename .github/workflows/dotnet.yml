@@ -12,6 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
   build1:
+    needs: [build] 
     runs-on: ubuntu-latest
     environment:
       name: prod
