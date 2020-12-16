@@ -1,0 +1,15 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    environment:
+      name: testing
+    steps:
+    - uses: actions/checkout@v2
+     
